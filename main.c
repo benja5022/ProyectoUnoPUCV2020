@@ -4,16 +4,25 @@
 #include <stdbool.h>
 #include <conio.h>
 #include <windows.h>
-#include <_mingw.h>
+//#include <_mingw.h>
 
 
 typedef struct carta carta;
 
 /*
-struct campo_de_juego{
+struct Area_de_juego{
+    struct Area_de_juego * area_enemiga;
     char nombre_jugador[100];
-    list * mazo;
-
+    Mapa * cementerio;
+    Mapa * mazo_castillo;
+    Mapa * linea_defensa;
+    Mapa * linea_ataque;
+    Mapa * mano;
+    unsigned int reserva_de_oro;
+    unsigned int oro_pagado;
+    pila * oros;
+    lista * linea_de_apoyo;
+    lista * destierro;
 };
 */
 struct carta{
@@ -85,7 +94,6 @@ void empezarJuego(){
 
         tecla = getch();
         system("cls");
-
             switch(tecla){
 
             case('w'):
@@ -118,6 +126,7 @@ void empezarJuego(){
                     printf("Nueva Partida\n");
                     textbackground(0);
                     break;
+
                 default :
                     break;
             }
@@ -187,31 +196,38 @@ void menu(){
                 cont =0 ;
                 break;
 
+            case (8):
+                printf("Retroceso\n");
+                //cont = 4;
+                break;
+
         }
 
         system("cls");
         switch(cont){
             case (1):
-                textbackground(2);
-                printf("Opcion 1\n");
+                textbackground(GREEN);
+                printf("Empezar Juego\n");
                 textbackground(0);
-                printf("Opcion 2\n");
-                printf("Opcion 3\n");
+                printf("Reglas\n");
+                printf("Creditos\n");
                 break;
 
             case (2):
-                printf("Opcion 1\n");
+                printf("Empezar Juego\n");
                 textbackground(GREEN);
-                printf("Opcion 2\n");
+                printf("Reglas\n");
                 textbackground(0);
-                printf("Opcion 3\n");
+                printf("Creditos\n");
                 break;
             case (3):
-                printf("Opcion 1\n");
-                printf("Opcion 2\n");
-                textbackground(2);
-                printf("Opcion 3\n");
+                printf("Empezar Juego\n");
+                printf("Reglas\n");
+                textbackground(GREEN);
+                printf("Creditos\n");
                 textbackground(0);
+                break;
+            default :
                 break;
         }
     }
@@ -249,60 +265,4 @@ int main()
     }
     fclose(archivo);
 
-
-
 }
-
-
-/*
-    printf("Hello world!\n");
-    FILE * archivo = fopen("texto.txt","w");
-
-    char azul[20] = "azul ";
-    char rojo[20] = "rojo ";
-    char amarillo[20] = "amarillo ";
-    char verde[20] = "verde ";
-    int i;
-    int j;
-
-    char caracter[3];
-    for(i = 0; i<=3; i++){
-        caracter[0] = i+49;
-        caracter[1] = ' ';
-        caracter[2] = '\0';
-
-        printf("%s\n",caracter);
-        for(j = 0; j <= 9; j++){
-            caracter[0] = j+48;
-            caracter[1] = '\n';
-            caracter[2] = '\0';
-
-            if(i == 0){
-                fprintf(archivo,strcat(azul,caracter));
-            }
-            else
-            {
-                if(i == 1){
-                    fprintf(archivo,strcat(rojo,caracter));
-                }
-                else
-                {
-                    if(i == 2){
-                        fprintf(archivo,strcat(amarillo,caracter));
-                    }
-                    else
-                    {
-                        fprintf(archivo,strcat(verde,caracter));
-                    }
-                }
-            }
-            strcpy(azul,"azul ");
-            strcpy(rojo,"rojo ");
-            strcpy(verde,"verde ");
-            strcpy(amarillo,"amarillo ");
-        }
-
-    }
-    fclose(archivo);
-    return 0;
-    */

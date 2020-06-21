@@ -1,10 +1,9 @@
 # depslib dependency file v1.0
-1592596970 source:c:\users\benjamín\desktop\proyecto pucv ed\proyectopucved\main.c
+1592749117 source:c:\users\benjamín\desktop\proyecto pucv ed\proyectopucved\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	<stdbool.h>
 	<conio.h>
 	<windows.h>
-	<_mingw.h>
 
