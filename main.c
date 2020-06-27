@@ -70,11 +70,11 @@ void crearCarta(char * linea){
 
 //    printf("%d %d %d %d\n",carta_nueva ->coste, carta_nueva ->fuerza, carta_nueva ->tipo, carta_nueva ->habilidad_arma);
 }
-void comenzarPartida(){
+void comenzarPartida(){//vacio
 
 }
 
-void buscarPartida(){
+void buscarPartida(){//vacio
 
 }
 
@@ -144,7 +144,7 @@ void empezarJuego(){
     printf("Empezar juego opcion %d\n", bandera);
 }
 
-void reglas(){
+void reglas(){//vacio
 
 
 }
@@ -232,8 +232,6 @@ void menu(){
         }
     }
 
-    printf("opcion = %d\n",bandera);
-
     switch(bandera){
         case(1):
             empezarJuego();
@@ -252,8 +250,7 @@ void menu(){
 
 int main()
 {
-    menu();
-    return 0;
+
     FILE * archivo = fopen("ArchivoPrueba.csv","r");
     char palabra[1000];
     fgets(palabra,500,archivo);
@@ -264,5 +261,14 @@ int main()
 
     }
     fclose(archivo);
+    archivo = fopen("Partidas\\quesosuizo.csv","w");
+    int cont = 0;
+    while(cont < 50){
+        fprintf(archivo,"carta %d\n",cont+1);
+        cont++;
+    }
+    fclose(archivo);
+    return 0;
+    menu();
 
 }
