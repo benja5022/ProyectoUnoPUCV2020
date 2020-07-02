@@ -68,3 +68,185 @@ const char* get_csv_field (char * tmp, int i) {
     return NULL;
 }
 
+void reglas(){//vacio
+
+
+}
+
+void creditos(){
+    int i;
+    int j;
+    for(i = 0; i<50; i++){
+        for(j=0 ; j< i; j++){
+            printf("\n");
+        }
+
+        printf("       ------Creadores------\n");
+        printf("           Matias Osorio\n");
+        printf("   Benjamin Ignacio Rojas Henriquez\n");
+        printf("   Gabriel Ignacio Alvarez Quintero\n");
+        printf("      Ignacio Cortes Gonzalez \n");
+        Sleep(550);
+        system("cls");
+    }
+
+}
+void comenzarPartida(){//vacio
+
+}
+
+void buscarPartida(){//Incompleta
+    FILE* partidas = fopen("Partidas\\Partidas.txt","r");
+    char current[50];
+    while(fgets(current,49,partidas)){
+        printf("%s\n",current);
+    }
+    fclose(partidas);
+}
+
+void menu(){
+    char tecla;
+    int cont = 1;
+    int bandera = 0;
+
+    textbackground(2);
+    printf("Empezar Juego\n");
+    textbackground(0);
+    printf("Reglas\n");
+    printf("Creditos\n");
+    while(bandera == 0){
+        tecla = getch();
+        switch(tecla){
+
+            case('w'):
+                if(cont == 1) cont = 3;
+                else cont--;
+                break;
+
+            case('s'):
+                if(cont == 3) cont = 1;
+                else cont++;
+                break;
+            case (13):
+                bandera = cont;
+                cont =0 ;
+                break;
+
+            case (8):
+                printf("Retroceso\n");
+                //cont = 4;
+                break;
+
+        }
+
+        system("cls");
+        switch(cont){
+            case (1):
+                textbackground(GREEN);
+                printf("Empezar Juego\n");
+                textbackground(0);
+                printf("Reglas\n");
+                printf("Creditos\n");
+                break;
+
+            case (2):
+                printf("Empezar Juego\n");
+                textbackground(GREEN);
+                printf("Reglas\n");
+                textbackground(0);
+                printf("Creditos\n");
+                break;
+            case (3):
+                printf("Empezar Juego\n");
+                printf("Reglas\n");
+                textbackground(GREEN);
+                printf("Creditos\n");
+                textbackground(0);
+                break;
+            default :
+                break;
+        }
+    }
+
+    switch(bandera){
+        case(1):
+            empezarJuego();
+            break;
+
+        case(2):
+            reglas();
+            break;
+
+        case(3):
+            creditos();
+            break;
+    }
+
+}
+
+void empezarJuego(){
+
+    char tecla;
+    int cont = 1;
+    int bandera = 0;
+    system("cls");
+
+    textbackground(2);
+    printf("Cargar Partida\n");
+    textbackground(0);
+    printf("Nueva Partida\n");
+
+    while(bandera == 0){
+
+        tecla = getch();
+        system("cls");
+            switch(tecla){
+
+            case('w'):
+                if(cont == 1) cont = 2;
+                else cont--;
+                break;
+
+            case('s'):
+                if(cont == 2) cont = 1;
+                else cont++;
+                break;
+            case (13):
+                bandera = cont;
+                cont = 0;
+                break;
+
+        }
+            switch(cont){
+
+                case (1):
+                    textbackground(2);
+                    printf("Cargar Partida\n");
+                    textbackground(0);
+                    printf("Nueva Partida\n");
+                    break;
+                case (2):
+
+                    printf("Cargar Partida\n");
+                    textbackground(2);
+                    printf("Nueva Partida\n");
+                    textbackground(0);
+                    break;
+
+                default :
+                    break;
+            }
+
+
+    }
+  /** Editar esta funcion importante */
+    switch(bandera){
+        case (1):
+            buscarPartida();
+            break;
+        case (2):
+            comenzarPartida();
+            break;
+    }
+    printf("Empezar juego opcion %d\n", bandera);
+}
