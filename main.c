@@ -3,62 +3,12 @@
 #include <string.h>
 #include <stdbool.h>
 #include <conio.h>
+#include <ctype.h>
 #include <windows.h>
+#include "HashTable.h"
+#include "funciones.c"
 //#include <_mingw.h>
-
-
-typedef struct carta carta;
-
 /*
-struct Area_de_juego{
-    struct Area_de_juego * area_enemiga;
-    char nombre_jugador[100];
-    Mapa * cementerio;
-    Mapa * mazo_castillo;
-    Mapa * linea_defensa;
-    Mapa * linea_ataque;
-    Mapa * mano;
-    unsigned int reserva_de_oro;
-    unsigned int oro_pagado;
-    pila * oros;
-    lista * linea_de_apoyo;
-    lista * destierro;
-};
-*/
-struct carta{
-
-    int tipo;
-    int coste;
-    int habilidad_talisman;
-    int habilidad_totem;
-    int habilidad_arma;
-    int fuerza;
-    char nombre[100];
-    char id[6];
-
-};
-
-char * _strdup (const char *s) {
-	size_t len = strlen (s) + 1;
-    void *new = malloc (len);
-
-	if (new == NULL)
-	    return NULL;
-
-	return (char *) memcpy (new, s, len);
-}
-
-const char* get_csv_field (char * tmp, int i) {
-
-    char * line = _strdup (tmp);
-    const char * tok;
-    for (tok = strtok (line, ";"); tok && *tok; tok = strtok (NULL, ";\n")) {
-        if (!--i) {
-            return tok;
-        }
-    }
-    return NULL;
-}
 void crearCarta(char * linea){
     carta * carta_nueva = (carta *) malloc (sizeof(carta));
     carta_nueva ->coste = atoi(get_csv_field(linea,7));
@@ -69,13 +19,39 @@ void crearCarta(char * linea){
     carta_nueva ->tipo = atoi(get_csv_field(linea,3));
 
 //    printf("%d %d %d %d\n",carta_nueva ->coste, carta_nueva ->fuerza, carta_nueva ->tipo, carta_nueva ->habilidad_arma);
+}*/
+
+long long stringHash(const void * key) {
+    long long hash = 5381;
+
+    const char * ptr;
+
+    for (ptr = key; *ptr != '\0'; ptr++) {
+        hash = ((hash << 5) + hash) + tolower(*ptr); /* hash * 33 + c */
+    }
+
+    return hash;
 }
+
+int stringEqual(const void * key1, const void * key2) {
+    const char * A = key1;
+    const char * B = key2;
+
+    return strcmp(A, B) == 0;
+}
+
+
 void comenzarPartida(){//vacio
 
 }
 
 void buscarPartida(){//vacio
-
+    FILE* partidas = fopen("Partidas\\Partidas.txt","r");
+    char current[50];
+    while(fgets(current,49,partidas)){
+        printf("%s\n",current);
+    }
+    fclose(partidas);
 }
 
 void empezarJuego(){
@@ -250,16 +226,32 @@ void menu(){
 
 int main()
 {
+//    menu();
+//    return 0;
 
-    FILE * archivo = fopen("ArchivoPrueba.csv","r");
+    Map* TablaHash = createHashTable(stringHash,stringEqual);
+    FILE * archivo = fopen("Edición\\Cartas.csv","r");
+    if(archivo == NULL){
+        printf("falla");
+        return 1;
+    }
+
     char palabra[1000];
     fgets(palabra,500,archivo);
-    while(fgets(palabra,500,archivo)){
+    carta* Tarjeta;
+    while(fgets(palabra,1000,archivo)){
 
-        crearCarta(palabra);
+        printf("%s\n",palabra);
+        Tarjeta = crearCarta(palabra);
+        insertHashTable(TablaHash ,Tarjeta ->nombre,Tarjeta);
 //        printf("%s %s %s %s %s %s %s pepito%d\n",get_csv_field(palabra,1),get_csv_field(palabra,2),get_csv_field(palabra,3),get_csv_field(palabra,4),get_csv_field(palabra,5),get_csv_field(palabra,6),get_csv_field(palabra,7),atoi(get_csv_field(palabra,8)));
-
     }
+    fclose(archivo);
+    carta * current = firstHashTable(TablaHash);
+    for(; current != NULL; current = nextHashTable(TablaHash)) printf ("%s\n", current ->nombre);
+
+    printf("%ld",HashTableCount(TablaHash));
+/*
     fclose(archivo);
     archivo = fopen("Partidas\\quesosuizo.csv","w");
     int cont = 0;
@@ -270,5 +262,5 @@ int main()
     fclose(archivo);
     return 0;
     menu();
-
+*/
 }
