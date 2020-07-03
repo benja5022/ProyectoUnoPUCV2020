@@ -25,7 +25,7 @@
 #ifndef HashTable_h
 #define HashTable_h
 
-typedef struct Map Map;
+typedef struct HashTable HashTable;
 
 /**
  @typedef
@@ -53,7 +53,7 @@ typedef int (* MapEqualCallBack)(const void * key1, const void * key2);
  @param equal Funcion equal.
  @return Puntero al nuevo Map creado.
  */
-Map * createHashTable(MapHashCallBack hash, MapEqualCallBack equal);
+HashTable * createHashTable(MapHashCallBack hash, MapEqualCallBack equal);
 
 /**
  Inserta un nuevo elemento en el Map.
@@ -68,7 +68,7 @@ Map * createHashTable(MapHashCallBack hash, MapEqualCallBack equal);
  @param key Puntero a la llave del elemento que se va a insertar.
  @param value Puntero al valor que se va a insertar.
  */
-void insertHashTable(Map * map, const void * key, const void * value);
+void insertHashTable(HashTable * map, const void * key, const void * value);
 
 /**
  Retorna la cantidad de elementos no nulos del Map.
@@ -78,7 +78,7 @@ void insertHashTable(Map * map, const void * key, const void * value);
  @param map Puntero al Map.
  @return La cantidad de elemntos del Map.
  */
-long HashTableCount(Map * map);
+long HashTableCount(HashTable * map);
 
 /**
  Prueba si el Map está vacio.
@@ -88,7 +88,7 @@ long HashTableCount(Map * map);
  @param map Puntero al Map.
  @return 1 (true) si y solo si el Map no contiene elementos; 0 (false) lo contrario.
  */
-int emptyHashTable(Map * map);
+int emptyHashTable(HashTable * map);
 
 /**
  Elimina un elemento con la llave del Map, pero no lo libera de la memoria.
@@ -103,7 +103,7 @@ int emptyHashTable(Map * map);
  @param key Llave del elemento a eliminar.
  @return Puntero al dato eliminado del Map.
  */
-void * eraseKeyHashTable(Map * map, const void * key);
+void * eraseKeyHashTable(HashTable * map, const void * key);
 
 /**
  Busca un elemento en el Map con la llave.
@@ -118,7 +118,7 @@ void * eraseKeyHashTable(Map * map, const void * key);
  @param key Llave del elemento a buscar.
  @return Puntero al dato encontrado del Map.
  */
-void * searchHashTable(Map * map, const void * key);
+void * searchHashTable(HashTable * map, const void * key);
 
 /**
  Retorna el primero elemento no nulo del Map.
@@ -128,7 +128,7 @@ void * searchHashTable(Map * map, const void * key);
  @param map Puntero al Map.
  @return Puntero al primero elemento encontrado del Map.
  */
-void * firstHashTable(Map * map);
+void * firstHashTable(HashTable * map);
 
 /**
  Retorna el siguiente elemento no nulo del Map.
@@ -138,7 +138,7 @@ void * firstHashTable(Map * map);
  @param map Puntero al Map.
  @return Puntero al siguiente elemento encontrado del Map.
  */
-void * nextHashTable(Map * map);
+void * nextHashTable(HashTable * map);
 
 /**
  Elimina todos los elementos del Map, pero sin liberar la memoria de los datos contentidos.
@@ -147,7 +147,7 @@ void * nextHashTable(Map * map);
 
  @param map Puntero al Map.
  */
-void removeAllHashTable(Map * map);
+void removeAllHashTable(HashTable * map);
 
 #endif /* HashTable_h */
 

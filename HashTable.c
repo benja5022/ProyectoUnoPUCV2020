@@ -51,7 +51,7 @@ struct pair {
     const void * value;
 };
 
-struct Map {
+struct HashTable {
     long size; // tamaño del arreglo
     long count; // cantidad actual
     long current;
@@ -64,7 +64,7 @@ struct Map {
     MapEqualCallBack equal;
 };
 
-static void enlarge(Map * map) {
+static void enlarge(HashTable * map) {
     if (map->primeIndex == (primeLength - 1)) return; // se verifica si super el ultimo indice.
 
     long newSize = primes[++(map->primeIndex)]; // se obtiene el nuevo size y se aumento el primeIndex.
@@ -95,7 +95,7 @@ static void enlarge(Map * map) {
     free(oldBucket);
 }
 
-static long quadraticProbing(Map * map, const void * key) {
+static long quadraticProbing(HashTable * map, const void * key) {
     assert(map->hash != NULL && map->equal != NULL);
     long long hash = llabs(map->hash(key));
     long idx = hash % map->size;
@@ -118,8 +118,8 @@ static Pair * createPair(const void * key, const void * value) {
     return new;
 }
 
-Map * createHashTable(MapHashCallBack hash, MapEqualCallBack equal) {
-    Map * new = (Map *)malloc(sizeof(Map));
+HashTable * createHashTable(MapHashCallBack hash, MapEqualCallBack equal) {
+    HashTable * new = (HashTable *)malloc(sizeof(HashTable));
 
     if (new == NULL) return NULL;
 
@@ -136,18 +136,18 @@ Map * createHashTable(MapHashCallBack hash, MapEqualCallBack equal) {
     return new;
 }
 
-long HashTableCount(Map * map) {
+long HashTableCount(HashTable * map) {
     assert(map != NULL);
     if (map->buckets == NULL) return 0;
     return map->count;
 }
 
-int emptyHashTable(Map * map) {
+int emptyHashTable(HashTable * map) {
     assert(map != NULL);
     return map->count == 0;
 }
 
-void insertHashTable(Map * map, const void * key, const void * value) {
+void insertHashTable(HashTable * map, const void * key, const void * value) {
     assert(map != NULL); // El mapa no puede ser NULL.
 
     long idx = quadraticProbing(map, key);
@@ -165,7 +165,7 @@ void insertHashTable(Map * map, const void * key, const void * value) {
     if ((map->count) >= map->loadFactor) enlarge(map); // si la cantidad supera al factor de carga se hace el enlarge del mapa.
 }
 
-void * eraseKeyHashTable(Map * map, const void * key) {
+void * eraseKeyHashTable(HashTable * map, const void * key) {
     assert(map != NULL); // El mapa no puede ser NULL.
 
     long idx = quadraticProbing(map, key);
@@ -183,7 +183,7 @@ void * eraseKeyHashTable(Map * map, const void * key) {
     return aux;
 }
 
-void * searchHashTable(Map * map, const void * key) {
+void * searchHashTable(HashTable * map, const void * key) {
     assert(map != NULL); // El mapa no puede ser NULL.
 
     long idx = quadraticProbing(map, key);
@@ -195,7 +195,7 @@ void * searchHashTable(Map * map, const void * key) {
     return (void *)map->buckets[idx]->value;
 }
 
-void * firstHashTable(Map * map) {
+void * firstHashTable(HashTable * map) {
     assert(map != NULL); // El mapa no puede ser NULL.
 
     if (map->buckets == NULL) return NULL;
@@ -212,7 +212,7 @@ void * firstHashTable(Map * map) {
     return NULL;
 }
 
-void * nextHashTable(Map * map) {
+void * nextHashTable(HashTable * map) {
     assert(map != NULL); // El mapa no puede ser NULL.
 
     if (map->buckets == NULL) return NULL;
@@ -229,7 +229,7 @@ void * nextHashTable(Map * map) {
     return NULL;
 }
 
-void removeAllHashTable(Map * map) {
+void removeAllHashTable(HashTable * map) {
     assert(map != NULL); // El mapa no puede ser NULL.
 
     long i;
