@@ -18,11 +18,13 @@ void reglas();
 
 void creditos();
 
-void menu(HashTable* hash);
+int menu(HashTable* hash);
 
-void empezarJuego(HashTable* hash);
+void elegirCartas(HashTable* tablahash, list* lista_todas_las_cartas);
 
-void buscarPartida(HashTable* hash);
+Area_de_juego* empezarJuego(HashTable* hash);
+
+Area_de_juego* buscarPartida(HashTable* hash);
 
 void ingresoAreaDeJuego(Area_de_juego* area, carta* card, int zona);
 

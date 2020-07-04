@@ -57,9 +57,9 @@ carta * crearCarta(char * linea){
     carta_nueva ->coste = atoi(get_csv_field(linea,8));
     carta_nueva ->fuerza = atoi(get_csv_field(linea,9));
 
-/*
-    printf("Nombre:%s\nCoste:%d\nFuerza:%d\nHabilidad Arma:%d\nTipo:",carta_nueva -> nombre,carta_nueva ->coste, carta_nueva ->fuerza, carta_nueva ->habilidad_arma);
-    switch(carta_nueva ->tipo){
+
+//    printf("Nombre:%s\nCoste:%d\nFuerza:%d\nHabilidad Arma:%d\nTipo:",carta_nueva -> nombre,carta_nueva ->coste, carta_nueva ->fuerza, carta_nueva ->habilidad_arma);
+    /*switch(carta_nueva ->tipo){
         case(0):
             printf("Oro\n\n");
             break;
@@ -100,35 +100,6 @@ const char* get_csv_field (char * tmp, int i) {
     }
     return NULL;
 }
-
-void reglas(){//vacio
-
-
-}
-
-void creditos(){
-    int i;
-    int j;
-    for(i = 0; i<30; i++){
-        for(j=0 ; j< i; j++){
-            printf("\n");
-        }
-
-        printf("       ------Creadores------\n");
-        printf("           Matias Osorio\n");
-        printf("   Benjamin Ignacio Rojas Henriquez\n");
-        printf("   Gabriel Ignacio Alvarez Quintero\n");
-        printf("      Ignacio Cortes Gonzalez \n");
-        Sleep(550);
-        system("cls");
-    }
-
-}
-
-void comenzarPartida(){//vacio
-
-}
-
 Area_de_juego * crearAreaDeJuego(){// Nombre, //Area_de_juego * crearAreaDeJuego()
     Area_de_juego* Area1 = (Area_de_juego *) malloc (sizeof(Area_de_juego));
     Area1 ->cementerio = createMap(cmp_str_map);
@@ -161,6 +132,143 @@ Area_de_juego * crearAreaDeJuego(){// Nombre, //Area_de_juego * crearAreaDeJuego
 
     return Area1;
 }
+
+void imprimirStats(int i,carta* card){
+    switch(i){
+            case 0:
+                printf("%72s","Nombre:");
+                printf(" %s\n",card->nombre);
+                break;
+            case 1:
+                printf("%73s","Fuerza:");
+                printf(" %d\n",card->fuerza);
+                break;
+            case 2:
+                printf("%76s","Coste:");
+                printf(" %d\n",card->coste);
+                break;
+            case 3:
+                printf("%75s","Habilidad:");
+                printf(" pepepepe\n");
+                break;
+            case 4:
+                printf("%72s","Tipo:");
+                printf(" papope\n");
+            break;
+
+    }
+
+}
+
+void elegirCartas(HashTable* tablahash, list* lista_todas_las_cartas){//Editar esta función
+    //*************
+    int limite = list_size(lista_todas_las_cartas);
+    int newcont = 0;
+    int i = 0;
+    carta* current = list_first(lista_todas_las_cartas);
+    carta* aux;
+    printf("Jugador: %d\n\n\n", 1);
+    for(i = 0; i < limite; i++,current = list_next(lista_todas_las_cartas)){
+        if(i == 0){
+            textbackground(4);
+            printf("%s",current->nombre);
+            textbackground(0);
+            printf("\n");
+        }
+        else printf("%s\n",current->nombre);
+    }
+
+    int cartas_escogidas = 0;
+    char tecla;
+    while(cartas_escogidas <50){
+
+    tecla = getch();
+
+        switch(tecla){
+
+            case('w'):
+                if(newcont == 0) newcont = limite;
+                else newcont--;
+                break;
+            case('s'):
+                if(newcont == limite) newcont = 0;
+                else newcont++;
+                break;
+            case(13):
+
+                cartas_escogidas++;
+                break;
+            default:
+                break;
+        }
+        for(i= 0, aux=list_first(lista_todas_las_cartas); i <newcont; i++,aux = list_next(lista_todas_las_cartas));
+        system("cls");
+        printf("Jugador: %d\n\n\n", 1);
+        for(i = 0,current = list_first(lista_todas_las_cartas); i < 22; i++,current = list_next(lista_todas_las_cartas)){
+
+            if( i < 5){
+
+                if(i == newcont){
+                    textbackground(4);
+                    printf("%2s",current->nombre);
+                    textbackground(0);
+                }
+                else
+                {
+                    printf("%2s",current->nombre);
+                }
+
+                imprimirStats(i,aux);
+            }
+            else
+            {
+                if(i == newcont){
+                    textbackground(4);
+                    printf("%2s\n",current->nombre);
+                    textbackground(0);
+                }
+                else
+                {
+                    printf("%2s\n",current->nombre);
+                }
+            }
+        }
+        printf("\n\nCartas escogidas: %d\n",cartas_escogidas);
+    }
+
+
+//***********************************************
+
+}
+
+void reglas(){//vacio
+
+
+}
+
+void creditos(){
+    int i;
+    int j;
+    for(i = 0; i<25; i++){
+        for(j=0 ; j< i; j++){
+            printf("\n");
+        }
+
+        printf("%60s","------Creadores------\n");
+        printf("%56s","Matias Osorio\n");
+        printf("%65s","Benjamin Ignacio Rojas Henriquez\n");
+        printf("%65s","Gabriel Ignacio Alvarez Quintero\n");
+        printf("%62s","Ignacio Cortes Gonzalez \n");
+        Sleep(450);
+        system("cls");
+    }
+
+}
+
+void comenzarPartida(){//vacio
+//    elegirCartas();
+}
+
 
 void ingresoAreaDeJuego(Area_de_juego* area, carta* card, int zona){
 
@@ -217,7 +325,7 @@ void ingresoAreaDeJuego(Area_de_juego* area, carta* card, int zona){
 
 }
 
-void buscarPartida(HashTable* tabla){//Incompleta
+Area_de_juego* buscarPartida(HashTable* tabla){
     FILE* partidas = fopen("Partidas\\Partidas.txt","r");
     Partida* punto_de_partida;
     list* lista_de_partidas = list_create_empty();
@@ -275,6 +383,8 @@ void buscarPartida(HashTable* tabla){//Incompleta
             case(13):
                 opcion_escogida = newcont;
                 break;
+            case(8):
+                return NULL;
             default:
                 break;
         }
@@ -349,9 +459,11 @@ void buscarPartida(HashTable* tabla){//Incompleta
     fclose(partida_salvada_escogida);
 
     printf("%ld %ld %ld %ld %ld %ld %ld %ld\n", MapCount(area->mano), list_size(area->destierro), area->reserva_de_oro, MapCount(area->cementerio), MapCount(area->linea_defensa), MapCount(area->mazo_castillo), list_size(area->linea_de_apoyo), area->total);
+
+    return area;
 }
 
-void menu(HashTable *tabla){
+int menu(HashTable *tabla){
     char tecla;
     int cont = 1;
     int bandera = 0;
@@ -415,85 +527,74 @@ void menu(HashTable *tabla){
         }
     }
 
-    switch(bandera){
-        case(1):
-            empezarJuego(tabla);
-            break;
-
-        case(2):
-            reglas();
-            break;
-
-        case(3):
-            creditos();
-            break;
-    }
-
+    return bandera;
 }
 
-void empezarJuego(HashTable* table){
-
+Area_de_juego* empezarJuego(HashTable* table){
+    Area_de_juego* Area = NULL;
     char tecla;
     int cont = 1;
     int bandera = 0;
-    system("cls");
 
-    textbackground(2);
-    printf("Cargar Partida\n");
-    textbackground(0);
-    printf("Nueva Partida\n");
+    do{
+        while(bandera == 0){
 
-    while(bandera == 0){
+            system("cls");
+                switch(cont){
 
-        tecla = getch();
-        system("cls");
-            switch(tecla){
+                    case (1):
+                        textbackground(2);
+                        printf("Cargar Partida\n");
+                        textbackground(0);
+                        printf("Nueva Partida\n");
+                        break;
+                    case (2):
 
-            case('w'):
-                if(cont == 1) cont = 2;
-                else cont--;
-                break;
+                        printf("Cargar Partida\n");
+                        textbackground(2);
+                        printf("Nueva Partida\n");
+                        textbackground(0);
+                        break;
 
-            case('s'):
-                if(cont == 2) cont = 1;
-                else cont++;
-                break;
-            case (13):
-                bandera = cont;
-                cont = 0;
-                break;
+                    default :
+                        break;
+                }
 
-        }
-            switch(cont){
+                tecla = getch();
 
-                case (1):
-                    textbackground(2);
-                    printf("Cargar Partida\n");
-                    textbackground(0);
-                    printf("Nueva Partida\n");
-                    break;
-                case (2):
+                switch(tecla){
 
-                    printf("Cargar Partida\n");
-                    textbackground(2);
-                    printf("Nueva Partida\n");
-                    textbackground(0);
+                case('w'):
+                    if(cont == 1) cont = 2;
+                    else cont--;
                     break;
 
-                default :
+                case('s'):
+                    if(cont == 2) cont = 1;
+                    else cont++;
                     break;
+                case (13):
+                    bandera = cont;
+                    cont = 0;
+                    break;
+                case (8):
+                    system("cls");
+                    return NULL;
             }
-
-
-    }
+        }
   /** Editar esta funcion importante */
-    switch(bandera){
-        case (1):
-            buscarPartida(table);
-            break;
-        case (2):
-            comenzarPartida();
-            break;
-    }
-    printf("Empezar juego opcion %d\n", bandera);
+        switch(bandera){
+            case (1):
+                Area = buscarPartida(table);
+                break;
+            case (2):
+                comenzarPartida();
+                break;
+        }
+        bandera = 0;
+        cont = 1;
+    }while(Area == NULL);
+
+    return Area;
+
 }
