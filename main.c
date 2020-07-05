@@ -60,9 +60,8 @@ int main()
     }
 
     fclose(archivo);
-    elegirCartas(TablaHash,lista_todas_las_cartas);
-
-    return 0;
+//    elegirCartas(TablaHash,lista_todas_las_cartas);
+//    return 0;
 
     //carta * current = firstHashTable(TablaHash);
     //for(; current != NULL; current = nextHashTable(TablaHash)) printf ("%s\n", current ->nombre);
@@ -74,15 +73,18 @@ int main()
 
         switch(bandera){
             case(1):
-                area_final = empezarJuego(TablaHash);
+                area_final = empezarJuego(TablaHash,lista_todas_las_cartas);
+                bandera = 0;
                 break;
 
             case(2):
                 reglas();
+                bandera = 0;
                 break;
 
             case(3):
                 creditos();
+                bandera = 0;
                 break;
         }
 

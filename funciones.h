@@ -9,7 +9,6 @@ typedef struct Partida Partida;
 
 carta * crearCarta(char * linea);
 
-
 char * _strdup (const char *s);
 
 const char* get_csv_field (char * tmp, int i);
@@ -20,9 +19,9 @@ void creditos();
 
 int menu(HashTable* hash);
 
-void elegirCartas(HashTable* tablahash, list* lista_todas_las_cartas);
+list* elegirCartas(HashTable* tablahash, list* lista_todas_las_cartas);
 
-Area_de_juego* empezarJuego(HashTable* hash);
+Area_de_juego* empezarJuego(HashTable* hash, list* lista);
 
 Area_de_juego* buscarPartida(HashTable* hash);
 
