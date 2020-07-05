@@ -10,7 +10,6 @@
 #include "list.h"
 #include "Map.h"
 #include "funciones.c"
-//#include <_mingw.h>
 
 
 long long stringHash(const void * key) {
@@ -32,8 +31,6 @@ int stringEqual(const void * key1, const void * key2) {
     return strcmp(A, B) == 0;
 }
 
-
-
 int main()
 {
 
@@ -45,27 +42,19 @@ int main()
         return 1;
     }
 
-    char palabra[1000];
+    char palabra[500];
     fgets(palabra,500,archivo);
     carta* Tarjeta = NULL;
 
-    while(fgets(palabra,1000,archivo)){
+    while(fgets(palabra,500,archivo)){
 
-//        printf("%s\n",palabra);
         Tarjeta = crearCarta(palabra);
         list_push_back(lista_todas_las_cartas,Tarjeta);
-//        printf("%s\n",Tarjeta->nombre);
         insertHashTable(TablaHash ,Tarjeta->nombre,Tarjeta);
-//        printf("%s %s %s %s %s %s %s pepito%d\n",get_csv_field(palabra,1),get_csv_field(palabra,2),get_csv_field(palabra,3),get_csv_field(palabra,4),get_csv_field(palabra,5),get_csv_field(palabra,6),get_csv_field(palabra,7),atoi(get_csv_field(palabra,8)));
     }
 
     fclose(archivo);
-//    elegirCartas(TablaHash,lista_todas_las_cartas);
-//    return 0;
 
-    //carta * current = firstHashTable(TablaHash);
-    //for(; current != NULL; current = nextHashTable(TablaHash)) printf ("%s\n", current ->nombre);
-//    printf("%ld",HashTableCount(TablaHash));
     Area_de_juego* area_final = NULL;
     int bandera =0;
     do{
@@ -73,7 +62,7 @@ int main()
 
         switch(bandera){
             case(1):
-                area_final = empezarJuego(TablaHash,lista_todas_las_cartas);
+                area_final = jugar(TablaHash,lista_todas_las_cartas);
                 bandera = 0;
                 break;
 
@@ -90,7 +79,7 @@ int main()
 
     }while(area_final == NULL);
 
-//    printf("%s", area_final->nombre_jugador);
-    return 0;
+    comenzarJuego(area_final);
 
+    return 0;
 }

@@ -105,7 +105,7 @@ const char* get_csv_field (char * tmp, int i) {
     return NULL;
 }
 
-Area_de_juego * crearAreaDeJuego(){// Nombre, //Area_de_juego * crearAreaDeJuego()
+Area_de_juego * crearAreaDeJuego(){
     Area_de_juego* Area1 = (Area_de_juego *) malloc (sizeof(Area_de_juego));
     Area1 ->cementerio = createMap(cmp_str_map);
     Area1 ->linea_ataque = createMap(cmp_str_map);
@@ -119,58 +119,10 @@ Area_de_juego * crearAreaDeJuego(){// Nombre, //Area_de_juego * crearAreaDeJuego
     Area1 ->reserva_de_oro = 0;
     Area1 ->total = 0;
 
-    Area_de_juego* Area2 = (Area_de_juego *) malloc (sizeof(Area_de_juego));
-    Area2 ->cementerio = createMap(cmp_str_map);
-    Area2 ->linea_ataque = createMap(cmp_str_map);
-    Area2 ->linea_defensa = createMap(cmp_str_map);
-    Area2 ->mano = createMap(cmp_str_map);
-    Area2 ->mazo_castillo = createMap(cmp_str_map);
-    Area2 ->destierro = list_create_empty();
-    Area2 ->linea_de_apoyo = list_create_empty();
-    Area2 ->oros = stack_create_empty();
-    Area2 ->oro_pagado = 0;
-    Area2 ->reserva_de_oro = 0;
-    Area2 ->total = 0;
-
-    Area1 ->area_enemiga = Area2;
-    Area2 ->area_enemiga = Area1;
-
     return Area1;
 }
 
-void imprimirStats(int i,carta* card){
-    switch(i){
-            case 0:
-                printf("%72s","Nombre:");
-                printf(" %s\n",card->nombre);
-                break;
-            case 1:
-                printf("%73s","Fuerza:");
-                printf(" %d\n",card->fuerza);
-                break;
-            case 2:
-                printf("%76s","Coste:");
-                printf(" %d\n",card->coste);
-                break;
-            case 3:
-                printf("%75s","Habilidad:");
-                printf(" pepepepe\n");
-                break;
-            case 4:
-                printf("%72s","Tipo:");
-                printf(" papope\n");
-            break;
-
-    }
-
-}
-
-bool mostrarYEscoger(carta* card){
-
-
-    int cont = 9;
-    int bandera = 0;
-    char tecla;
+void imprimirCaracteristicas(carta* card){
     printf("Caracteristicas:\n\n");
     printf("Nombre: %s\n",card->nombre);
     printf("Fuerza: %d\n",card->fuerza);
@@ -178,6 +130,15 @@ bool mostrarYEscoger(carta* card){
     printf("ID: %s\n",card->id);
     printf("Tipo: ");
     imprimirTipoCarta(card->tipo,card);
+}
+
+bool mostrarYEscoger(carta* card){ // elegirCartas
+
+    imprimirCaracteristicas(card);
+    int cont = 9;
+    int bandera = 0;
+    char tecla;
+
 
     printf("\nLa escoges?\n\nSi\nNo");
     gotoxy(1,11);
@@ -227,7 +188,7 @@ void eleccionDePaginas(int i, int pagina_actual, int paginas){
 
 }
 
-list* elegirCartas(HashTable* tablahash, list* lista_todas_las_cartas){//Editar esta función
+list* elegirCartas(HashTable* tablahash, list* lista_todas_las_cartas){
     //*************
     system("cls");
     int newcont = 1;
@@ -242,16 +203,16 @@ list* elegirCartas(HashTable* tablahash, list* lista_todas_las_cartas){//Editar 
     if(list_size(lista_todas_las_cartas) % 23) paginas = 1 + list_size(lista_todas_las_cartas) / 23;
     else paginas = list_size(lista_todas_las_cartas) / 23;
 
-    printf("Cartas Escogidas: %d     Pagina: %d\\%d\n\n", 0,pagina_actual,paginas);
+    printf("Cartas Escogidas: %d     Pagina: %d\\%d\n\n",0,pagina_actual,paginas);
 
     imprimirLista(lista_todas_las_cartas,pagina_actual);
     eleccionDePaginas(1,pagina_actual,paginas);
 
     int cartas_escogidas = 0;
     char tecla;
-    gotoxy(1,3);
-    while(cartas_escogidas <50){
 
+    while(cartas_escogidas < 50 && tecla != 8){
+        gotoxy(1,newcont+2);
         tecla = getch();
 
         switch(tecla){
@@ -268,6 +229,7 @@ list* elegirCartas(HashTable* tablahash, list* lista_todas_las_cartas){//Editar 
             case('d'):
                 if(pagina_actual < paginas) pagina_actual++;
                 else break;
+
                 system("cls");
                 printf("Cartas Escogidas: %d     Pagina: %d\\%d\n\n", cartas_escogidas,pagina_actual,paginas);
                 imprimirLista(lista_todas_las_cartas,pagina_actual);
@@ -282,6 +244,7 @@ list* elegirCartas(HashTable* tablahash, list* lista_todas_las_cartas){//Editar 
                 printf("Cartas Escogidas: %d     Pagina: %d\\%d\n\n", cartas_escogidas,pagina_actual,paginas);
                 imprimirLista(lista_todas_las_cartas,pagina_actual);
                 eleccionDePaginas(1,pagina_actual,paginas);
+                break;
             case(8):
                 return NULL;
                 break;
@@ -300,13 +263,10 @@ list* elegirCartas(HashTable* tablahash, list* lista_todas_las_cartas){//Editar 
                 system("cls");
                 printf("Cartas Escogidas: %d\n\n", cartas_escogidas);
                 imprimirLista(lista_todas_las_cartas,pagina_actual);
-                //printf("\n\nNombre Jugador: %s", "corcho");
-                //newcont = 1;
-                break;
-            default:
+                newcont = 1;
                 break;
         }
-        gotoxy(1,newcont+2);
+
     }
 
     return lista_cartas_escogidas;
@@ -326,7 +286,7 @@ void creditos(){
         }
 
         printf("%60s","------Creadores------\n");
-        printf("%56s","Matias Osorio\n");
+        printf("%64s","Matias Ezequiel Osorio Quinones\n");
         printf("%65s","Benjamin Ignacio Rojas Henriquez\n");
         printf("%65s","Gabriel Ignacio Alvarez Quintero\n");
         printf("%62s","Ignacio Cortes Gonzalez \n");
@@ -336,11 +296,56 @@ void creditos(){
 
 }
 
-Area_de_juego* comenzarPartida(HashTable* tabla_hash, list* lista){//vacio ingresar nombre de ambos jugadores
+void imprimirCuadrado(){
+    gotoxy(42,15);
+    printf("%c",201);
+    for(int i = 0; i<35; i++) printf("%c",205);
+    printf("%c\n",187);
+    gotoxy(42,16);
+    printf("%c",186);
+    for(int i = 0; i<35; i++) printf(" ");
+    printf("%c\n",186);
+    gotoxy(42,17);
+    printf("%c",200);
+    for(int i = 0; i<35; i++) printf("%c",205);
+    printf("%c",188);
+
+}
+
+Area_de_juego* comenzarPartida(HashTable* tabla_hash, list* lista){//Incompleto
+    system("cls");
+    char nombrePartida[100];
+    char nombre1[100];
+    char nombre2[100];
+
+    gotoxy(45,13);
+    printf("Ingresa el nombre de la partida\n");
+    imprimirCuadrado();
+    gotoxy(43,16);
+    scanf("%99[^\n]s",nombrePartida);
+
+    getchar();
+    gotoxy(42,13);
+    printf("Ingresa el nombre del primer jugador\n");
+    imprimirCuadrado();
+    gotoxy(43,16);
+    scanf("%99[^\n]s",nombre1);
+
+    system("cls");
+
+    getchar();
+    gotoxy(42,13);
+    printf("Ingresa el nombre del Segundo jugador\n");
+    imprimirCuadrado();
+    gotoxy(43,16);
+    scanf("99[^\n]%s",nombre2);
+
     list* lista1 = elegirCartas(tabla_hash,lista);
+
     if(lista1 == NULL) return NULL;
 
     list* lista2 = elegirCartas(tabla_hash,lista);
+
     if(lista2 == NULL) return NULL;
 
     return NULL;
@@ -491,19 +496,16 @@ Area_de_juego* buscarPartida(HashTable* tabla){
 
 
     Area_de_juego* area = crearAreaDeJuego();
+    Area_de_juego* area2 = crearAreaDeJuego();
+
+    area ->area_enemiga = area2;
+    area2 ->area_enemiga = area;
     strcpy(area ->nombre_jugador,pcurrent ->nombre_Jugador1);
-    strcpy(area ->area_enemiga ->nombre_jugador,pcurrent ->nombre_Jugador2);
-
-//    printf("%ld\n", MapCount(area->mano));
-
-
-//   printf("nombres pepegrillo:%s %s\n",area ->nombre_jugador,area ->area_enemiga ->nombre_jugador);
-
-
+    strcpy(area2->nombre_jugador,pcurrent ->nombre_Jugador2);
 
     carta* busqueda;
     int zona;
-    /** Aqui falta*/
+
     while(fgets(current,150,partida_salvada_escogida)){
         busqueda = (carta*) malloc (sizeof(carta));
         busqueda = searchHashTable(tabla,get_csv_field(current,3));
@@ -513,23 +515,17 @@ Area_de_juego* buscarPartida(HashTable* tabla){
         }
         else
         {
-//            printf("->%s \n",current);
             if(strcmp(area->nombre_jugador,get_csv_field(current,2))== 0){
                 zona = atoi(get_csv_field(current,4));
-//                printf("%s %s %d\n",area->nombre_jugador,get_csv_field(current,2),zona);
-//                printf("%s %x\n",busqueda->nombre, &busqueda);
                 ingresoAreaDeJuego(area,busqueda,zona);
 
             }
             else
             {
                 zona = atoi(get_csv_field(current,4));
-//                printf("%s %s %d\n",area->area_enemiga->nombre_jugador,get_csv_field(current,2),zona);
-//                printf("%s %x\n",busqueda->nombre, &busqueda);
-                ingresoAreaDeJuego(area->area_enemiga,busqueda,zona);
+                ingresoAreaDeJuego(area2,busqueda,zona);
             }
         }
-//        printf("%s\n",current);
 
     }
 
@@ -546,10 +542,11 @@ int menu(HashTable *tabla){
     int bandera = 0;
 
     textbackground(2);
-    printf("Empezar Juego\n");
+    printf("Jugar\n");
     textbackground(0);
     printf("Reglas\n");
     printf("Creditos\n");
+
     while(bandera == 0){
         tecla = getch();
         switch(tecla){
@@ -572,28 +569,27 @@ int menu(HashTable *tabla){
                 printf("Retroceso\n");
                 //cont = 4;
                 break;
-
         }
 
         system("cls");
         switch(cont){
             case (1):
                 textbackground(GREEN);
-                printf("Empezar Juego\n");
+                printf("Jugar\n");
                 textbackground(0);
                 printf("Reglas\n");
                 printf("Creditos\n");
                 break;
 
             case (2):
-                printf("Empezar Juego\n");
+                printf("Jugar\n");
                 textbackground(GREEN);
                 printf("Reglas\n");
                 textbackground(0);
                 printf("Creditos\n");
                 break;
             case (3):
-                printf("Empezar Juego\n");
+                printf("Jugar\n");
                 printf("Reglas\n");
                 textbackground(GREEN);
                 printf("Creditos\n");
@@ -607,7 +603,7 @@ int menu(HashTable *tabla){
     return bandera;
 }
 
-Area_de_juego* empezarJuego(HashTable* table, list* lista){
+Area_de_juego* jugar(HashTable* table, list* lista){
     Area_de_juego* Area = NULL;
     char tecla;
     int cont = 1;
@@ -673,4 +669,197 @@ Area_de_juego* empezarJuego(HashTable* table, list* lista){
         }
     }
     return Area;
+}
+
+bool opcionesCarta(){
+
+    gotoxy(1,9);
+    printf("Lanzar Volver\n");
+
+    char tecla;
+    unsigned short cont = 1;
+    unsigned short bandera = 0;
+
+    while(bandera == 0){
+        if(cont == 1) gotoxy(cont,9);
+        else gotoxy(cont + 6 , 9);
+
+        tecla = getch();
+        switch(tecla){
+            case ('a'):
+                if(cont == 1) cont = 2;
+                else cont--;
+                break;
+            case ('d'):
+                if(cont == 2) cont = 1;
+                else cont++;
+                break;
+
+            case (13):
+                bandera = cont;
+                break;
+
+        }
+    }
+
+    if(bandera == 1){
+        return true;
+    }
+    else return false;
+}
+
+carta* verMano(Map* mano){
+    system("cls");
+    if(MapCount(mano) == 0){
+        printf("No tienes Cartas");
+        return NULL;
+    }
+
+    carta* current = firstMap(mano);
+    printf("\n");
+    for(;current != NULL;current = nextMap(mano)) printf("%s\n",current->nombre);
+
+    unsigned short i;
+    unsigned short cont = 1;
+    char tecla;
+    unsigned short bandera = 0;
+
+
+    while(bandera == 0){
+        gotoxy(1,cont+1);
+
+        tecla = getch();
+
+        switch(tecla){
+            case ('w'):
+                if(cont == 1) cont = MapCount(mano);
+                else cont--;
+
+                break;
+            case ('s'):
+                if(cont == MapCount(mano)) cont = 1;
+                else cont++;
+                break;
+            case (13):
+                for(i = 0, current = firstMap(mano); i < cont-1 ; i++,current = nextMap(mano));
+
+                system("cls");
+                imprimirCaracteristicas(current);
+                if(opcionesCarta()) return current;
+
+                system("cls");
+                printf("\n");
+                for(current = firstMap(mano);current != NULL;current = nextMap(mano)) printf("%s\n",current->nombre);
+                break;
+            case (8):
+                return NULL;
+                break;
+        }
+    }
+
+    return NULL;
+}
+
+void imprimirMenucomenzarJuego(){
+    system("cls");
+    printf("\nVer Mano\n");
+    printf("Agrupar Oros\n");
+    printf("Agrupar aliados\n");
+    printf("Ver destierro\n");
+    printf("Ver destierro enemigo\n");
+    printf("Ver linea de ataque\n");
+    printf("Ver linea de ataque enemiga\n");
+    printf("Ver linea de defensa\n");
+    printf("Ver linea de defensa enemiga\n");
+    printf("Terminar turno\n");
+    printf("Salir y guardar\n");
+}
+
+void analizarYLanzarCarta(carta* card){ // incompleto
+    unsigned short tipo = card -> tipo;
+
+    printf("que sucede\n");
+    imprimirTipoCarta(tipo,card);
+
+}
+
+void comenzarJuego(Area_de_juego* Area_final){
+
+    imprimirMenucomenzarJuego();
+
+    char tecla;
+    unsigned short bandera = 0;
+    unsigned short cont = 1;
+    carta* cartaJugada = NULL;
+
+    do{
+        while(bandera == 0){
+            gotoxy(1,cont+1);
+
+            tecla = getch();
+
+            switch(tecla){
+
+                case('w'):
+                    if(cont == 1) cont = 11;
+                    else cont--;
+
+                    break;
+                case('s'):
+                    if(cont == 11) cont = 1;
+                    else cont++;
+
+                    break;
+                case(13):
+                    bandera = cont;
+                    break;
+            }
+        }
+
+        switch(bandera){
+            case 1:
+                cartaJugada = verMano(Area_final->mano);
+
+                if(cartaJugada) analizarYLanzarCarta(cartaJugada);
+
+                bandera = 0;
+                break;
+            case 2:
+                bandera = 0;
+                break;
+            case 3:
+                bandera = 0;
+                break;
+            case 4:
+                bandera = 0;
+                break;
+            case 5:
+                bandera = 0;
+                break;
+            case 6:
+                bandera = 0;
+                break;
+            case 7:
+                bandera = 0;
+                break;
+            case 8:
+                bandera = 0;
+                break;
+            case 9:
+                bandera = 0;
+                break;
+            case 10:
+
+                break;
+            case 11:
+                bandera = 0;
+                break;
+
+        }
+
+        imprimirMenucomenzarJuego();
+
+    }while(bandera != 10);
+
+
 }
