@@ -698,6 +698,9 @@ bool opcionesCarta(){
             case (13):
                 bandera = cont;
                 break;
+            case (8):
+                return false;
+                break;
 
         }
     }
@@ -783,12 +786,24 @@ void analizarYLanzarCarta(carta* card){ // incompleto
 
 }
 
+void agruparOros(Area_de_juego* Area){
+    system("cls");
+    printf("%d %d",Area->oro_pagado, Area->reserva_de_oro);
+    Area ->reserva_de_oro+= Area->oro_pagado;
+    Area ->oro_pagado = 0;
+    gotoxy(52,15);
+    printf("Oros Agrupados\n");
+    gotoxy(1,25);
+    system("pause");
+}
+
 void comenzarJuego(Area_de_juego* Area_final){
 
     imprimirMenucomenzarJuego();
 
     char tecla;
     unsigned short bandera = 0;
+    unsigned short b_agrupacion_oro = 0;
     unsigned short cont = 1;
     carta* cartaJugada = NULL;
 
@@ -825,6 +840,16 @@ void comenzarJuego(Area_de_juego* Area_final){
                 bandera = 0;
                 break;
             case 2:
+                if(b_agrupacion_oro == 0)agruparOros(Area_final);
+                else
+                {
+                    system("cls");
+                    gotoxy(48,15);
+                    printf("Los oros ya han sido agrupados\n");
+                    gotoxy(1,25);
+                    system("pause");
+                }
+                b_agrupacion_oro = 1;
                 bandera = 0;
                 break;
             case 3:
