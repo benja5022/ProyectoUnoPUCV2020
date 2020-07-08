@@ -274,6 +274,14 @@ list* elegirCartas(HashTable* tablahash, list* lista_todas_las_cartas){
 
 void reglas(){//vacio
 
+    FILE *fp = fopen("instrucciones.txt" , "r");
+    char line[1024];
+
+    while(fgets(line , 1024 , fp)){
+
+        printf("%s\n" , line);
+
+    }
 
 }
 
@@ -1119,6 +1127,74 @@ void descartarCarta(Area_de_juego* area){
         }
     }
 
+
+}
+
+void Barajar_Mazo(Map *mazo){//gabo
+
+    carta **arreglocartas = (carta**) malloc (50 * sizeof(carta*));
+    int i = 0;
+    carta *tmp = firstMap(mazo);
+    int indice;
+    int desp;
+
+    while(tmp != NULL){
+
+        arreglocartas[i] = tmp;
+        i++;
+        _popFront(mazo);
+        tmp = firstMap(mazo);
+
+    }
+
+    float max = RAND_MAX;
+
+    for( i = 0; i < 50 ; i++){
+
+        desp=i;
+        //Genero un numero aleatorio
+
+        indice = (rand()/max * (50 - i)) + desp;
+        //Intercambio valores de variables
+        tmp=arreglocartas[i];
+        arreglocartas[i]=arreglocartas[indice];
+        arreglocartas[indice]=tmp;
+
+    }
+
+    for(i = 0 ; i < 50 ; i++){
+
+        _pushFront(mazo , arreglocartas[i]->nombre , arreglocartas[i]);
+
+    }
+
+    return ;
+
+}
+
+void ver_defensa_enemiga(Area_de_juego *Area_enemiga){//cuando se llame la funcion: (Areadejuego->areaenemiga)
+
+    carta *navegador = firstMap(Area_enemiga->linea_defensa);
+
+    while(navegador != NULL){
+
+        printf("%s %d\n" , navegador->nombre , navegador->fuerza);
+        navegador = nextMap(Area_enemiga->linea_defensa);
+
+    }
+
+}
+
+void ver_destierro_enemigo(Area_de_juego *Area_enemiga){//cuando se llame la funcion: (Areadejuego->areaenemiga)
+
+    carta *navegador = list_first(Area_enemiga->destierro);
+
+    while(navegador != NULL){
+
+        printf("%s %d\n" , navegador->nombre , navegador->fuerza);
+        navegador = list_next(Area_enemiga->destierro);
+
+    }
 
 }
 
