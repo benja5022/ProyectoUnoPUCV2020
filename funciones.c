@@ -420,8 +420,6 @@ Area_de_juego* buscarPartida(HashTable* tabla){
         strcpy(punto_de_partida->nombre_Jugador2,get_csv_field(current,3));
 
         list_push_back(lista_de_partidas,punto_de_partida);
- //       printf("%s %s %s\n",get_csv_field(current,1),get_csv_field(current,2),get_csv_field(current,3));
- //       printf("%s\n",current);
     }
     fclose(partidas);
 
@@ -765,17 +763,17 @@ carta* verMano(Map* mano){
 
 void imprimirMenucomenzarJuego(){
     system("cls");
-    printf("\nVer Mano\n");
-    printf("Agrupar Oros\n");
-    printf("Agrupar aliados\n");
-    printf("Ver destierro\n");
-    printf("Ver destierro enemigo\n");
-    printf("Ver linea de ataque\n");
-    printf("Ver linea de ataque enemiga\n");
-    printf("Ver linea de defensa\n");
-    printf("Ver linea de defensa enemiga\n");
-    printf("Terminar turno\n");
-    printf("Salir y guardar\n");
+    printf("\nVer Mano\n");//1 listo
+    printf("Agrupar Oros\n");//2 listo
+    printf("Agrupar aliados\n");//3
+    printf("Ver destierro\n");//4
+    printf("Ver destierro enemigo\n");//5
+    printf("Ver linea de ataque\n");//6
+    printf("Ver linea de ataque enemiga\n");//7
+    printf("Ver linea de defensa\n");//8
+    printf("Ver linea de defensa enemiga\n");//9
+    printf("Terminar turno\n");//10
+    printf("Salir y guardar\n");//11
 }
 
 void analizarYLanzarCarta(carta* card){ // incompleto
@@ -786,8 +784,60 @@ void analizarYLanzarCarta(carta* card){ // incompleto
 
 }
 
+void verLineaAtaqueEnemigo(Area_de_juego* Area){
+    system("cls");
+    if(MapCount(Area->area_enemiga->linea_ataque) == 0){
+        printf("El usuario rival no tiene Cartas en la linea de ataque\n");
+        return;
+    }
+    Map* lineaAtaque = Area ->area_enemiga->linea_ataque;
+    carta* current;// = firstMap(lineaAtaque);
+    printf("\n");
+    for(current = firstMap(lineaAtaque);current!= NULL;current = nextMap(lineaAtaque)) printf("%s\n",current->nombre);
+
+    unsigned short i;
+    unsigned short cont = 1;
+    char tecla;
+    unsigned short bandera = 0;
+
+    while(bandera == 0){
+
+        gotoxy(1,cont+1);
+
+
+        tecla = getch();
+
+        switch(tecla){
+            case ('w'):
+                if(cont == 1) cont = MapCount(lineaAtaque);
+                else cont--;
+
+                break;
+            case ('s'):
+                if(cont == MapCount(lineaAtaque)) cont = 1;
+                else cont++;
+                break;
+            case (13):
+                for(i = 0, current = firstMap(lineaAtaque); i < cont-1 ; i++,current = nextMap(lineaAtaque));
+                system("cls");
+                imprimirCaracteristicas(current);
+                system("pause");
+                system("cls");
+                printf("\n");
+                for(current = firstMap(lineaAtaque);current!= NULL;current = nextMap(lineaAtaque)) printf("%s\n",current->nombre);
+                break;
+            case (8):
+                return;
+                break;
+        }
+    }
+
+
+}
+
 void agruparOros(Area_de_juego* Area){
     system("cls");
+
     printf("%d %d",Area->oro_pagado, Area->reserva_de_oro);
     Area ->reserva_de_oro+= Area->oro_pagado;
     Area ->oro_pagado = 0;
@@ -795,6 +845,30 @@ void agruparOros(Area_de_juego* Area){
     printf("Oros Agrupados\n");
     gotoxy(1,25);
     system("pause");
+}
+
+void agruparAliados(Area_de_juego* Area){
+    system("cls");
+    if(MapCount(Area->linea_ataque) == 0){
+        printf("Tus aliados ya se encuentran agrupados\n");
+        system("pause");
+        system("cls");
+        return;
+    }
+
+ /*   printf("Agrupando weones\n");
+    system("pause");
+    return;*/
+    carta* current = NULL;
+    for(current = firstMap(Area->linea_ataque);current;current = nextMap(Area->linea_ataque)){
+        insertMap(Area->linea_defensa,current->nombre,current);
+        eraseMap(Area->linea_ataque,current->nombre);
+    }
+
+    printf("Tus aliados han sido agrupados\n");
+    system("pause");
+    system("cls");
+
 }
 
 void comenzarJuego(Area_de_juego* Area_final){
@@ -853,6 +927,7 @@ void comenzarJuego(Area_de_juego* Area_final){
                 bandera = 0;
                 break;
             case 3:
+                agruparAliados(Area_final);
                 bandera = 0;
                 break;
             case 4:
@@ -865,6 +940,7 @@ void comenzarJuego(Area_de_juego* Area_final){
                 bandera = 0;
                 break;
             case 7:
+                verLineaAtaqueEnemigo(Area_final);
                 bandera = 0;
                 break;
             case 8:
