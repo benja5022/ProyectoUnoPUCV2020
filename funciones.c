@@ -274,7 +274,7 @@ list* elegirCartas(HashTable* tablahash, list* lista_todas_las_cartas){
 
 void reglas(){//vacio
 
-    FILE *fp = fopen("instrucciones.txt" , "r");
+    FILE *fp = fopen("Reglas//instrucciones.txt" , "r");
     char line[1024];
 
     while(fgets(line , 1024 , fp)){
@@ -360,7 +360,7 @@ Area_de_juego* comenzarPartida(HashTable* tabla_hash, list* lista){//Incompleto
 
 }
 
-void ingresoAreaDeJuego(Area_de_juego* area, carta* card, int zona){
+void ingresoAreaDeJuego(Area_de_juego* area, carta* card, int zona){ // acompañante :c
 
     switch(zona){
         case 0:
@@ -382,6 +382,7 @@ void ingresoAreaDeJuego(Area_de_juego* area, carta* card, int zona){
             area->reserva_de_oro++;
             break;
         case 4:
+            stack_push(area->oros,card);
             area->oro_pagado++;
      //       printf("5");
             break;
@@ -496,7 +497,10 @@ Area_de_juego* buscarPartida(HashTable* tabla){
     strcat(direccion,".csv");
 
     FILE* partida_salvada_escogida = fopen(direccion,"r");
-    if(partida_salvada_escogida == NULL) printf("falla\n");
+    if(partida_salvada_escogida == NULL){
+        printf("falla\n");
+        return NULL;
+    }
 
     fgets(current,100,partida_salvada_escogida);
 
@@ -518,6 +522,7 @@ Area_de_juego* buscarPartida(HashTable* tabla){
 
         if(busqueda == NULL){
             printf("falla %s\n",current);
+            system("pause");
         }
         else
         {
@@ -815,8 +820,9 @@ carta* verMano(Map* mano){
     return NULL;
 }
 
-void imprimirMenucomenzarJuego(){
+void imprimirMenucomenzarJuego(char* nombre){
     system("cls");
+    printf("%45s%s","Nombre Jugador:",nombre);
     printf("\nVer Mano\n");//1 listo
     printf("Agrupar Oros\n");//2 listo
     printf("Agrupar aliados\n");//3 listo
@@ -1031,6 +1037,7 @@ void verLineaDeDefensa(Area_de_juego* Area){
     system("cls");
     if(MapCount(Area->linea_defensa) == 0){
         printf("No tienes aliados en la linea de defensa\n");
+        system("pause");
         return;
     }
 
@@ -1129,7 +1136,7 @@ void descartarCarta(Area_de_juego* area){
 
 
 }
-
+/*
 void Barajar_Mazo(Map *mazo){//gabo
 
     carta **arreglocartas = (carta**) malloc (50 * sizeof(carta*));
@@ -1170,7 +1177,7 @@ void Barajar_Mazo(Map *mazo){//gabo
 
     return ;
 
-}
+}*/
 
 void ver_defensa_enemiga(Area_de_juego *Area_enemiga){//cuando se llame la funcion: (Areadejuego->areaenemiga)
 
@@ -1198,9 +1205,115 @@ void ver_destierro_enemigo(Area_de_juego *Area_enemiga){//cuando se llame la fun
 
 }
 
+const char* palabraQueSeImprimira(char* palabra, char * nombre_jugador,char* nombre_carta ,char lugar){
+    palabra[0] = ',';
+    palabra[1] = '\0';
+    strcat(palabra,nombre_jugador);
+    strcat(palabra,",");
+    strcat(palabra,nombre_carta);
+    strcat(palabra,",");
+    int numero = strlen(palabra);
+    palabra[numero] = lugar;
+    palabra[numero+1] = '\0';
+    strcat(palabra,",");
+
+    numero = strlen(palabra);
+    palabra[numero] = '\n';
+    palabra[numero+1] = '\0';
+    return palabra;
+}
+
+void escribirEnArchivoCSV(Area_de_juego* area, FILE* archivo){
+    carta* current = NULL;
+    char palabra[200];
+
+    while(stack_size(area->oros) > 0){//*******
+        current = stack_pop(area->oros);
+        if(area->reserva_de_oro > 0){
+            area ->reserva_de_oro--;
+            strcpy(palabra, palabraQueSeImprimira(palabra,area->nombre_jugador,current->nombre,'3'));
+            fprintf(archivo,palabra);
+        }
+        else
+        {
+            strcpy(palabra, palabraQueSeImprimira(palabra,area->nombre_jugador,current->nombre,'4'));
+            fprintf(archivo,palabra);
+        }
+    }
+
+    current = lastMap(area->cementerio);
+    while(MapCount(area->cementerio) > 0 && current!= NULL){
+        palabraQueSeImprimira(palabra,area->nombre_jugador,current->nombre,'0');
+        fprintf(archivo,palabra);
+        current = prevMap(area->cementerio);
+    }
+
+    removeAllMap(area->cementerio);
+
+    current = lastMap(area->mazo_castillo);
+    while(MapCount(area->mazo_castillo) > 0 && current!= NULL){
+        palabraQueSeImprimira(palabra,area->nombre_jugador,current->nombre,'1');
+        fprintf(archivo,palabra);
+        current = prevMap(area->mazo_castillo);
+    }
+    removeAllMap(area->mazo_castillo);
+
+    current = lastMap(area->mano);
+    while(MapCount(area->mano) > 0 && current!= NULL ){
+        palabraQueSeImprimira(palabra,area->nombre_jugador,current->nombre,'2');
+        fprintf(archivo,palabra);
+        current = prevMap(area->mano);
+    }
+    removeAllMap(area->mano);
+
+    current = lastMap(area->linea_defensa);
+    while(MapCount(area->linea_defensa) > 0 && current!= NULL){
+        palabraQueSeImprimira(palabra,area->nombre_jugador,current->nombre,'5');
+        fprintf(archivo,palabra);
+        current = prevMap(area->linea_defensa);
+    }
+    removeAllMap(area->linea_defensa);
+
+    current = lastMap(area->linea_ataque);
+    while(MapCount(area->linea_ataque) > 0 && current!= NULL){
+        palabraQueSeImprimira(palabra,area->nombre_jugador,current->nombre,'6');
+        fprintf(archivo,palabra);
+        current = prevMap(area->linea_ataque);
+    }
+    removeAllMap(area->linea_ataque);
+
+    current = list_last(area->destierro);
+    while(list_size(area->destierro) > 0 && current!= NULL){
+        current = list_pop_back(area->destierro);
+        palabraQueSeImprimira(palabra,area->nombre_jugador,current->nombre,'8');
+        fprintf(archivo,palabra);
+    }
+    area->destierro = NULL;
+
+    current = list_last(area->linea_de_apoyo);
+    while(list_size(area->linea_de_apoyo) > 0 && current!= NULL){
+        current = list_pop_back(area->linea_de_apoyo);
+        palabraQueSeImprimira(palabra,area->nombre_jugador,current->nombre,'7');
+        fprintf(archivo,palabra);
+    }
+    area->linea_de_apoyo = NULL;
+    printf("chihuehuencha\n");
+}
+
+void guardarPartida(Area_de_juego* area){//**********
+    system("cls");
+    FILE * archivo = fopen("Partidas\\Partida5.csv","w");
+
+    escribirEnArchivoCSV(area,archivo);
+    escribirEnArchivoCSV(area->area_enemiga,archivo);
+    fclose(archivo);
+    return;
+
+}
+
 void comenzarJuego(Area_de_juego* Area_final){
 
-    imprimirMenucomenzarJuego();
+    imprimirMenucomenzarJuego(Area_final->nombre_jugador);
 
     char tecla;
     unsigned short bandera = 0;
@@ -1300,12 +1413,14 @@ void comenzarJuego(Area_de_juego* Area_final){
                 bandera = 0;
                 break;
             case 11:
+                guardarPartida(Area_final);
+                return;
                 bandera = 0;
                 break;
 
         }
 
-        imprimirMenucomenzarJuego();
+        imprimirMenucomenzarJuego(Area_final->nombre_jugador);
 
     }while(bandera != 10);
 

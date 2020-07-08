@@ -113,4 +113,8 @@ void * nextMap(Map * map);
  */
 void removeAllMap(Map * map);
 
+
+void * lastMap(Map * list);
+
+void * prevMap(Map * list);
 #endif /* Map_h */
