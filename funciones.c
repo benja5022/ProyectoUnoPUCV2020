@@ -97,7 +97,7 @@ const char* get_csv_field (char * tmp, int i) {
 
     char * line = _strdup (tmp);
     const char * tok;
-    for (tok = strtok (line, ";"); tok && *tok; tok = strtok (NULL, ";\n")) {
+    for (tok = strtok (line, ","); tok && *tok; tok = strtok (NULL, ",\n")) {
         if (!--i) {
             return tok;
         }
@@ -518,22 +518,25 @@ Area_de_juego* buscarPartida(HashTable* tabla){
 
     while(fgets(current,150,partida_salvada_escogida)){
         busqueda = (carta*) malloc (sizeof(carta));
-        busqueda = searchHashTable(tabla,get_csv_field(current,3));
+        busqueda = searchHashTable(tabla,get_csv_field(current,2));
 
         if(busqueda == NULL){
-            printf("falla %s\n",current);
+            printf("falla %s %s\n",current,get_csv_field(current,2));
             system("pause");
         }
         else
         {
-            if(strcmp(area->nombre_jugador,get_csv_field(current,2))== 0){
-                zona = atoi(get_csv_field(current,4));
+            //printf("%s\n",busqueda->nombre);
+            //printf("->%s %s %s\n",get_csv_field(current,1),get_csv_field(current,2),get_csv_field(current,3));
+            //system("pause");
+            if(strcmp(area->nombre_jugador,get_csv_field(current,1))== 0){
+                zona = atoi(get_csv_field(current,3));
                 ingresoAreaDeJuego(area,busqueda,zona);
 
             }
             else
             {
-                zona = atoi(get_csv_field(current,4));
+                zona = atoi(get_csv_field(current,3));
                 ingresoAreaDeJuego(area2,busqueda,zona);
             }
         }
@@ -542,8 +545,10 @@ Area_de_juego* buscarPartida(HashTable* tabla){
 
     fclose(partida_salvada_escogida);
 
-    printf("%ld %ld %ld %ld %ld %ld %ld %ld\n", MapCount(area->mano), list_size(area->destierro), area->reserva_de_oro, MapCount(area->cementerio), MapCount(area->linea_defensa), MapCount(area->mazo_castillo), list_size(area->linea_de_apoyo), area->total);
-
+//    printf("%ld %ld %ld %ld %ld %ld %ld %ld\n", MapCount(area->mano), list_size(area->destierro), area->reserva_de_oro, MapCount(area->cementerio), MapCount(area->linea_defensa), MapCount(area->mazo_castillo), list_size(area->linea_de_apoyo), area->total);
+//    area = area2;
+//    printf("%ld %ld %ld %ld %ld %ld %ld %ld\n", MapCount(area->mano), list_size(area->destierro), area->reserva_de_oro, MapCount(area->cementerio), MapCount(area->linea_defensa), MapCount(area->mazo_castillo), list_size(area->linea_de_apoyo), area->total);
+//    system("pause");
     return area;
 }
 
