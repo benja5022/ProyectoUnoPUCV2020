@@ -772,7 +772,7 @@ void imprimirMapa(Map* mapa){
     carta* current;
     for(current = firstMap(mapa);current != NULL ; current = nextMap(mapa)) printf("%s\n",current->nombre);
 }
-//********
+
 carta* verMano(Map* mano){
     system("cls");
     if(MapCount(mano) == 0){
@@ -896,15 +896,39 @@ void imprimirMenucomenzarJuego(char* nombre){
     printf("Ver linea de ataque enemiga\n");//7 //listo
     printf("Ver linea de defensa\n");//8 listo
     printf("Ver linea de defensa enemiga\n");//9
-    printf("Terminar turno\n");//10
-    printf("Salir y guardar\n");//11
+    printf("Ver linea de apoyo\n");//11
+    printf("Ver linea de apoyo enemiga\n");//12
+    printf("Terminar turno\n");//12
+    printf("Salir y guardar\n");//13
 }
 
-void analizarYLanzarCarta(carta* card){ // incompleto
+void analizarYLanzarCarta(carta* card, Area_de_juego* area){ // incompleto
     unsigned short tipo = card -> tipo;
+
+
+    switch(tipo){
+        case(0)://oro
+            eraseMap(area->mano,card->nombre);
+            stack_push(area->oros,card);
+            area->reserva_de_oro++;
+            break;
+        case(1)://aliado
+            break;
+        case(2)://talisman
+            break;
+        case(3)://arma
+            break;
+        case(4)://totem
+            eraseMap(area->mano,card->nombre);
+            list_push_back(area->linea_de_apoyo,card);
+            break;
+        default:
+            break;
+    }
 
     printf("que sucede\n");
     imprimirTipoCarta(tipo,card);
+    system("pause");
 
 }
 
@@ -1224,6 +1248,64 @@ void verDestierroEnemigo(Area_de_juego *Area){
 
 }
 
+void verLineaDeApoyoEnemigo(Area_de_juego* Area){
+    system("cls");
+    printf("\n");
+
+    if(list_size(Area->area_enemiga->linea_de_apoyo) == 0){
+        printf("Tu oponente no tiene Cartas en la linea de apoyo\n");
+        system("pause");
+        return;
+    }
+    list* apoyo = Area->area_enemiga->linea_de_apoyo;
+    carta* current = NULL;
+    for(current = list_first(apoyo); current; current = list_next(apoyo)) printf("%s\n",current->nombre);
+
+    printf("\n");
+
+    int cont = 1;
+    char tecla;
+    unsigned short bandera = 0;
+
+    while(bandera == 0){
+
+        gotoxy(1,cont+1);
+
+        tecla = getch();
+        if(!eleccionLista(tecla,apoyo,&cont)) return;
+
+    }
+}
+
+void verLineaDeApoyo(Area_de_juego* Area){
+    system("cls");
+    printf("\n");
+
+    if(list_size(Area->area_enemiga->linea_de_apoyo) == 0){
+        printf("No tienes Cartas en la linea de apoyo\n");
+        system("pause");
+        return;
+    }
+    list* apoyo = Area->linea_de_apoyo;
+    carta* current = NULL;
+    for(current = list_first(apoyo); current; current = list_next(apoyo)) printf("%s\n",current->nombre);
+
+    printf("\n");
+
+    int cont = 1;
+    char tecla;
+    unsigned short bandera = 0;
+
+    while(bandera == 0){
+
+        gotoxy(1,cont+1);
+
+        tecla = getch();
+        if(!eleccionLista(tecla,apoyo,&cont)) return;
+
+    }
+}
+
 const char* palabraQueSeImprimira(char* palabra, char * nombre_jugador,char* nombre_carta ,char lugar){
     palabra[0] = ',';
     palabra[1] = '\0';
@@ -1337,6 +1419,7 @@ void comenzarJuego(Area_de_juego* Area_final){
     char tecla;
     unsigned short bandera = 0;
     unsigned short b_agrupacion_oro = 0;//bandera si ya se agruparon los oros toma valor 1, sino toma valor 0
+    unsigned short b_agrupacion_aliado = 0;
     unsigned short cont = 1;
     carta* cartaJugada = NULL;
 
@@ -1349,12 +1432,12 @@ void comenzarJuego(Area_de_juego* Area_final){
             switch(tecla){
 
                 case('w'):
-                    if(cont == 1) cont = 11;
+                    if(cont == 1) cont = 13;
                     else cont--;
 
                     break;
                 case('s'):
-                    if(cont == 11) cont = 1;
+                    if(cont == 13) cont = 1;
                     else cont++;
 
                     break;
@@ -1372,8 +1455,10 @@ void comenzarJuego(Area_de_juego* Area_final){
             case 1:
                 cartaJugada = verMano(Area_final->mano);
 
-                if(cartaJugada) analizarYLanzarCarta(cartaJugada);
-
+                if(cartaJugada){
+                    analizarYLanzarCarta(cartaJugada,Area_final);
+                    b_agrupacion_aliado = 1;
+                }
                 bandera = 0;
                 break;
             case 2:
@@ -1390,7 +1475,9 @@ void comenzarJuego(Area_de_juego* Area_final){
                 bandera = 0;
                 break;
             case 3:
-                agruparAliados(Area_final);
+                if(b_agrupacion_aliado == 0) agruparAliados(Area_final);
+                b_agrupacion_aliado = 1;
+
                 bandera = 0;
                 break;
             case 4:
@@ -1417,7 +1504,17 @@ void comenzarJuego(Area_de_juego* Area_final){
                 verLineaDeDefensaEnemiga(Area_final);
                 bandera = 0;
                 break;
-            case 10:
+            case 10://Ver linea de apoyo
+                verLineaDeApoyo(Area_final);
+                bandera = 0;
+                break;
+            case 11://Ver linea de apoyo enemiga
+                verLineaDeApoyoEnemigo(Area_final);
+                bandera = 0;
+                break;
+
+
+            case 12:
                 if(MapCount(Area_final->mano) < 8){
                     carta* Carta = firstMap(Area_final->mazo_castillo);
                     insertMap(Area_final->mano,Carta->nombre,Carta);
@@ -1433,11 +1530,12 @@ void comenzarJuego(Area_de_juego* Area_final){
                         }while(MapCount(Area_final->mano) > 8);
                     }
                 }
-
+                b_agrupacion_oro = 0;
+                b_agrupacion_aliado = 0;
                 Area_final = Area_final->area_enemiga;
                 bandera = 0;
                 break;
-            case 11:
+            case 13:
                 guardarPartida(Area_final);
                 return;
                 bandera = 0;

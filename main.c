@@ -50,7 +50,7 @@ int main()
 
         Tarjeta = crearCarta(palabra);
         list_push_back(lista_todas_las_cartas,Tarjeta);
-        insertHashTable(TablaHash ,Tarjeta->nombre,Tarjeta);
+        insertHashTable(TablaHash , Tarjeta->nombre ,Tarjeta);
     }
 
     fclose(archivo);
