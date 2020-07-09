@@ -1548,3 +1548,44 @@ void comenzarJuego(Area_de_juego* Area_final){
     }while(bandera != 10);
 
 }
+/*
+void jugar_arma(Area_de_juego *areadejuego , carta *armajugada){    //poner un menu donde se pregunta a que aliado anexar el arma, luego alterar dicho alido de acuerdo al efecto del arma.
+
+    carta *aliadoobjetivo = searchMap(areadejuego->linea_defensa,carta->nombre);
+    carta *aux = NULL;
+    switch(armajugada->habilidad_arma){
+
+        case -1: return;
+
+        case 0: aliadoobjetivo->fuerza++;
+                return;
+
+        case 1: aliadoobjetivo->fuerza++;
+                return;
+
+        case 2: aliadoobjetivo->fuerza++;
+                return;
+
+        case 3: carta *nav = firstMap(areadejuego->cementerio);
+                carta *aux;
+                while(nav != NULL){
+
+                    if(nav->tipo == 3){
+
+                        aux = nav;
+                        nav = nextMap(areadejuego->cementerio);
+                        insertMap(areadejuego->mano , aux->nombre , aux);
+                        eraseMap(areadejuego->cementerio , aux->nombre);
+
+                    }
+                    else{
+
+                        nav = nextMap(areadejuego->cementerio);
+
+                    }
+
+                }
+
+    }
+
+}*/
