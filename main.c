@@ -36,7 +36,7 @@ int main()
 
     HashTable* TablaHash = createHashTable(stringHash,stringEqual);
     list* lista_todas_las_cartas = list_create_empty();
-    FILE * archivo = fopen("Edición\\Cartas2.csv","r");
+    FILE * archivo = fopen("Edición\\Cartas.csv","r");
     if(archivo == NULL){
         printf("falla");
         return 1;
@@ -50,7 +50,7 @@ int main()
 
         Tarjeta = crearCarta(palabra);
         list_push_back(lista_todas_las_cartas,Tarjeta);
-        insertHashTable(TablaHash ,Tarjeta->nombre,Tarjeta);
+        insertHashTable(TablaHash , Tarjeta->nombre ,Tarjeta);
     }
 
     fclose(archivo);

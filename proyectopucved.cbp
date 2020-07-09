@@ -46,6 +46,13 @@
 		<Unit filename="funciones.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
+		<Unit filename="habilidades.c">
+			<Option compilerVar="CC" />
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="habilidades.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
 		<Unit filename="list.c">
 			<Option compilerVar="CC" />
 		</Unit>

@@ -1,3 +1,3 @@
-Partida1;Pepe;Juan
-Partida2;Choromaikol;Juan
-Partida3;Pepe;Juan
+Partida1,Pepe,Juan
+Partida2,Choromaikol,Juan
+Partida3,Pepe,Juan
