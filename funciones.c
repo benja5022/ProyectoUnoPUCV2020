@@ -11,6 +11,7 @@ struct Partida{
 struct Area_de_juego{
     struct Area_de_juego * area_enemiga;
     char nombre_jugador[100];
+    char nombre_partida[100];
     Map * cementerio;
     Map * mazo_castillo;
     Map * linea_defensa;
@@ -335,7 +336,6 @@ Area_de_juego* comenzarPartida(HashTable* tabla_hash, list* lista){//Incompleto
     printf("Ingresa el nombre de la partida\n");
     imprimirCuadrado();
     gotoxy(43,16);
-    getchar();
     scanf("%99[^\n]s",nombrePartida);
 
     getchar();
@@ -354,8 +354,11 @@ Area_de_juego* comenzarPartida(HashTable* tabla_hash, list* lista){//Incompleto
     getchar();
     scanf("%99[^\n]s",nombre2);
 
-    Map* lista1 = elegirCartas(tabla_hash,lista,&cont);
+    printf("%s %s %s\n",nombrePartida,nombre1,nombre2);
+    system("pause");
 
+    Map* lista1 = elegirCartas(tabla_hash,lista,&cont);
+    getchar();
     if(lista1 == NULL) return NULL;
 
     Barajar_Mazo(lista1);
@@ -371,6 +374,9 @@ Area_de_juego* comenzarPartida(HashTable* tabla_hash, list* lista){//Incompleto
 
     strcpy(Area1->nombre_jugador,nombre1);
     strcpy(Area2->nombre_jugador,nombre2);
+
+    strcpy(Area1->nombre_partida,nombrePartida);
+    strcpy(Area2->nombre_partida,nombrePartida);
 
     Area1 ->area_enemiga = Area2;
     Area2 ->area_enemiga = Area1;
@@ -429,9 +435,32 @@ Area_de_juego* comenzarPartida(HashTable* tabla_hash, list* lista){//Incompleto
 
     printf("%ld %ld %ld %ld %ld %ld %ld %ld\n", MapCount(Area1->mano), list_size(Area1->destierro), Area1->reserva_de_oro, MapCount(Area1->cementerio), MapCount(Area1->linea_defensa), MapCount(Area1->mazo_castillo), list_size(Area1->linea_de_apoyo), Area1->total);
     printf("%ld %ld %ld %ld %ld %ld %ld %ld\n", MapCount(Area2->mano), list_size(Area2->destierro), Area2->reserva_de_oro, MapCount(Area2->cementerio), MapCount(Area2->linea_defensa), MapCount(Area2->mazo_castillo), list_size(Area2->linea_de_apoyo), Area2->total);
-//    system("pause");
-    system("pause");
+//
+    FILE* archivo_de_texto = fopen("Partidas\\Partidas.txt","r+");
+    if(archivo_de_texto == NULL){
+        printf("Falla\n");
+    }
+    else
+    {
+        char linea[500];
+        char palabra_completa[500];
+        strcpy(palabra_completa,nombrePartida);
+        strcat(palabra_completa,",");
+        strcat(palabra_completa,nombre1);
+        strcat(palabra_completa,",");
+        strcat(palabra_completa,nombre2);
+        printf("\n%s\n",palabra_completa);
 
+        while(fgets(linea,500,archivo_de_texto)){
+            printf("%s\n",linea);
+            continue;
+        }
+
+        fprintf(archivo_de_texto,palabra_completa);
+    }
+
+    fclose(archivo_de_texto);
+    system("pause");
     return Area1;
 
 }
@@ -440,46 +469,44 @@ void ingresoAreaDeJuego(Area_de_juego* area, carta* card, int zona){ // acompaña
 
     switch(zona){
         case 0:
-//            printf("1");
             insertMap(area->cementerio,card->nombre,card);
 
             break;
         case 1:
-  //          printf("2");
             insertMap(area->mazo_castillo,card->nombre,card);
             break;
+
         case 2:
- //           printf("3");
             insertMap(area->mano,card->nombre,card);
             break;
+
         case 3:
-   //         printf("4");
             stack_push(area->oros,card);
             area->reserva_de_oro++;
             break;
+
         case 4:
             stack_push(area->oros,card);
             area->oro_pagado++;
-     //       printf("5");
             break;
+
         case 5:
             insertMap(area->linea_defensa,card->nombre,card);
-    //        printf("6");
             break;
+
         case 6:
             insertMap(area->linea_ataque,card->nombre,card);
-     //       printf("7");
             break;
+
         case 7:
             list_push_back(area->linea_de_apoyo,card);
-     //       printf("8");
             break;
+
         case 8:
             list_push_back(area->destierro,card);
-      //      printf("9");
             break;
+
         case 9:
-     //       printf("10");
             break;
 
         default:
@@ -580,14 +607,21 @@ Area_de_juego* buscarPartida(HashTable* tabla){
 
     fgets(current,100,partida_salvada_escogida);
 
+//    printf("%s %s\n",get_csv_field(current,2),get_csv_field(current,3));
+//    system("pause");
+
 
     Area_de_juego* area = crearAreaDeJuego();
     Area_de_juego* area2 = crearAreaDeJuego();
 
+    strcpy(area2->nombre_partida,pcurrent->nombre_partida);
+    strcpy(area->nombre_partida,pcurrent->nombre_partida);
+
     area ->area_enemiga = area2;
     area2 ->area_enemiga = area;
-    strcpy(area ->nombre_jugador,pcurrent ->nombre_Jugador1);
-    strcpy(area2->nombre_jugador,pcurrent ->nombre_Jugador2);
+
+    strcpy(area ->nombre_jugador,get_csv_field(current,2));//pcurrent ->nombre_Jugador1);
+    strcpy(area2->nombre_jugador,get_csv_field(current,3));//pcurrent ->nombre_Jugador2);
 
     carta* busqueda;
     int zona;
@@ -605,6 +639,7 @@ Area_de_juego* buscarPartida(HashTable* tabla){
             //printf("%s\n",busqueda->nombre);
             //printf("->%s %s %s\n",get_csv_field(current,1),get_csv_field(current,2),get_csv_field(current,3));
             //system("pause");
+
             if(strcmp(area->nombre_jugador,get_csv_field(current,1))== 0){
                 zona = atoi(get_csv_field(current,3));
                 ingresoAreaDeJuego(area,busqueda,zona);
@@ -1493,8 +1528,24 @@ void escribirEnArchivoCSV(Area_de_juego* area, FILE* archivo){
 
 void guardarPartida(Area_de_juego* area){//**********
     system("cls");
-    FILE * archivo = fopen("Partidas\\Partida9.csv","w");
 
+    char direccion[200];
+    strcpy(direccion,"Partidas\\");
+    strcat(direccion,area->nombre_partida);
+    strcat(direccion,".csv");
+
+    FILE * archivo = fopen(direccion,"w");
+
+    if(archivo == NULL){
+        printf("El Archivo No Existe %s\n", direccion);
+        system("pause");
+    }
+    else
+    {
+        printf("El Archivo Si Existe %s\n", direccion);
+        system("pause");
+    }
+    fprintf(archivo,",%s,%s,%s,\n",area->nombre_partida,area->nombre_jugador,area->area_enemiga->nombre_jugador);
     escribirEnArchivoCSV(area,archivo);
     escribirEnArchivoCSV(area->area_enemiga,archivo);
     fclose(archivo);

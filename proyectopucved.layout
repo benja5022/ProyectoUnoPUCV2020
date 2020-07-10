@@ -2,19 +2,34 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
-	<File name="Map.c" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="stack.h" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="3483" topLine="158" />
-		</Cursor>
-	</File>
-	<File name="funciones.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="712" topLine="28" />
+			<Cursor1 position="0" topLine="51" />
 		</Cursor>
 	</File>
 	<File name="Map.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="3110" topLine="87" />
+		</Cursor>
+	</File>
+	<File name="HashTable.h" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1825" topLine="53" />
+		</Cursor>
+	</File>
+	<File name="stack.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="75" />
+		</Cursor>
+	</File>
+	<File name="list.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="191" />
+		</Cursor>
+	</File>
+	<File name="funciones.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="712" topLine="16" />
 		</Cursor>
 	</File>
 	<File name="HashTable.c" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -24,17 +39,12 @@
 	</File>
 	<File name="main.c" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1070" topLine="51" />
+			<Cursor1 position="1418" topLine="18" />
 		</Cursor>
 		<Folding>
 			<Collapse line="14" />
 			<Collapse line="26" />
 		</Folding>
-	</File>
-	<File name="list.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="0" topLine="191" />
-		</Cursor>
 	</File>
 	<File name="list.c" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
@@ -43,65 +53,60 @@
 	</File>
 	<File name="funciones.c" open="1" top="1" tabpos="3" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="9737" topLine="138" />
+			<Cursor1 position="42448" topLine="118" />
 		</Cursor>
 		<Folding>
 			<Collapse line="3" />
 			<Collapse line="10" />
-			<Collapse line="26" />
-			<Collapse line="39" />
-			<Collapse line="48" />
-			<Collapse line="63" />
-			<Collapse line="85" />
-			<Collapse line="95" />
-			<Collapse line="107" />
-			<Collapse line="124" />
-			<Collapse line="134" />
-			<Collapse line="166" />
-			<Collapse line="177" />
-			<Collapse line="276" />
-			<Collapse line="289" />
-			<Collapse line="308" />
-			<Collapse line="494" />
-			<Collapse line="630" />
-			<Collapse line="708" />
-			<Collapse line="776" />
-			<Collapse line="817" />
-			<Collapse line="857" />
-			<Collapse line="862" />
-			<Collapse line="914" />
-			<Collapse line="943" />
-			<Collapse line="973" />
-			<Collapse line="991" />
-			<Collapse line="1021" />
-			<Collapse line="1047" />
-			<Collapse line="1059" />
-			<Collapse line="1080" />
-			<Collapse line="1108" />
-			<Collapse line="1135" />
-			<Collapse line="1185" />
-			<Collapse line="1239" />
-			<Collapse line="1284" />
-			<Collapse line="1310" />
-			<Collapse line="1340" />
-			<Collapse line="1369" />
-			<Collapse line="1398" />
-			<Collapse line="1504" />
+			<Collapse line="27" />
+			<Collapse line="40" />
+			<Collapse line="49" />
+			<Collapse line="64" />
+			<Collapse line="86" />
+			<Collapse line="96" />
+			<Collapse line="108" />
+			<Collapse line="125" />
+			<Collapse line="135" />
+			<Collapse line="167" />
+			<Collapse line="178" />
+			<Collapse line="191" />
+			<Collapse line="277" />
+			<Collapse line="290" />
+			<Collapse line="309" />
+			<Collapse line="325" />
+			<Collapse line="467" />
+			<Collapse line="521" />
+			<Collapse line="665" />
+			<Collapse line="743" />
+			<Collapse line="811" />
+			<Collapse line="852" />
+			<Collapse line="892" />
+			<Collapse line="897" />
+			<Collapse line="949" />
+			<Collapse line="978" />
+			<Collapse line="1008" />
+			<Collapse line="1026" />
+			<Collapse line="1056" />
+			<Collapse line="1082" />
+			<Collapse line="1094" />
+			<Collapse line="1115" />
+			<Collapse line="1143" />
+			<Collapse line="1170" />
+			<Collapse line="1220" />
+			<Collapse line="1274" />
+			<Collapse line="1319" />
+			<Collapse line="1345" />
+			<Collapse line="1375" />
+			<Collapse line="1404" />
+			<Collapse line="1433" />
+			<Collapse line="1451" />
+			<Collapse line="1528" />
+			<Collapse line="1555" />
 		</Folding>
 	</File>
-	<File name="stack.h" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="Map.c" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="0" topLine="51" />
-		</Cursor>
-	</File>
-	<File name="stack.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="0" topLine="75" />
-		</Cursor>
-	</File>
-	<File name="HashTable.h" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1825" topLine="53" />
+			<Cursor1 position="3483" topLine="158" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>
