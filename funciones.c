@@ -49,14 +49,14 @@ int cmp_str_map(const void * key1, const void * key2){
 carta * crearCarta(char * linea){
     carta * carta_nueva = (carta *) malloc (sizeof(carta));
 
-    strcpy(carta_nueva->id,get_csv_field(linea,2));
-    strcpy(carta_nueva->nombre,get_csv_field(linea,3));
-    carta_nueva ->tipo = atoi(get_csv_field(linea,4));
-    carta_nueva ->habilidad_talisman = atoi(get_csv_field(linea,5));
-    carta_nueva ->habilidad_totem = atoi(get_csv_field(linea,6));
-    carta_nueva ->habilidad_arma = atoi(get_csv_field(linea,7)) ;
-    carta_nueva ->coste = atoi(get_csv_field(linea,8));
-    carta_nueva ->fuerza = atoi(get_csv_field(linea,9));
+    strcpy(carta_nueva->id,get_csv_field(linea,1));
+    strcpy(carta_nueva->nombre,get_csv_field(linea,2));
+    carta_nueva ->tipo = atoi(get_csv_field(linea,3));
+    carta_nueva ->habilidad_talisman = atoi(get_csv_field(linea,4));
+    carta_nueva ->habilidad_totem = atoi(get_csv_field(linea,5));
+    carta_nueva ->habilidad_arma = atoi(get_csv_field(linea,6)) ;
+    carta_nueva ->coste = atoi(get_csv_field(linea,7));
+    carta_nueva ->fuerza = atoi(get_csv_field(linea,8));
 
     return carta_nueva;
 }
@@ -188,12 +188,12 @@ void eleccionDePaginas(int i, int pagina_actual, int paginas){
 
 }
 
-list* elegirCartas(HashTable* tablahash, list* lista_todas_las_cartas){
+Map* elegirCartas(HashTable* tablahash, list* lista_todas_las_cartas,int* cont){
     //*************
     system("cls");
     int newcont = 1;
     int i = 0;
-    list* lista_cartas_escogidas= list_create_empty();
+    Map* lista_cartas_escogidas= createMap(cmp_str_map);
     carta* current = list_first(lista_todas_las_cartas);
     carta* aux = NULL;
 
@@ -257,13 +257,15 @@ list* elegirCartas(HashTable* tablahash, list* lista_todas_las_cartas){
                 if(mostrarYEscoger(current)){
                     aux = (carta*) malloc (sizeof(carta));
                     aux = current;
-                    list_push_front(lista_cartas_escogidas,aux);
+                    (*cont)++;
+                    insertMap(lista_cartas_escogidas,aux->nombre,aux);
+                    //list_push_front(lista_cartas_escogidas,aux);
                     cartas_escogidas++;
                 }
                 system("cls");
                 printf("Cartas Escogidas: %d\n\n", cartas_escogidas);
                 imprimirLista(lista_todas_las_cartas,pagina_actual);
-                newcont = 1;
+                //newcont = 1;
                 break;
         }
 
@@ -326,10 +328,14 @@ Area_de_juego* comenzarPartida(HashTable* tabla_hash, list* lista){//Incompleto
     char nombre1[100];
     char nombre2[100];
 
+    int cont=0;
+    int cont2 =0;
+
     gotoxy(45,13);
     printf("Ingresa el nombre de la partida\n");
     imprimirCuadrado();
     gotoxy(43,16);
+    getchar();
     scanf("%99[^\n]s",nombrePartida);
 
     getchar();
@@ -341,22 +347,92 @@ Area_de_juego* comenzarPartida(HashTable* tabla_hash, list* lista){//Incompleto
 
     system("cls");
 
-    getchar();
     gotoxy(42,13);
     printf("Ingresa el nombre del Segundo jugador\n");
     imprimirCuadrado();
     gotoxy(43,16);
-    scanf("99[^\n]%s",nombre2);
+    getchar();
+    scanf("%99[^\n]s",nombre2);
 
-    list* lista1 = elegirCartas(tabla_hash,lista);
+    Map* lista1 = elegirCartas(tabla_hash,lista,&cont);
 
     if(lista1 == NULL) return NULL;
 
-    list* lista2 = elegirCartas(tabla_hash,lista);
+    Barajar_Mazo(lista1);
+
+    Map* lista2 = elegirCartas(tabla_hash,lista,&cont2);
 
     if(lista2 == NULL) return NULL;
 
-    return NULL;
+    Barajar_Mazo(lista2);
+
+    Area_de_juego* Area1 = crearAreaDeJuego();
+    Area_de_juego* Area2 = crearAreaDeJuego();
+
+    strcpy(Area1->nombre_jugador,nombre1);
+    strcpy(Area2->nombre_jugador,nombre2);
+
+    Area1 ->area_enemiga = Area2;
+    Area2 ->area_enemiga = Area1;
+
+    carta* current = NULL;
+
+    Area1 ->mazo_castillo = lista1;
+    Area2 ->mazo_castillo = lista2;
+
+//    printf("cont =%d\n",MapCount(lista1));
+//    printf("cont =%d\n",MapCount(lista2));
+
+    for(current = firstMap(Area1->mazo_castillo); current; current = nextMap(Area1->mazo_castillo))
+    {
+        if(current->tipo == 0) break;
+    }
+
+    stack_push(Area1->oros,current);
+    eraseMap(Area1->mazo_castillo,current->nombre);
+
+    for(current = firstMap(Area2->mazo_castillo); current; current = nextMap(Area2->mazo_castillo))
+    {
+        if(current->tipo == 0) break;
+    }
+
+    stack_push(Area2->oros,current);
+    eraseMap(Area2->mazo_castillo,current->nombre);
+
+    Area1 ->reserva_de_oro++;
+    Area2 ->reserva_de_oro++;
+
+    int i;
+
+    current = firstMap(Area1->mazo_castillo);
+
+    for(i=0 ; i<8; i++){
+
+        insertMap(Area1->mano, current->nombre,current);
+        current = nextMap(Area1->mazo_castillo);
+    }
+
+    for(current = firstMap(Area1->mano);current; current = nextMap(Area1->mano)) eraseMap(Area1->mazo_castillo,current->nombre);
+
+    current = firstMap(Area2->mazo_castillo);
+
+    for(i=0 ; i<8; i++){
+
+        insertMap(Area2->mano, current->nombre,current);
+        current = nextMap(Area2->mazo_castillo);
+    }
+
+    for(current = firstMap(Area2->mano);current; current = nextMap(Area2->mano)) eraseMap(Area2->mazo_castillo,current->nombre);
+
+    Area1->total = cont;
+    Area2->total = cont2;
+
+    printf("%ld %ld %ld %ld %ld %ld %ld %ld\n", MapCount(Area1->mano), list_size(Area1->destierro), Area1->reserva_de_oro, MapCount(Area1->cementerio), MapCount(Area1->linea_defensa), MapCount(Area1->mazo_castillo), list_size(Area1->linea_de_apoyo), Area1->total);
+    printf("%ld %ld %ld %ld %ld %ld %ld %ld\n", MapCount(Area2->mano), list_size(Area2->destierro), Area2->reserva_de_oro, MapCount(Area2->cementerio), MapCount(Area2->linea_defensa), MapCount(Area2->mazo_castillo), list_size(Area2->linea_de_apoyo), Area2->total);
+//    system("pause");
+    system("pause");
+
+    return Area1;
 
 }
 
@@ -562,18 +638,19 @@ int menu(HashTable *tabla){
     textbackground(0);
     printf("Reglas\n");
     printf("Creditos\n");
+    printf("Salir del Juego\n");
 
     while(bandera == 0){
         tecla = getch();
         switch(tecla){
 
             case('w'):
-                if(cont == 1) cont = 3;
+                if(cont == 1) cont = 4;
                 else cont--;
                 break;
 
             case('s'):
-                if(cont == 3) cont = 1;
+                if(cont == 4) cont = 1;
                 else cont++;
                 break;
             case (13):
@@ -582,8 +659,6 @@ int menu(HashTable *tabla){
                 break;
 
             case (8):
-                printf("Retroceso\n");
-                //cont = 4;
                 break;
         }
 
@@ -595,6 +670,7 @@ int menu(HashTable *tabla){
                 textbackground(0);
                 printf("Reglas\n");
                 printf("Creditos\n");
+                printf("Salir del Juego\n");
                 break;
 
             case (2):
@@ -603,12 +679,23 @@ int menu(HashTable *tabla){
                 printf("Reglas\n");
                 textbackground(0);
                 printf("Creditos\n");
+                printf("Salir del Juego\n");
                 break;
             case (3):
                 printf("Jugar\n");
                 printf("Reglas\n");
                 textbackground(GREEN);
                 printf("Creditos\n");
+                textbackground(0);
+                printf("Salir del Juego\n");
+                break;
+
+            case (4):
+                 printf("Jugar\n");
+                printf("Reglas\n");
+                printf("Creditos\n");
+                textbackground(GREEN);
+                printf("Salir del Juego\n");
                 textbackground(0);
                 break;
             default :
@@ -896,8 +983,8 @@ void imprimirMenucomenzarJuego(char* nombre){
     printf("Ver linea de ataque enemiga\n");//7 //listo
     printf("Ver linea de defensa\n");//8 listo
     printf("Ver linea de defensa enemiga\n");//9
-    printf("Ver linea de apoyo\n");//11
-    printf("Ver linea de apoyo enemiga\n");//12
+    printf("Ver Totems\n");//11
+    printf("Ver Totems Enemigos\n");//12
     printf("Terminar turno\n");//12
     printf("Salir y guardar\n");//13
 }
@@ -1149,7 +1236,7 @@ void descartarCarta(Area_de_juego* area){
 
 
 }
-/*
+
 void Barajar_Mazo(Map *mazo){//gabo
 
     carta **arreglocartas = (carta**) malloc (50 * sizeof(carta*));
@@ -1162,7 +1249,10 @@ void Barajar_Mazo(Map *mazo){//gabo
 
         arreglocartas[i] = tmp;
         i++;
-        _popFront(mazo);
+
+        eraseMap(mazo,tmp->nombre);
+        //_popFront(mazo);
+
         tmp = firstMap(mazo);
 
     }
@@ -1184,13 +1274,13 @@ void Barajar_Mazo(Map *mazo){//gabo
 
     for(i = 0 ; i < 50 ; i++){
 
-        _pushFront(mazo , arreglocartas[i]->nombre , arreglocartas[i]);
+        insertMap(mazo , arreglocartas[i]->nombre , arreglocartas[i]);
 
     }
 
     return ;
 
-}*/
+}
 
 void verLineaDeDefensaEnemiga(Area_de_juego *Area){
 
@@ -1403,7 +1493,7 @@ void escribirEnArchivoCSV(Area_de_juego* area, FILE* archivo){
 
 void guardarPartida(Area_de_juego* area){//**********
     system("cls");
-    FILE * archivo = fopen("Partidas\\Partida5.csv","w");
+    FILE * archivo = fopen("Partidas\\Partida9.csv","w");
 
     escribirEnArchivoCSV(area,archivo);
     escribirEnArchivoCSV(area->area_enemiga,archivo);

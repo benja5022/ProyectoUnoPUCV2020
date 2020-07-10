@@ -47,13 +47,15 @@ int main()
     carta* Tarjeta = NULL;
 
     while(fgets(palabra,500,archivo)){
-
+        //printf("%s\n",palabra);
         Tarjeta = crearCarta(palabra);
         list_push_back(lista_todas_las_cartas,Tarjeta);
         insertHashTable(TablaHash , Tarjeta->nombre ,Tarjeta);
     }
 
     fclose(archivo);
+
+    //printf("fuera");
 
     Area_de_juego* area_final = NULL;
     int bandera =0;
@@ -75,11 +77,17 @@ int main()
                 creditos();
                 bandera = 0;
                 break;
+            case(4):
+                return 0;
+                break;
         }
 
+        if(area_final != NULL){
+            comenzarJuego(area_final);
+            area_final = NULL;
+        }
     }while(area_final == NULL);
 
-    comenzarJuego(area_final);
 
     return 0;
 }

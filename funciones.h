@@ -28,7 +28,7 @@ void imprimirLista(list* lista, int pagina_actual);
 
 void eleccionDePaginas(int i, int pagina_actual, int paginas);
 
-list* elegirCartas(HashTable* tablahash, list* lista_todas_las_cartas);
+Map* elegirCartas(HashTable* tablahash, list* lista_todas_las_cartas, int* num);
 
 void reglas();
 
@@ -75,6 +75,8 @@ void verDestierro(Area_de_juego* Area);
 void verLineaDeDefensa(Area_de_juego* Area);
 
 void descartarCarta(Area_de_juego* area);
+
+void Barajar_Mazo(Map *mazo);
 
 void verLineaDeDefensaEnemiga(Area_de_juego *Area);
 
