@@ -1,6 +1,5 @@
 #include "funciones.h"
 
-
 struct Partida{
     char nombre_partida[50];
     char nombre_Jugador1[50];
@@ -25,19 +24,7 @@ struct Area_de_juego{
     unsigned short total;
 };
 
-struct carta{
 
-    int tipo;
-    int coste;
-    int habilidad_talisman;
-    int habilidad_totem;
-    int habilidad_arma;
-    int fuerza;
-    char nombre[100];
-    struct carta * arma;
-//    char id[6];
-
-};
 
 int cmp_str_map(const void * key1, const void * key2){
     const char * Key1 = key1;

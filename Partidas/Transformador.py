@@ -5,7 +5,7 @@ with open('Partida1.csv','r') as filepepito:
         #file.write(",Partida1,Juan,Pepe,nada,nada,\n")
         for row in filepepito:
 
-            row = row[:-1] + ("nada,0,\n")
+            #row = row[:-1] + ("nada,0,\n")
             #row = row.replace(';',',')
             file.write(row)
             
@@ -13,7 +13,7 @@ with open('Partida1.csv','r') as filepepito:
 filepepito.close()
 
 with open('pepito.txt', 'r') as file: 
-    with open('Partida5.csv','w') as filepepito:
+    with open('Partida2.csv','w') as filepepito:
         for linea in file:
             filepepito.write(linea)
     file.close()

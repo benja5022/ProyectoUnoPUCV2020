@@ -1,11 +1,29 @@
-#ifndef funciones_h
-#define funciones_h
+#ifndef FUNCIONESH
+#define FUNCIONESH
 
-typedef struct carta carta;
+typedef struct carta{
+
+    int tipo;
+    int coste;
+    int habilidad_talisman;
+    int habilidad_totem;
+    int habilidad_arma;
+    int fuerza;
+    char nombre[100];
+    struct carta * arma;
+//    char id[6];
+
+}carta;
+
+//typedef struct carta carta;
 
 typedef struct Partida Partida;
 
 typedef struct Area_de_juego Area_de_juego;
+
+void reglas();
+
+void creditos();
 
 
 int cmp_str_map(const void * key1, const void * key2);
@@ -29,10 +47,6 @@ void imprimirLista(list* lista, int pagina_actual);
 void eleccionDePaginas(int i, int pagina_actual, int paginas);
 
 Map* elegirCartas(HashTable* tablahash, list* lista_todas_las_cartas, int* num);
-
-void reglas();
-
-void creditos();
 
 void imprimirCuadrado();
 

@@ -1,4 +1,3 @@
 Partida1,Pepe,Juan
-Partida2,Choromaikol,Juan
 Superclasico,ColoColo,UdeChile
 Partida5,Juan,Pepe

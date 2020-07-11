@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1594427870 source:c:\users\benjamín\desktop\proyecto pucv ed\proyectopucved\main.c
+1594498495 source:c:\users\benjamín\desktop\proyecto pucv ed\proyectopucved\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -23,9 +23,9 @@
 
 1593744251 c:\users\benjamín\desktop\proyecto pucv ed\proyectopucved\hashtable.h
 
-1594486852 c:\users\benjamín\desktop\proyecto pucv ed\proyectopucved\funciones.h
+1594497870 c:\users\benjamín\desktop\proyecto pucv ed\proyectopucved\funciones.h
 
-1594487570 c:\users\benjamín\desktop\proyecto pucv ed\proyectopucved\funciones.c
+1594497613 c:\users\benjamín\desktop\proyecto pucv ed\proyectopucved\funciones.c
 	"funciones.h"
 
 1593806803 source:c:\users\benjamín\desktop\proyecto pucv ed\proyectopucved\map.c
@@ -48,4 +48,6 @@
 	<assert.h>
 
 1575514896 c:\users\benjamín\desktop\proyecto pucv ed\proyectopucved\stack.h
+
+1594495025 c:\users\benjamín\desktop\proyecto pucv ed\proyectopucved\habilidades.h
 

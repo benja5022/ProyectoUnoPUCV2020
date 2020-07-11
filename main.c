@@ -10,6 +10,7 @@
 #include "list.h"
 #include "Map.h"
 #include "funciones.c"
+//#include "habilidades.h"
 
 
 long long stringHash(const void * key) {
@@ -33,6 +34,8 @@ int stringEqual(const void * key1, const void * key2) {
 
 int main()
 {
+//    imprimirHabilidadTalisman(5);
+    system("pause");
  //   system("color 20");
 
     HashTable* TablaHash = createHashTable(stringHash,stringEqual);
