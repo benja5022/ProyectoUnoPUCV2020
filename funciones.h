@@ -20,7 +20,7 @@ const char* get_csv_field (char * tmp, int i);
 
 Area_de_juego * crearAreaDeJuego();
 
-void imprimirCaracteristicas(carta* card);
+void imprimirCaracteristicas(carta* card, carta* card2);
 
 bool mostrarYEscoger(carta* card);
 
@@ -38,7 +38,7 @@ void imprimirCuadrado();
 
 Area_de_juego* comenzarPartida(HashTable* tabla_hash, list* lista);
 
-void ingresoAreaDeJuego(Area_de_juego* area, carta* card, int zona);
+void ingresoAreaDeJuego(Area_de_juego* area, carta* card, int zona, char* nombre_aliado, int posicion_aliado);
 
 Area_de_juego* buscarPartida(HashTable* tabla);
 

@@ -33,6 +33,7 @@ int stringEqual(const void * key1, const void * key2) {
 
 int main()
 {
+ //   system("color 20");
 
     HashTable* TablaHash = createHashTable(stringHash,stringEqual);
     list* lista_todas_las_cartas = list_create_empty();
