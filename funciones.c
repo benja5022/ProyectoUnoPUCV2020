@@ -88,6 +88,21 @@ Area_de_juego * crearAreaDeJuego(){
     return Area1;
 }
 
+void logo(){
+    int boton2;
+    gotoxy(41,10);
+    printf("   BIENVENIDOS A MITOS & LEYENDAS   \n\n");
+    //menu inicio
+    do{
+    printf("                                                   INSTRUCCIONES            \n");
+    printf("                                               W,A,D y S para moverse          \n");
+    printf("                                                ENTER para selecionar        \n\n");
+    printf("                                      presione cualquier boton para comenzar\n");
+    scanf("%d",&boton2);
+    }while(boton2<0);
+
+}
+
 void imprimirCaracteristicas(carta* card, carta* arma){
     printf("Caracteristicas:\n\n");
     printf("Nombre: %s\n",card->nombre);

@@ -9,6 +9,8 @@ void creditos();
 
 int cmp_str_map(const void * key1, const void * key2);
 
+void logo();
+
 carta * crearCarta(char * linea);
 
 void imprimirTipoCarta(int tipo,carta * card );

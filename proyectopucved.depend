@@ -87,3 +87,29 @@
 
 1594176099 c:\users\matias\desktop\proyectounopucv2020-master\real\proyectounopucv2020\stack.h
 
+1594590002 source:c:\users\matias\desktop\proyectounopucv2020-master\real\proyectounopucv2020\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdbool.h>
+	<conio.h>
+	<ctype.h>
+	<windows.h>
+	"HashTable.h"
+	"stack.h"
+	"list.h"
+	"Map.h"
+	"habilidades.c"
+	"funciones.c"
+
+1594590027 c:\users\matias\desktop\proyectounopucv2020-master\real\proyectounopucv2020\habilidades.c
+	<stdio.h>
+	"habilidades.h"
+
+1594588443 c:\users\matias\desktop\proyectounopucv2020-master\real\proyectounopucv2020\habilidades.h
+
+1594590093 c:\users\matias\desktop\proyectounopucv2020-master\real\proyectounopucv2020\funciones.c
+	"funciones.h"
+
+1594590002 c:\users\matias\desktop\proyectounopucv2020-master\real\proyectounopucv2020\funciones.h
+

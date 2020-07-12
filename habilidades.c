@@ -279,6 +279,7 @@ void activarHabilidadTotem(carta* card, int habilidad, Area_de_juego* area){
 
     }
 }
+/*
 
 void h_arma_cero(carta* card){//vacio
     carta* carta_aliado = card->arma;
@@ -345,3 +346,4 @@ void activarHabilidadArma(carta* card, int habilidad, Area_de_juego* area){
 
 }
 
+*/
