@@ -291,6 +291,7 @@ void h_arma_uno(carta* card){//vacio
 }
 
 void h_arma_dos(carta* card){//vacio
+    carta* carta_aliado = card->arma;
     carta_aliado->fuerza+=3;
 }
 
