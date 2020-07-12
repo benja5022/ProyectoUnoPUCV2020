@@ -1,0 +1,43 @@
+Tipos de Carta.
+
+Aliados.
+
+Son personajes que reunes para defender tu mazo Castillo o para atacar al de tu oponente. De esta
+manera, son las unicas cartas que puedes asignar para la fase de batalla.
+La forma de poner a los Aliados en juego es pagar su coste de oro, y ubicandolos en la linea de
+defensa (ver area de juego).
+Cada Aliado tiene habilidades especiales que los diferencian entre si. En algunos casos, estas
+habilidades se activan al entrar o salir del juego. En otros, es necesario pagar un cierto coste extra
+para activar una habilidad.
+Los Aliados se reconocen por el icono de fuerza que tienen en el costado superior izquierdo, que
+sirve tambien para representar la fuerza que tiene el Aliado, es decir, la cantidad de dano que puede
+hacer en un ataque y la capacidad de bloquear un ataque oponente.
+No es necesario mover a los aliados para bloquear. No pueden ser declarados atacantes el turno que
+entran en juego, (a menos que su habilidad diga lo contrario).
+
+Armas.
+
+Son elementos del juego que generalmente otorgan bonificadores al aliado portador y, en
+algunos casos, le entregan nuevas habilidades. Al igual que los aliados, requieren de un coste
+para ponerse en juego y se colocan bajo un aliado. Son intransferibles y, al ser portadas, Aliado
+y Arma se consideran una sola carta, por lo tanto, si un aliado es destruido, el arma sera
+destruida y de la misma manera, si el aliado es barajado el arma también es barajada.
+La forma de reconocer este tipo de cartas es por ícono Arma, que aparece en el costado
+superior izquierdo de la carta. Cada Aliado puede portar sólo un Arma, a menos que su
+habilidad diga lo contrario.
+
+Totems.
+
+Son modificadores de juego y sus efectos duran mientras permanezcan en juego y su objetivo
+es apoyar a tus Aliados y tu estrategia de juego.
+Puedes identificarlos por su icono en la esquina superior izquierda, para jugarlos debes pagar
+su coste de oro, ubicado en la esquina superior derecha y ponerlos en la zona de apoyo (ver
+area de juego).
+
+Talismanes.
+
+Los Talismanes son cartas que no entran en juego y tiene diversos efectos, una vez jugadas
+son enviadas al cementerio.
+La forma de jugar un talisman es pagar el coste de oro, mostrar la carta a tu oponente, anunciar
+y resolver el efecto que produce, y enviar la carta de Talisman al cementerio.
+Puedes reconocer un Talismán es por el ícono en el extremo superior izquierdo.

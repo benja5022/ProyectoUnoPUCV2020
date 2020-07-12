@@ -1,0 +1,15 @@
+Conceptos Importantes.
+
+Ronda: Consta de 3 partidas. De los resultados de estas partidas, se determina el ganador.
+
+Turnos:  Son los momentos en que los jugadores realizan las acciones con las que intentaran
+ganar la partida, avanzando a traves de las fases. El juego se desarrolla en una serie de turnos
+alternados.
+
+Fases: Son el orden en que se desarrolla el juego, y solo ciertas acciones pueden ser tomadas
+en cada fase. El hacer acciones durante una fase (distinta de defender un ataque) puede
+hacerse sóolo en el turno de un jugador, sin intervencion de su oponente.
+
+Regla de oro: En algunos casos las cartas y sus habilidades estaran en contra de las reglas de
+juego, cuando ocurran estas situaciones las cartas tendrán la razon. Es decir, las habilidades
+rompen las reglas.

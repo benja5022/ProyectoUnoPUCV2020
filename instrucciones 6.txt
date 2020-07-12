@@ -1,0 +1,80 @@
+Empezando el juego.
+
+Al comenzar el juego, cada jugador presenta su mazo Castillo ante su oponente y elige uno de
+sus oros como “oro inicial” ubicándolo en la zona de reserva.
+Para determinar que jugador comenzara la partida se debe utilizar un metodo aleatorio
+(moneda, dado, etc.). Posteriormente, cada jugador robara 8 cartas y, si alguno no esta
+conforme con su mano, puede barajarla y robar 7 cartas. Este proceso puede repetirse
+robando una carta menos hasta que el jugador se sienta conforme con su mano. Si un jugador
+no tiene cartas en la mano no puede realizar este proceso.
+
+Estructura del Turno:
+
+A) Fase de Agrupacion.
+
+En esta fase, todas las cartas de oro y/o Aliados que han sido utilizados, declarados atacantes
+o movidos por alguna habilidad, vuelven a la Zona de Reserva de Oros y a la Linea de Defensa,
+respectivamente, para poder ser utilizadas nuevamente.
+Si es el primer turno del juego, esta fase no se aplica y se parte desde la fase de Vigilia.
+
+B) Fase de Vigilia.
+
+Es la fase de juego donde te preparas para la batalla. En este momento es cuando puedes
+bajar Aliados, Talismanes, Armas y Totems.
+La primera carta que debes jugar en esta fase es el oro, si no lo haces de esta manera, no
+puedes jugarlo durante el turno.
+
+C) Fase de Batalla Mitologica.
+
+Esta fase comienza cuando atacas a tu oponente. Es opcional, y un jugador puede decidir no
+atacar para ayudar a su estrategia.
+La fase de Batalla Mitológica se divide en 4 sub - etapas:
+
+    1.- Ataque:
+    
+    El jugador atacante designa a sus Aliados para declararlos atacantes, desplazandolos desde
+    su linea de defensa hacia la linea de ataque.
+    No podran atacar los aliados que esten en la zona de ataque y los que no hayan pasado al
+    menos una fase de vigilia bajo el dominio de su controlador.
+
+    2.- Defensa:
+
+    En esta etapa el jugador defensor elige si desea bloquear con sus aliados el ataque oponente.
+    Bloquear no es una obligacion para el jugador defensor.
+    Solo podran defender los Aliados ubicados en la linea de defensa.
+    Los bloqueos se asignan uno a uno es decir un aliado ataca y un aliado defiende. Esta accion
+    se realiza de manera verbal, por lo tanto, es necesario anunciar cada uno de los bloqueos.
+
+    3.- Guerra de Talismanes:
+
+    Comienza luego de que el jugador defensor designe sus aliados bloqueadores. En esta fase los
+    gladiadores podran jugar talismanes de manera alternada cediendo prioridades, donde el
+    jugador defensor tendra la prioridad.
+    Una vez que ambos jugadores cedan sus prioridades o no puedan seguir jugando talismanes,
+    pasaremos la etapa de asignación de dano.
+
+    4.- Asignacion de Dano:
+
+    Es el ultimo paso de la Batalla Mitologica. En esta etapa se asignan los danos entre los aliados
+    atacantes y defensores, ademas de la diferencia que se traduce en dano al mazo Castillo.
+    La asignacion de dano se rige por las siguientes reglas:
+
+      - Si el Aliado atacante tiene mayor fuerza que el defensor, el Aliado defensor es destruido
+      y el resultado de la resta entre las fuerzas de ambos Aliados, es el daño que se asigna al Castillo
+      del jugador defensor
+
+      - Si ambos Aliados tienen la misma fuerza, los dos son destruidos y ninguno de los
+      jugadores recibe dano.
+
+      - Si el Aliado defensor tiene más fuerza que el atacante, el Aliado atacante es destruido, y
+      ninguno de los jugadores recibe daño.
+
+D) Fase Final:
+
+Luego de la asignacion de dano, comienza la fase final. En esta fase, concluyen todos los
+efectos que dicen “hasta la fase final” y se activan los que dicen “en la fase final”.
+
+E) El jugador activo roba una carta de su mazo castillo y verifica que la cantidad de cartas no
+supere las 8; si supera este numero debe descartara cartas hasta llegar a 8 y de esta manera
+comienza el turno del siguiente jugador.
+En el primer turno del juego no se roba esta carta.

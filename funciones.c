@@ -1,6 +1,9 @@
 #include "funciones.h"
 
-// hola aqui mati, saludos y cuidense :)
+struct regla{
+char* nombre;
+};
+
 int cmp_str_map(const void * key1, const void * key2){
     const char * Key1 = key1;
     const char * Key2 = key2;
@@ -272,18 +275,76 @@ Map* elegirCartas(HashTable* tablahash, list* lista_todas_las_cartas,int* cont){
     return lista_cartas_escogidas;
 }
 
-void reglas(){//vacio
+void reglas(){
 
-    FILE *fp = fopen("Reglas//instrucciones.txt" , "r");
-    char line[1024];
+ list* reglamento = list_create_empty();
+ FILE* reglamentos = fopen ("reglas.csv","r");
+ char linea [1000];
 
-    while(fgets(line , 1024 , fp)){
+ while (fgets (linea,1000, reglamentos)){
 
-        printf("%s\n" , line);
+ char* nombre = get_csv_field(linea,1);
+ regla *r = crear_reglas(nombre);
 
-    }
+ list_push_back(reglamento,r);
+}
+
+system("cls");
+
+regla* aux = list_first(reglamento);
+
+int boton=1;
+char tecla;
+int cont = 0;
+char copia[1000];
+strcpy(copia,aux->nombre);
+strcat(copia,".txt");
+
+while(aux!=NULL){
+
+FILE *fp = fopen(copia,"r");
+char line[1024];
+
+while(fgets(line , 1024 , fp)){
+
+printf("%s\n" , line);
 
 }
+
+printf("\n| presione d para continuar | a para retroceder | retroceso para salir |\n");
+
+tecla = getch();
+
+if(tecla=='d' && cont!=6){
+    aux=list_next(reglamento);
+    cont++;
+}
+
+if(tecla=='a' && cont!=0){
+    aux=list_prev(reglamento);
+    cont--;
+}
+
+if(tecla==8){
+    system("cls");
+    return;
+}
+
+strcpy(copia,aux->nombre);
+strcat(copia,".txt");
+system("cls");
+}
+}
+
+regla* crear_reglas (char* nombre){
+
+ regla *r = malloc (sizeof(regla));
+ r->nombre= nombre;
+ return r;
+
+}
+
+
 
 void creditos(){
     int i;
