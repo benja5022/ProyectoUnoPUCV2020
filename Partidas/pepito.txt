@@ -1,100 +1,101 @@
-;Pepe;Escarapela Nacional;3;
-;Pepe;Escarapela Nacional;3;
-;Pepe;Escarapela Nacional;3;
-;Pepe;Escarapela Nacional;3;
-;Pepe;Escarapela Nacional;3;
-;Pepe;Escarapela Nacional;3;
-;Pepe;Escarapela Nacional;4;
-;Pepe;Escarapela Nacional;4;
-;Pepe;Gandarillas;0;
-;Pepe;Abrazo De Maipu;0;
-;Pepe;Hipolito Villegas;0;
-;Pepe;Francisco Bilbao;0;
-;Pepe;Carabina Evans;0;
-;Pepe;El Relampago;0;
-;Pepe;Hilaron Daza;1;
-;Pepe;La Independencia;1;
-;Pepe;Humberstone;1;
-;Pepe;Duelo De Navajas;1;
-;Pepe;Benjamin Vicuna Mackena;1;
-;Pepe;El Marte;1;
-;Pepe;El Marte;1;
-;Pepe;Canon de Corto Alcance;1;
-;Pepe;El Marte;1;
-;Pepe;Encalladero Chilote;1;
-;Pepe;Encalladero Chilote;1;
-;Pepe;Canon de Corto Alcance;1;
-;Pepe;Fundicion de Guayacan;1;
-;Pepe;El Marte;1;
-;Pepe;Toma Del Morro;1;
-;Pepe;Escarapela Nacional;2;
-;Pepe;Escarapela Nacional;2;
-;Pepe;Fusil Grass Cheatellerau;2;
-;Pepe;Anibal Pinto;2;
-;Pepe;Antonio Varas;2;
-;Pepe;La Independencia;2;
-;Pepe;Fundicion de Guayacan;2;
-;Pepe;Remington Rolling Block;2;
-;Pepe;Fernando VII;2;
-;Pepe;Fusil Grass Cheatellerau;2;
-;Pepe;Antonio Varas;5;
-;Pepe;Antonio Varas;5;
-;Pepe;Antonio Varas;5;
-;Pepe;Antonio Varas;5;
-;Pepe;Andres Bello;6;
-;Pepe;Carabina Evans;8;
-;Pepe;Carabina Evans;8;
-;Pepe;Fundicion de Guayacan;7;
-;Pepe;Fundicion de Guayacan;7;
-;Pepe;Fundicion de Guayacan;7;
-;Pepe;Fundicion de Guayacan;7;
-;Juan;Escarapela Nacional;3;
-;Juan;Escarapela Nacional;3;
-;Juan;Escarapela Nacional;3;
-;Juan;Escarapela Nacional;3;
-;Juan;Escarapela Nacional;3;
-;Juan;Escarapela Nacional;3;
-;Juan;Escarapela Nacional;3;
-;Juan;Escarapela Nacional;3;
-;Juan;Escarapela Nacional;3;
-;Juan;Escarapela Nacional;3;
-;Juan;Andres Bello;0;
-;Juan;Rodriguez Aldea;0;
-;Juan;Fernando VII;0;
-;Juan;Fuerte de niebla;0;
-;Juan;Mineral de Chanarcillo;0;
-;Juan;Abrazo De Maipu;0;
-;Juan;Quemar La Ciudad;0;
-;Juan;Gandarillas;1;
-;Juan;Telegrafo;1;
-;Juan;Covadonga;1;
-;Juan;Carabina Evans;1;
-;Juan;La Independencia;1;
-;Juan;Fragata Warren;1;
-;Juan;Bergantin Aguila;1;
-;Juan;Remington Rolling Block;1;
-;Juan;El furioso;1;
-;Juan;Humberstone;1;
-;Juan;Fundicion de Guayacan;1;
-;Juan;Fundicion de Guayacan;1;
-;Juan;Fuerte de niebla;1;
-;Juan;Encalladero Chilote;1;
-;Juan;Abrazo De Maipu;1;
-;Juan;Emboscada;1;
-;Juan;Camilo Henriquez;2;
-;Juan;Rafael Maroto;2;
-;Juan;Anibal Pinto;2;
-;Juan;Hilaron Daza;2;
-;Juan;El Relampago;2;
-;Juan;Fusil Grass Cheatellerau;2;
-;Juan;Humberstone;2;
-;Juan;Quemar La Ciudad;2;
-;Juan;Orosimbo Barboza;5;
-;Juan;Bernardo De Monteagudo;5;
-;Juan;Antonio Varas;5;
-;Juan;Gabino Gainza;6;
-;Juan;Los Pincheira;6;
-;Juan;Hipolito Villegas;6;
-;Juan;Perez Cotapos;6;
-;Juan;Mineral de Chanarcillo;7;
-;Juan;Encalladero Chilote;7;
+,Partida1,Juan,Pepe,nada,0,
+,Juan,Escarapela Nacional,3,nada,0,
+,Juan,Escarapela Nacional,3,nada,0,
+,Juan,Escarapela Nacional,3,nada,0,
+,Juan,Escarapela Nacional,3,nada,0,
+,Juan,Escarapela Nacional,3,nada,0,
+,Juan,Escarapela Nacional,3,nada,0,
+,Juan,Escarapela Nacional,3,nada,0,
+,Juan,Escarapela Nacional,3,nada,0,
+,Juan,Escarapela Nacional,3,nada,0,
+,Juan,Escarapela Nacional,3,nada,0,
+,Juan,Andres Bello,0,nada,0,
+,Juan,Rodriguez Aldea,0,nada,0,
+,Juan,Fernando VII,0,nada,0,
+,Juan,Fuerte de niebla,0,nada,0,
+,Juan,Mineral de Chanarcillo,0,nada,0,
+,Juan,Gandarillas,1,nada,0,
+,Juan,Telegrafo,1,nada,0,
+,Juan,Covadonga,1,nada,0,
+,Juan,Carabina Evans,1,nada,0,
+,Juan,La Independencia,1,nada,0,
+,Juan,Fragata Warren,1,nada,0,
+,Juan,Bergantin Aguila,1,nada,0,
+,Juan,Remington Rolling Block,1,nada,0,
+,Juan,El furioso,1,nada,0,
+,Juan,Humberstone,1,nada,0,
+,Juan,Fundicion de Guayacan,1,nada,0,
+,Juan,Fundicion de Guayacan,1,nada,0,
+,Juan,Fuerte de niebla,1,nada,0,
+,Juan,Encalladero Chilote,1,nada,0,
+,Juan,Abrazo De Maipu,1,nada,0,
+,Juan,Emboscada,1,nada,0,
+,Juan,Camilo Henriquez,2,nada,0,
+,Juan,Rafael Maroto,2,nada,0,
+,Juan,Anibal Pinto,2,nada,0,
+,Juan,Hilaron Daza,2,nada,0,
+,Juan,El Relampago,2,nada,0,
+,Juan,Fusil Grass Cheatellerau,2,nada,0,
+,Juan,Humberstone,2,nada,0,
+,Juan,Quemar La Ciudad,2,nada,0,
+,Juan,Orosimbo Barboza,5,nada,0,
+,Juan,Bernardo De Monteagudo,5,nada,0,
+,Juan,Antonio Varas,5,nada,0,
+,Juan,Gabino Gainza,6,nada,0,
+,Juan,Los Pincheira,6,nada,0,
+,Juan,Hipolito Villegas,6,nada,0,
+,Juan,Perez Cotapos,6,nada,0,
+,Juan,Quemar La Ciudad,8,nada,0,
+,Juan,Abrazo De Maipu,8,nada,0,
+,Juan,Encalladero Chilote,7,nada,0,
+,Juan,Mineral de Chanarcillo,7,nada,0,
+,Pepe,Escarapela Nacional,3,nada,0,
+,Pepe,Escarapela Nacional,3,nada,0,
+,Pepe,Escarapela Nacional,3,nada,0,
+,Pepe,Escarapela Nacional,3,nada,0,
+,Pepe,Escarapela Nacional,3,nada,0,
+,Pepe,Escarapela Nacional,3,nada,0,
+,Pepe,Escarapela Nacional,3,nada,0,
+,Pepe,Escarapela Nacional,3,nada,0,
+,Pepe,Gandarillas,0,nada,0,
+,Pepe,Abrazo De Maipu,0,nada,0,
+,Pepe,Hipolito Villegas,0,nada,0,
+,Pepe,Francisco Bilbao,0,nada,0,
+,Pepe,Carabina Evans,0,nada,0,
+,Pepe,El Relampago,0,nada,0,
+,Pepe,Hilaron Daza,1,nada,0,
+,Pepe,La Independencia,1,nada,0,
+,Pepe,Humberstone,1,nada,0,
+,Pepe,Duelo De Navajas,1,nada,0,
+,Pepe,Benjamin Vicuna Mackena,1,nada,0,
+,Pepe,El Marte,1,nada,0,
+,Pepe,El Marte,1,nada,0,
+,Pepe,Canon de Corto Alcance,1,nada,0,
+,Pepe,El Marte,1,nada,0,
+,Pepe,Encalladero Chilote,1,nada,0,
+,Pepe,Encalladero Chilote,1,nada,0,
+,Pepe,Canon de Corto Alcance,1,nada,0,
+,Pepe,Fundicion de Guayacan,1,nada,0,
+,Pepe,El Marte,1,nada,0,
+,Pepe,Toma Del Morro,1,nada,0,
+,Pepe,Escarapela Nacional,1,nada,0,
+,Pepe,Escarapela Nacional,1,nada,0,
+,Pepe,Fusil Grass Cheatellerau,2,nada,0,
+,Pepe,Anibal Pinto,2,nada,0,
+,Pepe,Antonio Varas,2,nada,0,
+,Pepe,La Independencia,2,nada,0,
+,Pepe,Fundicion de Guayacan,2,nada,0,
+,Pepe,Remington Rolling Block,2,nada,0,
+,Pepe,Fernando VII,2,nada,0,
+,Pepe,Fusil Grass Cheatellerau,2,nada,0,
+,Pepe,Antonio Varas,5,nada,0,
+,Pepe,Antonio Varas,5,nada,0,
+,Pepe,Antonio Varas,5,nada,0,
+,Pepe,Antonio Varas,5,nada,0,
+,Pepe,Andres Bello,5,nada,0,
+,Pepe,Carabina Evans,8,nada,0,
+,Pepe,Carabina Evans,8,nada,0,
+,Pepe,Fundicion de Guayacan,7,nada,0,
+,Pepe,Fundicion de Guayacan,7,nada,0,
+,Pepe,Fundicion de Guayacan,7,nada,0,
+,Pepe,Fundicion de Guayacan,7,nada,0,

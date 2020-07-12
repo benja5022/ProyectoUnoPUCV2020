@@ -9,7 +9,9 @@
 #include "stack.h"
 #include "list.h"
 #include "Map.h"
+#include "habilidades.c"
 #include "funciones.c"
+
 
 
 long long stringHash(const void * key) {
@@ -33,6 +35,9 @@ int stringEqual(const void * key1, const void * key2) {
 
 int main()
 {
+  //  imprimirHabilidadTalisman(5);
+  //  system("pause");
+ //   system("color 20");
 
     HashTable* TablaHash = createHashTable(stringHash,stringEqual);
     list* lista_todas_las_cartas = list_create_empty();
@@ -47,13 +52,15 @@ int main()
     carta* Tarjeta = NULL;
 
     while(fgets(palabra,500,archivo)){
-
+        //printf("%s\n",palabra);
         Tarjeta = crearCarta(palabra);
         list_push_back(lista_todas_las_cartas,Tarjeta);
         insertHashTable(TablaHash , Tarjeta->nombre ,Tarjeta);
     }
 
     fclose(archivo);
+
+    //printf("fuera");
 
     Area_de_juego* area_final = NULL;
     int bandera =0;
@@ -75,11 +82,17 @@ int main()
                 creditos();
                 bandera = 0;
                 break;
+            case(4):
+                return 0;
+                break;
         }
 
+        if(area_final != NULL){
+            comenzarJuego(area_final);
+            area_final = NULL;
+        }
     }while(area_final == NULL);
 
-    comenzarJuego(area_final);
 
     return 0;
 }

@@ -1,11 +1,10 @@
 #ifndef funciones_h
 #define funciones_h
 
-typedef struct carta carta;
 
-typedef struct Partida Partida;
+void reglas();
 
-typedef struct Area_de_juego Area_de_juego;
+void creditos();
 
 
 int cmp_str_map(const void * key1, const void * key2);
@@ -20,7 +19,7 @@ const char* get_csv_field (char * tmp, int i);
 
 Area_de_juego * crearAreaDeJuego();
 
-void imprimirCaracteristicas(carta* card);
+void imprimirCaracteristicas(carta* card, carta* card2);
 
 bool mostrarYEscoger(carta* card);
 
@@ -28,17 +27,13 @@ void imprimirLista(list* lista, int pagina_actual);
 
 void eleccionDePaginas(int i, int pagina_actual, int paginas);
 
-list* elegirCartas(HashTable* tablahash, list* lista_todas_las_cartas);
-
-void reglas();
-
-void creditos();
+Map* elegirCartas(HashTable* tablahash, list* lista_todas_las_cartas, int* num);
 
 void imprimirCuadrado();
 
 Area_de_juego* comenzarPartida(HashTable* tabla_hash, list* lista);
 
-void ingresoAreaDeJuego(Area_de_juego* area, carta* card, int zona);
+void ingresoAreaDeJuego(Area_de_juego* area, carta* card, int zona, char* nombre_aliado, int posicion_aliado);
 
 Area_de_juego* buscarPartida(HashTable* tabla);
 
@@ -48,7 +43,7 @@ Area_de_juego* jugar(HashTable* table, list* lista);
 
 bool descartarOpciones();
 
-bool opcionesCarta();
+bool opcionesCarta(int num);
 
 void imprimirMapa(Map* mapa);
 
@@ -72,9 +67,11 @@ void verLineaDeAtaque(Area_de_juego* Area);
 
 void verDestierro(Area_de_juego* Area);
 
-void verLineaDeDefensa(Area_de_juego* Area);
+bool verLineaDeDefensa(Area_de_juego* Area);
 
 void descartarCarta(Area_de_juego* area);
+
+void Barajar_Mazo(Map *mazo);
 
 void verLineaDeDefensaEnemiga(Area_de_juego *Area);
 
@@ -89,4 +86,4 @@ void guardarPartida(Area_de_juego* area);
 void comenzarJuego(Area_de_juego* Area_final);
 
 
-#endif // FUNCIONES_H_INCLUDED
+#endif // funciones_h_INCLUDED
