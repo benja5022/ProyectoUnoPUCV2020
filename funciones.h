@@ -1,25 +1,6 @@
-#ifndef FUNCIONESH
-#define FUNCIONESH
+#ifndef funciones_h
+#define funciones_h
 
-typedef struct carta{
-
-    int tipo;
-    int coste;
-    int habilidad_talisman;
-    int habilidad_totem;
-    int habilidad_arma;
-    int fuerza;
-    char nombre[100];
-    struct carta * arma;
-//    char id[6];
-
-}carta;
-
-//typedef struct carta carta;
-
-typedef struct Partida Partida;
-
-typedef struct Area_de_juego Area_de_juego;
 
 void reglas();
 
@@ -62,7 +43,7 @@ Area_de_juego* jugar(HashTable* table, list* lista);
 
 bool descartarOpciones();
 
-bool opcionesCarta();
+bool opcionesCarta(int num);
 
 void imprimirMapa(Map* mapa);
 
@@ -86,7 +67,7 @@ void verLineaDeAtaque(Area_de_juego* Area);
 
 void verDestierro(Area_de_juego* Area);
 
-void verLineaDeDefensa(Area_de_juego* Area);
+bool verLineaDeDefensa(Area_de_juego* Area);
 
 void descartarCarta(Area_de_juego* area);
 
@@ -105,4 +86,4 @@ void guardarPartida(Area_de_juego* area);
 void comenzarJuego(Area_de_juego* Area_final);
 
 
-#endif // FUNCIONES_H_INCLUDED
+#endif // funciones_h_INCLUDED

@@ -1,16 +1,54 @@
 #include <stdio.h>
 #include "habilidades.h"
 
+struct carta{
+
+    int tipo;
+    int coste;
+    int habilidad_talisman;
+    int habilidad_totem;
+    int habilidad_arma;
+    int fuerza;
+    char nombre[100];
+    struct carta * arma;
+    bool estado; //si es bool, significa que ha sido usado
+
+};
+
+struct Partida{
+    char nombre_partida[50];
+    char nombre_Jugador1[50];
+    char nombre_Jugador2[50];
+
+};
+
+struct Area_de_juego{
+    struct Area_de_juego * area_enemiga;
+    char nombre_jugador[100];
+    char nombre_partida[100];
+    Map * cementerio;
+    Map * mazo_castillo;
+    Map * linea_defensa;
+    Map * linea_ataque;
+    Map * mano;
+    unsigned int reserva_de_oro;
+    unsigned int oro_pagado;
+    stack * oros;
+    list * linea_de_apoyo;
+    list * destierro;
+    unsigned short total;
+};
+
 void imprimirHabilidadTotem(int habilidad){
     switch(habilidad){
         case(0):
             printf("Tus Aliados ganan 2 a la fuerza.");
             break;
         case(1):
-            printf("Una vez cada turno se barajan 2 cartas del cementerio al mazo castillo.");
+            printf("Una vez por turno, Baraja 2 cartas de tu cementerio en tu Mazo Castillo.");
             break;
         case(2):
-            printf("Destruye un totem enemigo.");
+            printf("Destruye un totem enemigo Cuando entra en juego.");
             break;
         case(3):
             printf("Aliados oponentes pierden 1 a la fuerza.");
@@ -22,10 +60,10 @@ void imprimirHabilidadTotem(int habilidad){
             printf("Cuando entra en juego, Puedes destruir un tótem o arma en juego.");
             break;
         case(6):
-            printf("Una vez por turno, Baraja 2 cartas de tu cementerio en tu castillo y robar una carta.");
+            printf("Una vez por turno, Baraja 2 cartas de tu cementerio en tu Mazo Castillo y robar una carta.");
             break;
         case(7):
-            printf("Una vez por turno, puedes generar 2 oros para jugar Totem.");
+            printf("Una vez por turno, puedes generar 2 oros.");
             break;
 
     }
@@ -95,7 +133,7 @@ void imprimirHabilidadArma(int habilidad){
             printf("Aliado gana 3 a la fuerza");
             break;
         case(3):
-            printf("Cuando entra en juego todas las armasdel cementerio pasan a la mano");
+            printf("Cuando entra en juego todas las armas del cementerio pasan a la mano");
             break;
         case(4):
             printf("Una vez por turno, puedes desterrar una carta del cementerio");
@@ -113,4 +151,197 @@ void imprimirHabilidadArma(int habilidad){
     }
 }
 
+
+void h_totem_cero(carta* card){//vacio
+
+}
+
+void h_totem_uno(carta* card, Area_de_juego* area){
+    if(card->estado){
+        printf("Esta Carta ya se ha Utilizado en este turno\n");
+        system("pause");
+        return;
+    }
+
+    if(MapCount(area->cementerio) > 1 ){
+        int i=0;
+        carta* current = NULL;
+        for (i=0, current = firstMap(area->cementerio) ; i<2 && current!= NULL ;i++, current = nextMap(area->cementerio)){
+            if(current){
+                eraseMap(area->cementerio,current->nombre);
+                insertMap(area->mazo_castillo,current->nombre,current);
+
+            }
+        }
+        card ->estado = true;
+    }
+    else
+    {
+        printf("No tienes Cartas en el Cementerio\n");
+        system("pause");
+    }
+}
+
+void h_totem_dos(carta* card){//vacio
+
+}
+
+void h_totem_tres(carta* card){//vacio
+
+}
+
+void h_totem_cuatro(carta* card){//vacio
+
+}
+
+void h_totem_cinco(carta* card){//vacio
+
+}
+
+void h_totem_seis(carta* card, Area_de_juego* area){
+
+    carta* current = NULL;
+
+    if(card->estado == true){
+        printf("Esta Carta ya se ha Utilizado en este turno\n");
+        system("pause");
+        return;
+    }
+
+
+    if(MapCount(area->cementerio) >= 1 ){
+        int i=0;
+        carta* current = NULL;
+        for (i=0, current = firstMap(area->cementerio) ; i<2 && current!= NULL ;i++, current = nextMap(area->cementerio)){
+            if(current){
+                eraseMap(area->cementerio,current->nombre);
+                insertMap(area->mazo_castillo,current->nombre,current);
+
+            }
+        }
+    }
+    else
+    {
+        printf("No tienes Cartas en el Cementerio\n");
+        system("pause");
+    }
+
+    if(MapCount(area->mazo_castillo) > 0 ){
+        current = firstMap(area->mazo_castillo);
+        eraseMap(area->mazo_castillo, current->nombre);
+        insertMap(area->mano,current->nombre,current);
+    }
+
+    card ->estado = true;
+}
+
+void h_totem_siete(carta* card, Area_de_juego* area){
+
+    if(card->estado){
+        printf("Esta Carta ya se ha Utilizado en este turno\n");
+        system("pause");
+
+    }
+    else{
+        area->reserva_de_oro += 2;
+        card ->estado = true;
+    }
+
+
+}
+
+void activarHabilidadTotem(carta* card, int habilidad, Area_de_juego* area){
+    switch(habilidad){
+        case(0):
+            //h_totem_cero(card);
+            break;
+        case(1):
+            h_totem_uno(card,area);
+            break;
+        case(2):
+            //h_totem_dos(card);
+            break;
+        case(3):
+            //h_totem_tres(card);
+            break;
+        case(4):
+            //h_totem_cuatro(card);
+            break;
+        case(5):
+            //h_totem_cinco(card);
+            break;
+        case(6):
+            h_totem_seis(card,area);
+            break;
+        case(7):
+            h_totem_siete(card,area);
+            break;
+
+    }
+}
+
+void h_arma_cero(carta* card){//vacio
+    carta* carta_aliado = card->arma;
+    carta_aliado->fuerza++;
+}
+
+void h_arma_uno(carta* card){//vacio
+    carta* carta_aliado = card->arma;
+    carta_aliado->fuerza+=2;
+}
+
+void h_arma_dos(carta* card){//vacio
+    carta_aliado->fuerza+=3;
+}
+
+void h_arma_tres(carta* card){//vacio
+
+}
+
+void h_arma_cuatro(carta* card){//vacio
+
+}
+
+void h_arma_cinco(carta* card){//vacio
+
+}
+
+void h_arma_seis(carta* card){//vacio
+
+}
+
+void h_arma_siete(carta* card){//vacio
+
+}
+void activarHabilidadArma(carta* card, int habilidad, Area_de_juego* area){
+
+    switch(habilidad){
+        case(0):
+            h_arma_cero(card);
+            break;
+        case(1):
+            h_arma_uno(card);
+            break;
+        case(2):
+            h_arma_dos(card);
+            break;
+        case(3):
+            h_arma_tres(card);
+            break;
+        case(4):
+            h_arma_cuatro(card);
+            break;
+        case(5):
+            h_arma_cinco(card);
+            break;
+        case(6):
+            h_arma_seis(card);
+            break;
+        case(7):
+            h_arma_siete(card);
+            break;
+
+    }
+
+}
 
