@@ -1,0 +1,62 @@
+Preparando el juego.
+
+El area de juego.
+
+Es el lugar en donde se ubicaran las cartas para desarrollar la batalla.
+Cada carta que pongas o retires del juego deberá ser puesta en un lugar especifico dentro del
+mismo, ya que cada lugar representa una función específica.
+
+El Mazo Castillo.
+
+Son las 50 cartas que componen tu baraja. Este sera tu fuente de recursos para
+enfrentar la batalla y, al mismo tiempo, recibira el daño que tu oponente realice por combate y
+efectos de cartas.
+Cuando un jugador no posee cartas en su Mazo Castillo su oponente es declarado vencedor.
+Tu Mazo Castillo se ubica a la izquierda de tu área de juego y es la base para determinar las
+demás zonas de juego.
+
+La Reserva de Oros.
+
+Contiene a todos los oros que has puesto en juego, recuerda que
+solo puedes jugar un oro por turno.
+Para pagar un oro solo debes moverlo desde tu reserva a la zona de oro pagado.
+
+Zona de Oro Pagado.
+
+Es el lugar donde se ubican los oros que pagas para jugar una carta.
+Mover los oros desde la Reserva hacia la zona de Oro Pagado es la forma de representar que
+estás “pagando” los costes de oro requeridos para bajar cartas o activar habilidades.
+Al pagar un oro, éste permanece en la zona de oro pagado hasta la siguiente fase de
+agrupacion.
+La zona de Oro Pagado se ubica al frente del Mazo Castillo.
+
+Linea de Defensa.
+
+Es el lugar donde se juegan las cartas de Aliados y desde donde defenderan tu mazo Castillo.
+Recuerda que para que un Aliado sea declarado bloqueador es necesario que se encuentre
+ubicado en esta zona.
+Tu línea de defensa se ubica a la derecha del Mazo Castillo.
+
+Linea de Ataque.
+
+Es el lugar donde se ubican los Aliados declarados atacantes. Para declarar un aliado atacante,
+debes moverlo a esta zona.
+Esta acción puede hacerse sólo durante la fase de Batalla Mitológica.
+La línea de ataque está al frente de la línea de defensa.
+
+Cementerio.
+
+Es la zona donde van tus cartas cuando salen del juego, ya sea por efectos de cartas o por
+dano de combate.
+El Cementerio está ubicado a la izquierda del Mazo Castillo.
+
+Linea de Apoyo.
+
+Es la zona donde pones el totem que juegas y se encuentra a la derecha de la reserva de oro.
+Si posees mas de un totem debes colocarlos en una fila, uno al lado del otro y no existe límite
+en la cantidad de tótem que puedas controlar.
+
+Zona de Destierro.
+
+Es una zona de juego donde van las cartas que, por efectos de juego son enviadas alli, está
+ubicada bajo el cementerio.

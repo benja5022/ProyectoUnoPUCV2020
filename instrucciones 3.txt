@@ -1,0 +1,10 @@
+Oros.
+
+Son los recursos que tienes para pagar el coste de tus cartas.
+Para jugar un Oro solo debes ponerlo desde tu mano en la zona de reserva. Esta accion puede
+ser realizada solo durante tu turno y al comienzo de la fase de vigilia.
+El Oro es la primera carta que juegas durante tu turno y puedes identificarlos por su icono en la
+esquina superior.
+Dentro del juego existen algunas cartas que generan Oros, esta generacion esta restringida por
+el texto de la las cartas y deben ser utilizadas en el momento de ser generadas, de lo contrario
+se pierden.

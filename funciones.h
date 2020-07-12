@@ -1,13 +1,17 @@
 #ifndef funciones_h
 #define funciones_h
 
+typedef struct regla regla;
 
 void reglas();
 
+regla* crear_reglas (char* nombre);
+
 void creditos();
 
-
 int cmp_str_map(const void * key1, const void * key2);
+
+void logo();
 
 carta * crearCarta(char * linea);
 

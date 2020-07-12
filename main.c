@@ -39,6 +39,9 @@ int main()
   //  system("pause");
  //   system("color 20");
 
+    logo();
+    system("cls");
+
     HashTable* TablaHash = createHashTable(stringHash,stringEqual);
     list* lista_todas_las_cartas = list_create_empty();
     FILE * archivo = fopen("Edición\\Cartas.csv","r");

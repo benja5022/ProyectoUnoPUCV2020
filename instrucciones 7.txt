@@ -1,0 +1,3 @@
+ Obtencion de la Victoria.
+
+El juego termina cuando un jugador logra que el castillo oponente no tenga cartas.
