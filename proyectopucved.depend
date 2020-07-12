@@ -56,3 +56,34 @@
 	<stdio.h>
 	"habilidades.h"
 
+1594176098 source:c:\users\matias\desktop\proyectounopucv2020-master\real\proyectounopucv2020\hashtable.c
+	"HashTable.h"
+	<math.h>
+	<string.h>
+	<stdlib.h>
+	<stdint.h>
+	<assert.h>
+
+1594176098 c:\users\matias\desktop\proyectounopucv2020-master\real\proyectounopucv2020\hashtable.h
+
+1594176099 source:c:\users\matias\desktop\proyectounopucv2020-master\real\proyectounopucv2020\list.c
+	"list.h"
+	<stdlib.h>
+	<assert.h>
+
+1594176099 c:\users\matias\desktop\proyectounopucv2020-master\real\proyectounopucv2020\list.h
+
+1594176098 source:c:\users\matias\desktop\proyectounopucv2020-master\real\proyectounopucv2020\map.c
+	"Map.h"
+	<stdlib.h>
+	<assert.h>
+
+1594588443 c:\users\matias\desktop\proyectounopucv2020-master\real\proyectounopucv2020\map.h
+
+1594176099 source:c:\users\matias\desktop\proyectounopucv2020-master\real\proyectounopucv2020\stack.c
+	"stack.h"
+	<stdlib.h>
+	<assert.h>
+
+1594176099 c:\users\matias\desktop\proyectounopucv2020-master\real\proyectounopucv2020\stack.h
+

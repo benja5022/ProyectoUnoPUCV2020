@@ -1,5 +1,6 @@
 #include "funciones.h"
 
+// hola aqui mati, saludos y cuidense :)
 int cmp_str_map(const void * key1, const void * key2){
     const char * Key1 = key1;
     const char * Key2 = key2;
