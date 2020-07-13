@@ -75,20 +75,20 @@ const char* get_csv_field (char * tmp, int i) {
 }
 
 Area_de_juego * crearAreaDeJuego(){
-    Area_de_juego* Area1 = (Area_de_juego *) malloc (sizeof(Area_de_juego));
-    Area1 ->cementerio = createMap(cmp_str_map);
-    Area1 ->linea_ataque = createMap(cmp_str_map);
-    Area1 ->linea_defensa = createMap(cmp_str_map);
-    Area1 ->mano = createMap(cmp_str_map);
-    Area1 ->mazo_castillo = createMap(cmp_str_map);
-    Area1 ->destierro = list_create_empty();
-    Area1 ->linea_de_apoyo = list_create_empty();
-    Area1 ->oros = stack_create_empty();
-    Area1 ->oro_pagado = 0;
-    Area1 ->reserva_de_oro = 0;
-    Area1 ->total = 0;
+    Area_de_juego* Area = (Area_de_juego *) malloc (sizeof(Area_de_juego));
+    Area ->cementerio = createMap(cmp_str_map);
+    Area ->linea_ataque = createMap(cmp_str_map);
+    Area ->linea_defensa = createMap(cmp_str_map);
+    Area ->mano = createMap(cmp_str_map);
+    Area ->mazo_castillo = createMap(cmp_str_map);
+    Area ->destierro = list_create_empty();
+    Area ->linea_de_apoyo = list_create_empty();
+    Area ->oros = stack_create_empty();
+    Area ->oro_pagado = 0;
+    Area ->reserva_de_oro = 0;
+    Area ->total = 0;
 
-    return Area1;
+    return Area;
 }
 
 void logo(){
@@ -128,7 +128,7 @@ void imprimirCaracteristicas(carta* card, carta* arma){
             printf("Coste: %d\n",card->coste);
             printf("Tipo: ");
             imprimirTipoCarta(card->tipo,card);
-            printf("Habilidad: No");
+            printf("Habilidad: No\n");
 
             if(arma)
             {
@@ -197,11 +197,11 @@ bool mostrarYEscoger(carta* card){ // elegirCartas
 
     gotoxy(1,9);
 
-    printf("La escoges?");
-    gotoxy(1,12);
+    printf("%cLa escoges?",168);
+    gotoxy(1,13);
     printf("Si\nNo");
     while(bandera == 0){
-        gotoxy(1,cont+3);
+        gotoxy(1,cont+4);
         tecla = getch();
         switch(tecla){
             case('w'):
@@ -262,8 +262,13 @@ Map* elegirCartas(HashTable* tablahash, list* lista_todas_las_cartas,int* cont){
     int paginas;
     int pagina_actual = 1;
 
+
     if(list_size(lista_todas_las_cartas) % 23) paginas = 1 + list_size(lista_todas_las_cartas) / 23;
     else paginas = list_size(lista_todas_las_cartas) / 23;
+
+    int cantCarxpag = list_size(lista_todas_las_cartas) -23*(pagina_actual-1);//Cantidad de cartas por pagina
+
+    printf("%d", cantCarxpag);
 
     printf("Cartas Escogidas: %d     Pagina: %d\\%d\n\n",0,pagina_actual,paginas);
 
@@ -280,11 +285,15 @@ Map* elegirCartas(HashTable* tablahash, list* lista_todas_las_cartas,int* cont){
         switch(tecla){
 
             case('w'):
+                cantCarxpag = -1*(list_size(lista_todas_las_cartas) - 23*(pagina_actual) - list_size(lista_todas_las_cartas) - 23*(pagina_actual-1));
+                //if(newcont == 1) newcont = cantCarxpag;
                 if(newcont == 1) newcont = 23;
                 else newcont--;
                 break;
             case('s'):
+                cantCarxpag = -1*(list_size(lista_todas_las_cartas) - 23*(pagina_actual) - list_size(lista_todas_las_cartas) - 23*(pagina_actual-1));
                 if(newcont == 23) newcont = 1;
+                //if(newcont == cantCarxpag) newcont = 1
                 else newcont++;
                 break;
 
@@ -293,6 +302,7 @@ Map* elegirCartas(HashTable* tablahash, list* lista_todas_las_cartas,int* cont){
                 else break;
 
                 system("cls");
+                printf("%d",cantCarxpag);
                 printf("Cartas Escogidas: %d     Pagina: %d\\%d\n\n", cartas_escogidas,pagina_actual,paginas);
                 imprimirLista(lista_todas_las_cartas,pagina_actual);
                 eleccionDePaginas(0,pagina_actual,paginas);
@@ -303,6 +313,7 @@ Map* elegirCartas(HashTable* tablahash, list* lista_todas_las_cartas,int* cont){
                 else break;
 
                 system("cls");
+                printf("%d",cantCarxpag);
                 printf("Cartas Escogidas: %d     Pagina: %d\\%d\n\n", cartas_escogidas,pagina_actual,paginas);
                 imprimirLista(lista_todas_las_cartas,pagina_actual);
                 eleccionDePaginas(1,pagina_actual,paginas);
@@ -418,8 +429,8 @@ void creditos(){
         }
 
         printf("%60s","------Creadores------\n");
-        printf("%64s","Matias Ezequiel Osorio Quinones\n");
         printf("%65s","Benjamin Ignacio Rojas Henriquez\n");
+        printf("%64s","Matias Ezequiel Osorio Quinones\n");
         printf("%65s","Gabriel Ignacio Alvarez Quintero\n");
         printf("%62s","Ignacio Cortes Gonzalez \n");
         Sleep(450);
@@ -1912,15 +1923,49 @@ void terminarTurno(Area_de_juego* Area_final){
 
 }
 
+void moverAliadoDeLugar(Map* mapa1, carta* card, Map* mapa2){
+    char* nombre = card->nombre;
+    char idcaracter = nombre[strlen(nombre)-1];
+    nombre[strlen(nombre)-1] = 64;
+
+    eraseMap(mapa1,card->nombre);
+
+    insertMap(mapa2,card->nombre,card);
+
+    nombre[strlen(nombre)-1] = idcaracter;
+}
+
+
+
+void eliminarAliado(Map* linea_de_defensa,carta* card,Map* cementerio){ // El aliado debe Pertenecer a la linea de defensa y al cementerio
+    char* nombre = card->nombre;
+    char idcaracter = nombre[strlen(nombre)-1];
+    nombre[strlen(nombre)-1] = 64;
+
+    eraseMap(linea_de_defensa,card->nombre);
+    nombre[strlen(nombre)-1] = idcaracter;
+
+    card->estado = false;
+
+    if(card->arma){
+        insertMap(cementerio,card->arma->nombre,card->arma);
+        card->arma = NULL;
+    }
+    insertMap(cementerio,card->nombre,card);
+}
+
 void comenzarAtaque(Area_de_juego* Area_final, carta* card){
     system("cls");
-    gotoxy(35,5);
+    gotoxy(40,5);
     printf("Comienzo de la Batalla Mitologica");
     gotoxy(35,15);
     printf("Ataque Iniciado por %s con %s\n\n\n",Area_final->nombre_jugador, card->nombre);
+    gotoxy(1,26);
     system("pause");
     system("cls");
     if(card->arma){
+//        printf("%d",card->arma->habilidad_arma);
+//        system("pause");
         activarHabilidadArma(card->arma,card->arma->habilidad_arma,Area_final);
     }
     comenzarDefensa(Area_final->area_enemiga,card);
@@ -1928,11 +1973,15 @@ void comenzarAtaque(Area_de_juego* Area_final, carta* card){
 }
 
 void comenzarDefensa(Area_de_juego* Area_final, carta* carta_enemiga){
+
+    //eliminarAliadoConArma(Area_final->area_enemiga->linea_defensa,carta_enemiga,Area_final->area_enemiga->cementerio);
+
+    //system("pause");
     gotoxy(35,15);
     printf("Defensa Realizada por %s",Area_final->nombre_jugador);
     gotoxy(1,20);
     printf("(Recuerda que solo puedes utlizar Talismanes o Defenderte con algún aliado de tu linea de defensa)\n");
-    gotoxy(1,25);
+    gotoxy(1,26);
     system("pause");
     system("cls");
 
@@ -1941,6 +1990,7 @@ void comenzarDefensa(Area_de_juego* Area_final, carta* carta_enemiga){
     char tecla;
     int bandera = 0;
     int cont = 1;
+    int diferencia;
     carta* defensa;
 
     while(bandera == 0){
@@ -1958,8 +2008,21 @@ void comenzarDefensa(Area_de_juego* Area_final, carta* carta_enemiga){
                 break;
             case (13):
                 switch(cont){
-                    case(1):
+                    case(1)://verifificar la cantidad de oros
                         defensa = verMano(Area_final->mano,1);//se envia la mano y la etapa(0 para lanzar y 1 para defender)
+                        if(defensa && defensa->tipo == 2){
+                            activarHabilidadTalisman(defensa,defensa->habilidad_talisman,Area_final);
+                        }
+                        else
+                        {
+                            if(defensa)
+                            {
+                                system("cls");
+                                gotoxy(35,15);
+                                printf("No se puede Jugar esta Carta Desde tu Mano en este momento\n");
+                                system("pause");
+                            }
+                        }
                         system("cls");
                         printf("\nVer Mano\nVer Caracteristicas del Aliado Enemigo\nVer Linea de defensa\nDejarse Atacar");
 
@@ -1975,23 +2038,60 @@ void comenzarDefensa(Area_de_juego* Area_final, carta* carta_enemiga){
                         system("cls");
                         defensa = verLineaDeDefensa(Area_final,1);
                         if(defensa){
+                            if(defensa->arma && (defensa->arma->habilidad_arma == 0 || defensa->arma->habilidad_arma == 1 || defensa->arma->habilidad_arma == 2)){
+                                activarHabilidadArma(defensa->arma,defensa->arma->habilidad_arma,Area_final);
+                            }
+
+                            diferencia = defensa->fuerza - carta_enemiga->fuerza;
+
+                            if(diferencia > 0){
+                                printf("Destruiste al Aliado Enemigo\n");
+
+                                eliminarAliado(Area_final->area_enemiga->linea_defensa,carta_enemiga,Area_final->area_enemiga->cementerio);
+
+                            }
+
+                            if(diferencia < 0){
+                                system("cls");
+                                printf("%d %d\n", MapCount(Area_final->mazo_castillo),MapCount(Area_final->cementerio));
+                                printf("Han destruido a tu aliado y te han enviado %d cartas al cementerio\n",diferencia * -1);
+
+                                moverAliadoDeLugar(Area_final->area_enemiga->linea_defensa,carta_enemiga,Area_final->area_enemiga->linea_ataque);
+
+                                eliminarAliado(Area_final->linea_defensa,defensa,Area_final->cementerio);
+
+                                defensa = firstMap(Area_final->mazo_castillo);
+
+                                for(int i = 0; i < diferencia *-1 && defensa != NULL; i++,defensa = firstMap(Area_final->mazo_castillo)){
+                                    eraseMap(Area_final->mazo_castillo,defensa->nombre);
+                                    insertMap(Area_final->cementerio,defensa->nombre,defensa);
+                                }
+                                printf("%d %d\n", MapCount(Area_final->mazo_castillo),MapCount(Area_final->cementerio));
+                            }
+
+                            if(diferencia*-1 == 0){
+                                printf("Ambos Aliados han sido Destuidos\n");
+
+                                eliminarAliado(Area_final->area_enemiga->linea_defensa,carta_enemiga,Area_final->area_enemiga->cementerio);
+                                eliminarAliado(Area_final->linea_defensa,defensa,Area_final->cementerio);
+
+                            }
+
                             printf("pep");
                             system("pause");
+                            return;
                         }
+
                         system("cls");
                         printf("\nVer Mano\nVer Caracteristicas del Aliado Enemigo\nVer Linea de defensa\nDejarse Atacar");
                         break;
                     case (4):
+
                         return ;//NULL;
                         break;
 
                 }
-
-
-
-
         }
-
 
     }
 }

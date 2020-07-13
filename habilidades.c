@@ -406,6 +406,7 @@ void h_arma_seis(carta* card){//vacio
 void h_arma_siete(carta* card){//vacio
 
 }
+
 void activarHabilidadArma(carta* card, int habilidad, Area_de_juego* area){
 
     switch(habilidad){
@@ -436,6 +437,95 @@ void activarHabilidadArma(carta* card, int habilidad, Area_de_juego* area){
 
     }
 
+}
+
+void h_talisman_cero(carta* card){//vacio
+
+}
+
+void h_talisman_uno(carta* card){//vacio
+
+}
+void h_talisman_dos(carta* card){//vacio
+
+}
+void h_talisman_tres(carta* card){//vacio
+
+}
+void h_talisman_cuatro(carta* card){//vacio
+
+}
+void h_talisman_cinco(carta* card){//vacio
+
+}
+void h_talisman_seis(carta* card){//vacio
+
+}
+void h_talisman_siete(carta* card){//vacio
+
+}
+void h_talisman_ocho(carta* card){//vacio
+
+}
+void h_talisman_nueve(carta* card){//vacio
+
+}
+void h_talisman_diez(carta* card){//vacio
+
+}
+void h_talisman_once(carta* card){//vacio
+
+}
+void h_talisman_doce(carta* card){//vacio
+
+}
+
+
+void activarHabilidadTalisman(carta* card, int habilidad, Area_de_juego* area){
+    switch(habilidad){
+        case(0):
+            h_talisman_cero(card);
+            break;
+        case(1):
+            h_talisman_uno(card);
+            break;
+        case(2):
+            h_talisman_dos(card);
+            break;
+        case(3):
+            h_talisman_tres(card);
+            break;
+        case(4):
+            h_talisman_cuatro(card);
+            break;
+        case(5):
+            h_talisman_cinco(card);
+            break;
+        case(6):
+            h_talisman_seis(card);
+            break;
+        case(7):
+            h_talisman_siete(card);
+            break;
+        case(8):
+            h_talisman_ocho(card);
+            break;
+        case(9):
+            h_talisman_nueve(card);
+            break;
+        case(10):
+            h_talisman_diez(card);
+            break;
+        case(11):
+            h_talisman_once(card);
+            break;
+        case(12):
+            h_talisman_doce(card);
+            break;
+        default:
+            break;
+
+    }
 }
 
 

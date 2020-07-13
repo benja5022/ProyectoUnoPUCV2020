@@ -26,10 +26,10 @@
 
 1594606369 c:\users\benjamín\desktop\proyecto pucv ed\proyectopucved\funciones.h
 
-1594607557 c:\users\benjamín\desktop\proyecto pucv ed\proyectopucved\funciones.c
+1594662022 c:\users\benjamín\desktop\proyecto pucv ed\proyectopucved\funciones.c
 	"funciones.h"
 
-1593806803 source:c:\users\benjamín\desktop\proyecto pucv ed\proyectopucved\map.c
+1594616389 source:c:\users\benjamín\desktop\proyecto pucv ed\proyectopucved\map.c
 	"Map.h"
 	<stdlib.h>
 	<assert.h>
@@ -52,7 +52,7 @@
 
 1594517546 c:\users\benjamín\desktop\proyecto pucv ed\proyectopucved\habilidades.h
 
-1594606369 c:\users\benjamín\desktop\proyecto pucv ed\proyectopucved\habilidades.c
+1594658025 c:\users\benjamín\desktop\proyecto pucv ed\proyectopucved\habilidades.c
 	<stdio.h>
 	"habilidades.h"
 	"funciones.h"

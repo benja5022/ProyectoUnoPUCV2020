@@ -251,6 +251,7 @@ void * eraseMap(Map * list, const void * key) {
     return data;
 }
 
+
 void removeAllMap(Map * list) {
     assert(list != NULL); // list no puede ser NULL.
 
