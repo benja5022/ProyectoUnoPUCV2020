@@ -266,9 +266,7 @@ Map* elegirCartas(HashTable* tablahash, list* lista_todas_las_cartas,int* cont){
     if(list_size(lista_todas_las_cartas) % 23) paginas = 1 + list_size(lista_todas_las_cartas) / 23;
     else paginas = list_size(lista_todas_las_cartas) / 23;
 
-    int cantCarxpag = list_size(lista_todas_las_cartas) -23*(pagina_actual-1);//Cantidad de cartas por pagina
-
-    printf("%d", cantCarxpag);
+    int cantCarxpag = 23;
 
     printf("Cartas Escogidas: %d     Pagina: %d\\%d\n\n",0,pagina_actual,paginas);
 
@@ -285,21 +283,31 @@ Map* elegirCartas(HashTable* tablahash, list* lista_todas_las_cartas,int* cont){
         switch(tecla){
 
             case('w'):
-                cantCarxpag = -1*(list_size(lista_todas_las_cartas) - 23*(pagina_actual) - list_size(lista_todas_las_cartas) - 23*(pagina_actual-1));
                 //if(newcont == 1) newcont = cantCarxpag;
-                if(newcont == 1) newcont = 23;
+                if(newcont == 1) newcont = cantCarxpag;
                 else newcont--;
                 break;
             case('s'):
-                cantCarxpag = -1*(list_size(lista_todas_las_cartas) - 23*(pagina_actual) - list_size(lista_todas_las_cartas) - 23*(pagina_actual-1));
-                if(newcont == 23) newcont = 1;
+
+                if(newcont == cantCarxpag) newcont = 1;
                 //if(newcont == cantCarxpag) newcont = 1
                 else newcont++;
                 break;
 
             case('d'):
+
+
                 if(pagina_actual < paginas) pagina_actual++;
                 else break;
+
+                if(pagina_actual * 23 > list_size(lista_todas_las_cartas)){
+
+                    cantCarxpag = list_size(lista_todas_las_cartas) - (pagina_actual-1) * 23;
+                    if(newcont > cantCarxpag){
+                        newcont = cantCarxpag;
+                    }
+                }
+                else cantCarxpag = 23;
 
                 system("cls");
                 printf("%d",cantCarxpag);
@@ -309,11 +317,21 @@ Map* elegirCartas(HashTable* tablahash, list* lista_todas_las_cartas,int* cont){
 
                 break;
             case('a'):
+
+
                 if(pagina_actual > 1) pagina_actual--;
                 else break;
 
+                if(pagina_actual * 23 > list_size(lista_todas_las_cartas)){
+
+                    cantCarxpag = list_size(lista_todas_las_cartas) - (pagina_actual-1) * 23;
+                    if(newcont > cantCarxpag){
+                        newcont = cantCarxpag;
+                    }
+                }
+                else cantCarxpag = 23;
+
                 system("cls");
-                printf("%d",cantCarxpag);
                 printf("Cartas Escogidas: %d     Pagina: %d\\%d\n\n", cartas_escogidas,pagina_actual,paginas);
                 imprimirLista(lista_todas_las_cartas,pagina_actual);
                 eleccionDePaginas(1,pagina_actual,paginas);
@@ -664,6 +682,10 @@ void ingresoAreaDeJuego(Area_de_juego* area, carta* card, int zona, char* nombre
 
             break;
 
+        case(10):
+            insertMap(area->mazo_castillo,card->nombre,card);
+            break;
+
         default:
             break;
 
@@ -799,7 +821,14 @@ Area_de_juego* buscarPartida(HashTable* tabla){
             }
             else
             {
+
                 zona = atoi(get_csv_field(current,3));
+                if(zona == 10){
+                    printf("La bandera, %s",busqueda->nombre);
+                    system("pause");
+                    busqueda->tipo = atoi(get_csv_field(current,4));
+                    busqueda->coste = atoi(get_csv_field(current,5));
+                }
                 strcpy(nombre_aliado,get_csv_field(current,4));
                 zona_del_aliado = atoi(get_csv_field(current,5));
                 ingresoAreaDeJuego(area2,busqueda,zona,nombre_aliado,zona_del_aliado);
@@ -810,10 +839,10 @@ Area_de_juego* buscarPartida(HashTable* tabla){
 
     fclose(partida_salvada_escogida);
 
-//    printf("%ld %ld %ld %ld %ld %ld %ld %ld\n", MapCount(area->mano), list_size(area->destierro), area->reserva_de_oro, MapCount(area->cementerio), MapCount(area->linea_defensa), MapCount(area->mazo_castillo), list_size(area->linea_de_apoyo), area->total);
-//    area = area2;
-//    printf("%ld %ld %ld %ld %ld %ld %ld %ld\n", MapCount(area->mano), list_size(area->destierro), area->reserva_de_oro, MapCount(area->cementerio), MapCount(area->linea_defensa), MapCount(area->mazo_castillo), list_size(area->linea_de_apoyo), area->total);
-//    system("pause");
+ //   printf("%ld %ld %ld %ld %ld %ld %ld %ld\n", MapCount(area->mano), list_size(area->destierro), area->reserva_de_oro, MapCount(area->cementerio), MapCount(area->linea_defensa), MapCount(area->mazo_castillo), list_size(area->linea_de_apoyo), area->total);
+ //   area= area2;
+ //   printf("%ld %ld %ld %ld %ld %ld %ld %ld\n", MapCount(area->mano), list_size(area->destierro), area->reserva_de_oro, MapCount(area->cementerio), MapCount(area->linea_defensa), MapCount(area->mazo_castillo), list_size(area->linea_de_apoyo), area->total);
+ //   system("pause");
     return area;
 }
 
@@ -1526,7 +1555,7 @@ void descartarCarta(Area_de_juego* area){
 
 }
 
-void Barajar_Mazo(Map *mazo){//gabo
+void Barajar_Mazo(Map *mazo){
 
     carta **arreglocartas = (carta**) malloc (50 * sizeof(carta*));
     int i = 0;
@@ -1786,15 +1815,6 @@ void escribirEnArchivoCSV(Area_de_juego* area, FILE* archivo){
 
     removeAllMap(area->cementerio);
 
-    current = lastMap(area->mazo_castillo);
-    while(MapCount(area->mazo_castillo) > 0 && current!= NULL){
-        ImpresionPartidaCSVsa(palabra,area->nombre_jugador,current->nombre,'1');
-
-        fprintf(archivo,palabra);
-        current = prevMap(area->mazo_castillo);
-    }
-    removeAllMap(area->mazo_castillo);
-
     current = lastMap(area->mano);
     while(MapCount(area->mano) > 0 && current!= NULL ){
         ImpresionPartidaCSVsa(palabra,area->nombre_jugador,current->nombre,'2');
@@ -1831,8 +1851,8 @@ void escribirEnArchivoCSV(Area_de_juego* area, FILE* archivo){
     current = lastMap(area->linea_defensa);
     while(MapCount(area->linea_defensa) > 0 && current!= NULL){
         if(current->arma != NULL){
-            printf("%s\n",current->arma->nombre);
-            system("pause");
+//            printf("%s\n",current->arma->nombre);
+//            system("pause");
             ImpresionPartidaCSVsa(palabra,area->nombre_jugador,current->nombre,'5');
 
             fprintf(archivo,palabra);
@@ -1856,10 +1876,6 @@ void escribirEnArchivoCSV(Area_de_juego* area, FILE* archivo){
     while(list_size(area->destierro) > 0 && current!= NULL){
         current = list_pop_back(area->destierro);
         ImpresionPartidaCSVsa(palabra,area->nombre_jugador,current->nombre,'8');
-/*
-        int tamano = strlen(palabra);
-        palabra[tamano-1]='\0';
-        strcat(palabra,"nada,0,\n");*/
 
         fprintf(archivo,palabra);
     }
@@ -1873,6 +1889,25 @@ void escribirEnArchivoCSV(Area_de_juego* area, FILE* archivo){
         fprintf(archivo,palabra);
     }
     area->linea_de_apoyo = NULL;
+
+    current = lastMap(area->mazo_castillo);
+    while(MapCount(area->mazo_castillo) > 0 && current!= NULL){
+        if(strcmp(current->nombre,"Bandera") == 0){
+
+            fprintf(archivo,",%s,%s,%s,%c,%c,",area->nombre_jugador,"Bandera","10",current->tipo+48,current->coste+48);
+            current = prevMap(area->mazo_castillo);
+        }
+        else
+        {
+            ImpresionPartidaCSVsa(palabra,area->nombre_jugador,current->nombre,'1');
+
+            fprintf(archivo,palabra);
+            current = prevMap(area->mazo_castillo);
+        }
+
+
+    }
+    removeAllMap(area->mazo_castillo);
 }
 
 void guardarPartida(Area_de_juego* area){//**********
@@ -1974,9 +2009,6 @@ void comenzarAtaque(Area_de_juego* Area_final, carta* card){
 
 void comenzarDefensa(Area_de_juego* Area_final, carta* carta_enemiga){
 
-    //eliminarAliadoConArma(Area_final->area_enemiga->linea_defensa,carta_enemiga,Area_final->area_enemiga->cementerio);
-
-    //system("pause");
     gotoxy(35,15);
     printf("Defensa Realizada por %s",Area_final->nombre_jugador);
     gotoxy(1,20);
@@ -2107,6 +2139,21 @@ void comenzarJuego(Area_de_juego* Area_final){
     unsigned short cont = 1;
     carta* cartaJugada = NULL;
 
+    carta* estado_bandera = eraseMap(Area_final->area_enemiga->mazo_castillo,"Bandera");
+    //eraseMap(Area_final->area_enemiga->mazo_castillo,"Bandera");
+    if(estado_bandera == NULL){
+        estado_bandera = crearCarta(",band,Bandera,0,0,0,0,0,0,");
+        printf("Partida Nueva");
+        system("pause");
+    }
+    else
+    {
+//        printf("La mea cagá");
+//        system("pause");
+        b_agrupacion_oro = estado_bandera->tipo;
+        b_agrupacion_aliado = estado_bandera->coste;
+    }
+
     do{
         while(bandera == 0){
             gotoxy(1,cont+1);
@@ -2225,6 +2272,13 @@ void comenzarJuego(Area_de_juego* Area_final){
                 bandera = 0;
                 break;
             case 13:
+                estado_bandera->tipo = b_agrupacion_oro;
+                estado_bandera->coste = b_agrupacion_aliado;
+
+                //strcpy(estado_bandera->nombre,Area_final->area_enemiga->nombre_jugador);
+
+                insertMap(Area_final->area_enemiga->mazo_castillo,estado_bandera->nombre,estado_bandera);
+
                 guardarPartida(Area_final);
                 system("cls");
                 imprimirCuadrado();
