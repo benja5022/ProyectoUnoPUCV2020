@@ -5,6 +5,7 @@
 #include <conio.h>
 #include <ctype.h>
 #include <windows.h>
+#include <MMsystem.h>
 #include "HashTable.h"
 #include "stack.h"
 #include "list.h"
@@ -38,6 +39,8 @@ int main()
   //  imprimirHabilidadTalisman(5);
   //  system("pause");
  //   system("color 20");
+
+    PlaySound("Proyecto1.wav",NULL,SND_ASYNC | SND_LOOP); //| SND_LOOP);
 
     logo();
     system("cls");

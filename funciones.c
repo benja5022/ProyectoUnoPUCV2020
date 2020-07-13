@@ -366,11 +366,15 @@ Map* elegirCartas(HashTable* tablahash, list* lista_todas_las_cartas,int* cont){
 }
 
 void reglas(){
-    return;
-/*
+
     list* reglamento = list_create_empty();
     FILE* reglamentos = fopen ("Instrucciones//reglas.csv","r");
     char linea [1000];
+
+    if(reglamento == NULL){
+        printf("NO");
+        system("pause");
+    }
 
     while (fgets (linea,1000, reglamentos)){
         char* nombre;// = (char*) malloc (sizeof(char)*1000);
@@ -425,7 +429,7 @@ void reglas(){
         strcat(copia,".txt");
         system("cls");
     }
-    */
+
 }
 
 regla* crear_reglas (char* nombre){
