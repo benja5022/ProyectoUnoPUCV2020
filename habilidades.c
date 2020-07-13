@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include "habilidades.h"
+#include "funciones.h"
+
 
 struct carta{
 
@@ -71,6 +73,7 @@ void imprimirHabilidadTotem(int habilidad){
 
 void imprimirHabilidadTalisman(int habilidad){
     switch(habilidad){
+
         case(0):
             printf("Destruye a un aliado oponente");
             break;
@@ -142,10 +145,10 @@ void imprimirHabilidadArma(int habilidad){
             printf("En tu vigilia,Una vez por turno, un Jugador bota tantas cartas como aliados controles");
             break;
         case(6):
-            printf("Una vez por turno, puedes desterrar un aliado de tu mano para buscar en tu castillo o cementerio y ponerlo en tu mano");
+            printf("Puedes desterrar un aliado de tu mano para buscar en tu Castillo/Cementerio y ponerlo en tu mano(1 vez por turno)");
             break;
         case(7):
-            printf("Cada vez que el portador haga daño de combate a un castillo oponente, pudes ganar el control de un aliado oponente");
+            printf("Cuando el Portador haga daño de combate a un castillo oponente, puedes ganar el control de un aliado oponente");
             break;
 
     }
@@ -279,28 +282,116 @@ void activarHabilidadTotem(carta* card, int habilidad, Area_de_juego* area){
 
     }
 }
-/*
 
-void h_arma_cero(carta* card){//vacio
+
+void h_arma_cero(carta* card){
     carta* carta_aliado = card->arma;
     carta_aliado->fuerza++;
 }
 
-void h_arma_uno(carta* card){//vacio
+void h_arma_uno(carta* card){
     carta* carta_aliado = card->arma;
     carta_aliado->fuerza+=2;
 }
 
-void h_arma_dos(carta* card){//vacio
+void h_arma_dos(carta* card){
     carta* carta_aliado = card->arma;
     carta_aliado->fuerza+=3;
 }
 
+void h_arma_tres(carta* card , Area_de_juego *Areafinal){
+
+    carta *nav = firstMap(Areafinal->cementerio);
+
+    while(nav != NULL){
+
+        if(nav->tipo == 3){
+
+            insertMap(Areafinal->mano , nav->nombre , nav);
+            eraseMap(Areafinal->cementerio , nav->nombre);
+
+        }
+
+        nav = nextMap(Areafinal->cementerio);
+
+    }
+
+}
+/*
+void h_arma_cuatro(carta* card , Area_de_juego *Areafinal){// en el menu principal, crear un submenu preguntando si se quiere usar esta habilidad
+
+    carta *current = NULL;
+    imprimirMapa(Areafinal->area_enemiga->cementerio);
+
+    unsigned short i;
+    unsigned short cont = 1;
+    char tecla;
+    unsigned short bandera = 0;
+
+
+    while(bandera == 0){
+        gotoxy(1,cont+1);
+
+        tecla = getch();
+
+        switch(tecla){
+            case ('w'):
+                if(cont == 1) cont = MapCount(Areafinal->area_enemiga->cementerio);
+                else cont--;
+
+                break;
+            case ('s'):
+                if(cont == MapCount(Areafinal->area_enemiga->cementerio)) cont = 1;
+                else cont++;
+                break;
+            case (13):
+                for(i = 0, current = firstMap(Areafinal->area_enemiga->cementerio); i < cont-1 ; i++,current = nextMap(Areafinal->area_enemiga->cementerio));
+
+                system("cls");
+                imprimirCaracteristicas(current,current->arma);
+                unsigned short sino = 1;
+                printf("Desterrar esta carta?\n");
+                printf("Si No\n");
+
+                switch(tecla){
+
+                    case ('a'):
+                        if(sino == 1) sino = 2;
+                        else sino--;
+                        break;
+
+                    case ('d'):
+                        if(sino == 2) sino = 1;
+                        else sino--;
+                        break;
+
+                    case (13):
+                        if(sino == 1){
+                            eraseMap(Areafinal->area_enemiga->cementerio , current->nombre);
+                            return;
+                        }
+
+                        if(sino == 2){
+                            imprimirMapa(Areafinal->area_enemiga->cementerio);
+                        }
+
+                        break;
+
+                    case (8):
+                        bandera == 1;
+                        return;
+                }
+            }
+
+        }
+
+}*/
+/*
 void h_arma_tres(carta* card){//vacio
 
 }
-
-void h_arma_cuatro(carta* card){//vacio
+*/
+void h_arma_cuatro(carta* card, Area_de_juego* area){//vacio
 
 }
 
@@ -328,10 +419,10 @@ void activarHabilidadArma(carta* card, int habilidad, Area_de_juego* area){
             h_arma_dos(card);
             break;
         case(3):
-            h_arma_tres(card);
+            h_arma_tres(card,area);
             break;
         case(4):
-            h_arma_cuatro(card);
+            h_arma_cuatro(card,area);
             break;
         case(5):
             h_arma_cinco(card);
@@ -347,4 +438,4 @@ void activarHabilidadArma(carta* card, int habilidad, Area_de_juego* area){
 
 }
 
-*/
+

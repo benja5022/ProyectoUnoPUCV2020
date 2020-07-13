@@ -92,46 +92,98 @@ Area_de_juego * crearAreaDeJuego(){
 }
 
 void logo(){
-    int boton2;
+//    int boton2;
     gotoxy(41,10);
     printf("   BIENVENIDOS A MITOS & LEYENDAS   \n\n");
     //menu inicio
-    do{
+//    do{
     printf("                                                   INSTRUCCIONES            \n");
     printf("                                               W,A,D y S para moverse          \n");
     printf("                                                ENTER para selecionar        \n\n");
-    printf("                                      presione cualquier boton para comenzar\n");
-    scanf("%d",&boton2);
-    }while(boton2<0);
+    //printf("                                      presione cualquier boton para comenzar\n");
+    //scanf("%d",&boton2);
+    system("pause");
+//    }while(boton2<0);
 
 }
 
 void imprimirCaracteristicas(carta* card, carta* arma){
-    printf("Caracteristicas:\n\n");
-    printf("Nombre: %s\n",card->nombre);
-    printf("Fuerza: %d\n",card->fuerza);
-    printf("Coste: %d\n",card->coste);
-    printf("Tipo: ");
-    imprimirTipoCarta(card->tipo,card);
-    if(arma && card->tipo == 1)
-    {
-        printf("Arma: %s\n",card->arma->nombre);
-        gotoxy(40,1);
-        printf("Caracteristicas del Arma:");
-        gotoxy(40,3);
-        printf("Nombre: %s\n",arma->nombre);
-        gotoxy(40,4);
-        printf("Fuerza: %d\n",arma->fuerza);
-        gotoxy(40,5);
-        printf("Coste: %d\n",arma->coste);
-    }
-    else
-    {
-        if(card->tipo == 1) printf("Arma: No\n");
+
+    int tipo = card->tipo;
+
+    switch(tipo){
+        case(0):
+            printf("Caracteristicas:\n\n");
+            printf("Nombre: %s\n",card->nombre);
+            printf("Fuerza: %d\n",card->fuerza);
+            printf("Coste: %d\n",card->coste);
+            printf("Tipo: ");
+            imprimirTipoCarta(card->tipo,card);
+            printf("Habilidad: No");
+            break;
+        case(1):
+            printf("Caracteristicas:\n\n");
+            printf("Nombre: %s\n",card->nombre);
+            printf("Fuerza: %d\n",card->fuerza);
+            printf("Coste: %d\n",card->coste);
+            printf("Tipo: ");
+            imprimirTipoCarta(card->tipo,card);
+            printf("Habilidad: No");
+            if(arma)
+            {
+                printf("Arma: %s\n",card->arma->nombre);
+                gotoxy(40,1);
+                printf("Caracteristicas del Arma:");
+                gotoxy(40,3);
+                printf("Nombre: %s\n",arma->nombre);
+                gotoxy(40,4);
+                printf("Fuerza: %d\n",arma->fuerza);
+                gotoxy(40,5);
+                printf("Coste: %d\n",arma->coste);
+                gotoxy(40,6);
+                printf("Habilidad: ");
+                imprimirHabilidadArma(arma->habilidad_arma);
+            }
+            else
+            {
+                if(card->tipo == 1) printf("Arma: No\n");
+            }
+            break;
+        case(2):
+            printf("Caracteristicas:\n\n");
+            printf("Nombre: %s\n",card->nombre);
+            printf("Fuerza: %d\n",card->fuerza);
+            printf("Coste: %d\n",card->coste);
+            printf("Tipo: ");
+            imprimirTipoCarta(card->tipo,card);
+            printf("Habilidad: ");
+            imprimirHabilidadTalisman(card->habilidad_talisman);
+            break;
+        case(3):
+            printf("Caracteristicas:\n\n");
+            printf("Nombre: %s\n",card->nombre);
+            printf("Fuerza: %d\n",card->fuerza);
+            printf("Coste: %d\n",card->coste);
+            printf("Tipo: ");
+            imprimirTipoCarta(card->tipo,card);
+            printf("Habilidad: ");
+            imprimirHabilidadArma(card->habilidad_arma);
+            break;
+        case(4):
+            printf("Caracteristicas:\n\n");
+            printf("Nombre: %s\n",card->nombre);
+            printf("Fuerza: %d\n",card->fuerza);
+            printf("Coste: %d\n",card->coste);
+            printf("Tipo: ");
+            imprimirTipoCarta(card->tipo,card);
+            printf("Habilidad: ");
+            imprimirHabilidadTotem(card->habilidad_totem);
+            break;
+
 
     }
 
-    gotoxy(1,20);
+//    gotoxy(1,20);
 
 }
 
@@ -142,9 +194,13 @@ bool mostrarYEscoger(carta* card){ // elegirCartas
     int bandera = 0;
     char tecla;
 
-    printf("\nLa escoges?\n\nSi\nNo");
+    gotoxy(1,9);
+
+    printf("La escoges?");
+    gotoxy(1,12);
+    printf("Si\nNo");
     while(bandera == 0){
-        gotoxy(1,cont+1);
+        gotoxy(1,cont+3);
         tecla = getch();
         switch(tecla){
             case('w'):
@@ -158,6 +214,10 @@ bool mostrarYEscoger(carta* card){ // elegirCartas
             case(13):
                 bandera = cont;
                 break;
+            case(8):
+                return false;
+                break;
+
         }
     }
     if(bandera == 9) return true;
@@ -276,71 +336,73 @@ Map* elegirCartas(HashTable* tablahash, list* lista_todas_las_cartas,int* cont){
 }
 
 void reglas(){
-
- list* reglamento = list_create_empty();
- FILE* reglamentos = fopen ("reglas.csv","r");
- char linea [1000];
-
- while (fgets (linea,1000, reglamentos)){
-
- char* nombre = get_csv_field(linea,1);
- regla *r = crear_reglas(nombre);
-
- list_push_back(reglamento,r);
-}
-
-system("cls");
-
-regla* aux = list_first(reglamento);
-
-int boton=1;
-char tecla;
-int cont = 0;
-char copia[1000];
-strcpy(copia,aux->nombre);
-strcat(copia,".txt");
-
-while(aux!=NULL){
-
-FILE *fp = fopen(copia,"r");
-char line[1024];
-
-while(fgets(line , 1024 , fp)){
-
-printf("%s\n" , line);
-
-}
-
-printf("\n| presione d para continuar | a para retroceder | retroceso para salir |\n");
-
-tecla = getch();
-
-if(tecla=='d' && cont!=6){
-    aux=list_next(reglamento);
-    cont++;
-}
-
-if(tecla=='a' && cont!=0){
-    aux=list_prev(reglamento);
-    cont--;
-}
-
-if(tecla==8){
-    system("cls");
     return;
-}
+/*
+    list* reglamento = list_create_empty();
+    FILE* reglamentos = fopen ("Instrucciones//reglas.csv","r");
+    char linea [1000];
 
-strcpy(copia,aux->nombre);
-strcat(copia,".txt");
-system("cls");
-}
+    while (fgets (linea,1000, reglamentos)){
+        char* nombre;// = (char*) malloc (sizeof(char)*1000);
+        nombre = get_csv_field(linea,1);
+        regla *r = crear_reglas(nombre);
+
+        list_push_back(reglamento,r);
+    }
+
+    system("cls");
+
+    regla* aux = list_first(reglamento);
+
+//    int boton=1;
+    char tecla;
+    int cont = 0;
+    char copia[1000];
+    strcpy(copia,aux->nombre);
+    strcat(copia,".txt");
+
+    while(aux!=NULL){
+
+        FILE *fp = fopen(copia,"r");
+        char line[1024];
+
+        while(fgets(line , 1024 , fp)){
+
+        printf("%s\n" , line);
+
+    }
+
+        printf("\n| presione d para continuar | a para retroceder | retroceso para salir |\n");
+
+        tecla = getch();
+
+        if(tecla=='d' && cont!=6){
+            aux=list_next(reglamento);
+            cont++;
+        }
+
+        if(tecla=='a' && cont!=0){
+            aux=list_prev(reglamento);
+            cont--;
+        }
+
+        if(tecla==8){
+            system("cls");
+            return;
+        }
+
+        strcpy(copia,aux->nombre);
+        strcat(copia,".txt");
+        system("cls");
+    }
+    */
 }
 
 regla* crear_reglas (char* nombre){
 
- regla *r = malloc (sizeof(regla));
- r->nombre= nombre;
- return r;
+    regla *r = malloc (sizeof(regla));
+    r->nombre= nombre;
+    return r;
 
 }
 
@@ -890,6 +952,9 @@ bool opcionesCarta(int num){
         case (3):
             printf("Atacar Volver\n");
             break;
+        case (4):
+            printf("Defender Volver\n");
+            break;
     }
 
     char tecla;
@@ -939,7 +1004,7 @@ void imprimirMapa(Map* mapa){
     for(current = firstMap(mapa);current != NULL ; current = nextMap(mapa)) printf("%s\n",current->nombre);
 }
 
-carta* verMano(Map* mano){
+carta* verMano(Map* mano,int etapa){//, int etapa){
     system("cls");
     if(MapCount(mano) == 0){
         printf("No tienes Cartas");
@@ -976,7 +1041,13 @@ carta* verMano(Map* mano){
 
                 system("cls");
                 imprimirCaracteristicas(current,current->arma);
-                if(opcionesCarta(0)) return current;
+                if(etapa == 0){
+                    if(opcionesCarta(0)) return current;
+                }
+                else
+                {
+                    if(opcionesCarta(4)) return current;
+                }
 
                 system("cls");
                 printf("\n");
@@ -1322,12 +1393,12 @@ void verDestierro(Area_de_juego* Area){
 
 }
 
-bool verLineaDeDefensa(Area_de_juego* Area){
+carta* verLineaDeDefensa(Area_de_juego* Area, int etapa){
     system("cls");
     if(MapCount(Area->linea_defensa) == 0){
         printf("No tienes aliados en la linea de defensa\n");
         system("pause");
-        return false;
+        return NULL;
     }
 
     carta* current;
@@ -1360,21 +1431,31 @@ bool verLineaDeDefensa(Area_de_juego* Area){
                 for(i = 0, current = firstMap(Defensa); i < cont-1 ; i++,current = nextMap(Defensa));
                 system("cls");
                 imprimirCaracteristicas(current,current->arma);
-                if(opcionesCarta(3)){
-                    printf("Coco\n");
-                    return true;
+
+                switch(etapa){
+                    case (0): // atacar
+                        if(opcionesCarta(3))
+                        {
+                            //comenzarAtaque(Area,current);
+                            return current;
+                        }
+                        break;
+                    case (1): // defender
+                        if(opcionesCarta(4)){
+                            return current;
+                        }
+                        break;
                 }
-                system("pause");
                 system("cls");
                 printf("\n");
                 imprimirMapa(Defensa);
                 break;
             case (8):
-                return false;
+                return NULL;
                 break;
         }
     }
-    return false;
+    return NULL;
 }
 
 void descartarCarta(Area_de_juego* area){
@@ -1828,13 +1909,88 @@ void terminarTurno(Area_de_juego* Area_final){
 
 }
 
-void comenzarAtaque(Area_de_juego* Area_final){
-
-
+void comenzarAtaque(Area_de_juego* Area_final, carta* card){
+    system("cls");
+    gotoxy(35,5);
+    printf("Comienzo de la Batalla Mitologica");
+    gotoxy(35,15);
+    printf("Ataque Iniciado por %s con %s\n\n\n",Area_final->nombre_jugador, card->nombre);
+    system("pause");
+    system("cls");
+    if(card->arma){
+        activarHabilidadArma(card->arma,card->arma->habilidad_arma,Area_final);
+    }
+    comenzarDefensa(Area_final->area_enemiga,card);
+    //imprimirCaracteristicas(card,card->arma);
 }
 
-void comenzarDefensa(Area_de_juego* Area_final){
+void comenzarDefensa(Area_de_juego* Area_final, carta* carta_enemiga){
+    gotoxy(35,15);
+    printf("Defensa Realizada por %s",Area_final->nombre_jugador);
+    gotoxy(1,20);
+    printf("(Recuerda que solo puedes utlizar Talismanes o Defenderte con algún aliado de tu linea de defensa)\n");
+    gotoxy(1,25);
+    system("pause");
+    system("cls");
 
+    printf("\nVer Mano\nVer Caracteristicas del Aliado Enemigo\nVer Linea de defensa\nDejarse Atacar");
+
+    char tecla;
+    int bandera = 0;
+    int cont = 1;
+    carta* defensa;
+
+    while(bandera == 0){
+        gotoxy(1,cont+1);
+        tecla = getch();
+        switch(tecla){
+            case ('w'):
+                if(cont == 1) cont = 4 ;
+                else cont--;
+
+                break;
+            case ('s'):
+                if(cont == 4) cont = 1;
+                else cont++;
+                break;
+            case (13):
+                switch(cont){
+                    case(1):
+                        defensa = verMano(Area_final->mano,1);//se envia la mano y la etapa(0 para lanzar y 1 para defender)
+                        system("cls");
+                        printf("\nVer Mano\nVer Caracteristicas del Aliado Enemigo\nVer Linea de defensa\nDejarse Atacar");
+
+                        break;
+                    case(2):
+                        system("cls");
+                        imprimirCaracteristicas(carta_enemiga,carta_enemiga->arma);
+                        system("pause");
+                        system("cls");
+                        printf("\nVer Mano\nVer Caracteristicas del Aliado Enemigo\nVer Linea de defensa\nDejarse Atacar");
+                        break;
+                    case(3):
+                        system("cls");
+                        defensa = verLineaDeDefensa(Area_final,1);
+                        if(defensa){
+                            printf("pep");
+                            system("pause");
+                        }
+                        system("cls");
+                        printf("\nVer Mano\nVer Caracteristicas del Aliado Enemigo\nVer Linea de defensa\nDejarse Atacar");
+                        break;
+                    case (4):
+                        return ;//NULL;
+                        break;
+
+                }
+
+
+
+
+        }
+
+
+    }
 }
 
 void comenzarJuego(Area_de_juego* Area_final){
@@ -1878,7 +2034,7 @@ void comenzarJuego(Area_de_juego* Area_final){
 
         switch(bandera){
             case 1:
-                cartaJugada = verMano(Area_final->mano);
+                cartaJugada = verMano(Area_final->mano, 0);
 
                 if(cartaJugada){
                     analizarYLanzarCarta(cartaJugada,Area_final);
@@ -1931,7 +2087,10 @@ void comenzarJuego(Area_de_juego* Area_final){
                 bandera = 0;
                 break;
             case 8:
-                if(verLineaDeDefensa(Area_final)){
+                cartaJugada = NULL;
+                cartaJugada = verLineaDeDefensa(Area_final,0);
+                if(cartaJugada){
+                    comenzarAtaque(Area_final,cartaJugada);
                     b_agrupacion_aliado = 1;
                 }
                 bandera = 0;

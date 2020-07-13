@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1594514126 source:c:\users\benjamín\desktop\proyecto pucv ed\proyectopucved\main.c
+1594591362 source:c:\users\benjamín\desktop\proyecto pucv ed\proyectopucved\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -24,9 +24,9 @@
 
 1593744251 c:\users\benjamín\desktop\proyecto pucv ed\proyectopucved\hashtable.h
 
-1594572645 c:\users\benjamín\desktop\proyecto pucv ed\proyectopucved\funciones.h
+1594597043 c:\users\benjamín\desktop\proyecto pucv ed\proyectopucved\funciones.h
 
-1594573827 c:\users\benjamín\desktop\proyecto pucv ed\proyectopucved\funciones.c
+1594604912 c:\users\benjamín\desktop\proyecto pucv ed\proyectopucved\funciones.c
 	"funciones.h"
 
 1593806803 source:c:\users\benjamín\desktop\proyecto pucv ed\proyectopucved\map.c
@@ -52,9 +52,10 @@
 
 1594517546 c:\users\benjamín\desktop\proyecto pucv ed\proyectopucved\habilidades.h
 
-1594588725 c:\users\benjamín\desktop\proyecto pucv ed\proyectopucved\habilidades.c
+1594605543 c:\users\benjamín\desktop\proyecto pucv ed\proyectopucved\habilidades.c
 	<stdio.h>
 	"habilidades.h"
+	"funciones.h"
 
 1594176098 source:c:\users\matias\desktop\proyectounopucv2020-master\real\proyectounopucv2020\hashtable.c
 	"HashTable.h"

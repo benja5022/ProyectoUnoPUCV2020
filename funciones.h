@@ -51,7 +51,7 @@ bool opcionesCarta(int num);
 
 void imprimirMapa(Map* mapa);
 
-carta* verMano(Map* mano);
+carta* verMano(Map* mano, int i);
 
 bool eleccionMapa(char tecla, Map * mapa, int* cont);
 
@@ -71,7 +71,7 @@ void verLineaDeAtaque(Area_de_juego* Area);
 
 void verDestierro(Area_de_juego* Area);
 
-bool verLineaDeDefensa(Area_de_juego* Area);
+carta* verLineaDeDefensa(Area_de_juego* Area,int etapa);
 
 void descartarCarta(Area_de_juego* area);
 
@@ -88,6 +88,10 @@ void escribirEnArchivoCSV(Area_de_juego* area, FILE* archivo);
 void guardarPartida(Area_de_juego* area);
 
 void comenzarJuego(Area_de_juego* Area_final);
+
+void comenzarAtaque(Area_de_juego* Area_final, carta* card);
+
+void comenzarDefensa(Area_de_juego* Area_final, carta* carta_enemiga);
 
 
 #endif // funciones_h_INCLUDED
