@@ -129,6 +129,7 @@ void imprimirCaracteristicas(carta* card, carta* arma){
             printf("Tipo: ");
             imprimirTipoCarta(card->tipo,card);
             printf("Habilidad: No");
+
             if(arma)
             {
                 printf("Arma: %s\n",card->arma->nombre);
@@ -146,7 +147,7 @@ void imprimirCaracteristicas(carta* card, carta* arma){
             }
             else
             {
-                if(card->tipo == 1) printf("Arma: No\n");
+                if(card->tipo == 1) printf("\nArma: No\n");
             }
             break;
         case(2):
@@ -564,11 +565,13 @@ Area_de_juego* comenzarPartida(HashTable* tabla_hash, list* lista){
     {
         char linea[500];
         char palabra_completa[500];
-        strcpy(palabra_completa,nombrePartida);
+        strcpy(palabra_completa,"\n");
+        strcat(palabra_completa,nombrePartida);
         strcat(palabra_completa,",");
         strcat(palabra_completa,nombre1);
         strcat(palabra_completa,",");
         strcat(palabra_completa,nombre2);
+//        strcat(palabra_completa,"\n");
 //        printf("\n%s\n",palabra_completa);
 
         while(fgets(linea,500,archivo_de_texto)){
