@@ -75,10 +75,10 @@ void imprimirHabilidadTalisman(int habilidad){
     switch(habilidad){
 
         case(0):
-            printf("Destruye a un aliado oponente");
+            printf("Destruye a un aliado oponente");//**
             break;
         case(1):
-            printf("Saca Una carta del mazo");
+            printf("Saca Una carta del mazo");//****
             break;
         case(2):
             printf("Genera 3 oros");
@@ -87,19 +87,19 @@ void imprimirHabilidadTalisman(int habilidad){
             printf("Un jugador bota una carta por cada aliado en juego");
             break;
         case(4):
-            printf("Destruye un Aliado");
+            printf("Destruye un Aliado");//****
             break;
         case(5):
             printf("Para jugar esta carta debes botar 5 cartas, Un jugador bota 5 cartas");
             break;
         case(6):
-            printf("Roba 2 cartas de tu Mazo Castillo");
+            printf("Roba 2 cartas de tu Mazo Castillo");//***
             break;
         case(7):
             printf("Los Aliados que controles ganan dos a la fuerza");
             break;
         case(8):
-            printf("Roba 1 Carta de Tu mazo Castillo");
+            printf("Roba 1 Carta de Tu mazo Castillo");//***
             break;
         case(9):
             printf("Descarta tu mano, luego busca una carta en tu castillo o cementerio y ponla en tu mano");
@@ -155,7 +155,20 @@ void imprimirHabilidadArma(int habilidad){
 }
 
 
-void h_totem_cero(carta* card){//vacio
+void h_totem_cero(carta* card, Area_de_juego* Area){
+    if(MapCount(Area->linea_ataque)==0 && MapCount(Area->linea_defensa) == 0){
+        printf("No tienes Aliados");
+        return;
+    }
+
+    carta* current = NULL;
+    for(current=firstMap(Area->linea_ataque);current;current=nextMap(Area->linea_ataque)){
+        current->fuerza+=2;
+    }
+
+    for(current=firstMap(Area->linea_defensa);current;current=nextMap(Area->linea_defensa)){
+        current->fuerza+=2;
+    }
 
 }
 
@@ -254,9 +267,10 @@ void h_totem_siete(carta* card, Area_de_juego* area){
 }
 
 void activarHabilidadTotem(carta* card, int habilidad, Area_de_juego* area){
+    system("cls");
     switch(habilidad){
         case(0):
-            //h_totem_cero(card);
+            h_totem_cero(card, area);
             break;
         case(1):
             h_totem_uno(card,area);
@@ -284,22 +298,27 @@ void activarHabilidadTotem(carta* card, int habilidad, Area_de_juego* area){
 }
 
 
-void h_arma_cero(carta* card){
+void h_arma_cero(carta* card, int valor){// el valor indica si la habilidad siendo activada o desactivada
     carta* carta_aliado = card->arma;
-    carta_aliado->fuerza++;
+
+    if(valor == 0) carta_aliado->fuerza++;
+    else carta_aliado->fuerza--;
 }
 
-void h_arma_uno(carta* card){
+void h_arma_uno(carta* card, int valor){// el valor indica si la habilidad siendo activada o desactivada
     carta* carta_aliado = card->arma;
-    carta_aliado->fuerza+=2;
+
+    if(valor == 0) carta_aliado->fuerza+=2;
+    else carta_aliado->fuerza -=2;
 }
 
-void h_arma_dos(carta* card){
-    carta* carta_aliado = card->arma;
-    carta_aliado->fuerza+=3;
+void h_arma_dos(carta* card, int valor){
+    carta* carta_aliado = card->arma;// el valor indica si la habilidad siendo activada o desactivada
+    if(valor==0) carta_aliado->fuerza+=3;
+    else carta_aliado->fuerza -=3;
 }
 
-void h_arma_tres(carta* card , Area_de_juego *Areafinal){
+void h_arma_tres(carta* card , Area_de_juego *Areafinal){// EDITAR
 
     carta *nav = firstMap(Areafinal->cementerio);
 
@@ -317,107 +336,113 @@ void h_arma_tres(carta* card , Area_de_juego *Areafinal){
     }
 
 }
-/*
-void h_arma_cuatro(carta* card , Area_de_juego *Areafinal){// en el menu principal, crear un submenu preguntando si se quiere usar esta habilidad
-
-    carta *current = NULL;
-    imprimirMapa(Areafinal->area_enemiga->cementerio);
-
-    unsigned short i;
-    unsigned short cont = 1;
-    char tecla;
-    unsigned short bandera = 0;
 
 
-    while(bandera == 0){
-        gotoxy(1,cont+1);
-
-        tecla = getch();
-
-        switch(tecla){
-            case ('w'):
-                if(cont == 1) cont = MapCount(Areafinal->area_enemiga->cementerio);
-                else cont--;
-
-                break;
-            case ('s'):
-                if(cont == MapCount(Areafinal->area_enemiga->cementerio)) cont = 1;
-                else cont++;
-                break;
-            case (13):
-                for(i = 0, current = firstMap(Areafinal->area_enemiga->cementerio); i < cont-1 ; i++,current = nextMap(Areafinal->area_enemiga->cementerio));
-
-                system("cls");
-                imprimirCaracteristicas(current,current->arma);
-                unsigned short sino = 1;
-                printf("Desterrar esta carta?\n");
-                printf("Si No\n");
-
-                switch(tecla){
-
-                    case ('a'):
-                        if(sino == 1) sino = 2;
-                        else sino--;
-                        break;
-
-                    case ('d'):
-                        if(sino == 2) sino = 1;
-                        else sino--;
-                        break;
-
-                    case (13):
-                        if(sino == 1){
-                            eraseMap(Areafinal->area_enemiga->cementerio , current->nombre);
-                            return;
-                        }
-
-                        if(sino == 2){
-                            imprimirMapa(Areafinal->area_enemiga->cementerio);
-                        }
-
-                        break;
-
-                    case (8):
-                        bandera == 1;
-                        return;
-                }
-            }
-
-        }
-
-}*/
-/*
-void h_arma_tres(carta* card){//vacio
-
-}
-*/
 void h_arma_cuatro(carta* card, Area_de_juego* area){//vacio
 
 }
 
-void h_arma_cinco(carta* card){//vacio
+void h_arma_cinco(Area_de_juego *area){
+
+    long total = MapCount(area->linea_defensa) + MapCount(area->linea_ataque);
+    long i = 0;
+
+    carta* card = firstMap(area->area_enemiga->mazo_castillo);
+
+    while(card != NULL && i < total){
+
+        insertMap(area->area_enemiga->cementerio,card->nombre,card);
+        eraseMap(area->area_enemiga->mazo_castillo,card->nombre);
+
+        card = firstMap(area->area_enemiga->mazo_castillo);
+        i++;
+
+    }
 
 }
+// Parece que está buena
+void h_arma_seis(Area_de_juego *area){// cuando se llame a esta función, mandar la carta que se va a desterrar
+/*
+    carta *current = NULL;
+    char tecla;
+    unsigned short cont = 1;
+    unsigned short bandera = 0;
+    imprimirMapa(area->mano);
 
-void h_arma_seis(carta* card){//vacio
+    while(bandera == 0){
+        gotoxy(1,cont+1);
+        tecla = getch();
 
+        switch(tecla){
+            case ('w'):
+                if(cont == 1) cont = MapCount(area->mano);
+                else cont--;
+
+                break;
+            case ('s'):
+                if(cont == MapCount(area->mano)) cont = 1;
+                else cont++;
+                break;
+            case (13):
+                for(i = 0, current = firstMap(area->mano); i < cont-1 ; i++,current = nextMap(area->mano));
+                eraseMap(area->mano , current->nombre);
+                bandera = 1;
+                break;
+
+            case (8):
+                return NULL;
+                break;
+        }
+
+    }
+
+    system("cls");
+    imprimirMapa(area->mazo_castillo);
+    current = NULL
+    cont = 1;
+
+    while(bandera == 0){
+        gotoxy(1,cont+1);
+        tecla = getch();
+
+        switch(tecla){
+            case ('w'):
+                if(cont == 1) cont = MapCount(area->mazo_castillo);
+                else cont--;
+
+                break;
+            case ('s'):
+                if(cont == MapCount(area->mazo_castillo)) cont = 1;
+                else cont++;
+                break;
+            case (13):
+                for(i = 0, current = firstMap(area->mazo_castillo); i < cont-1 ; i++,current = nextMap(area->mazo_castillo));
+                insertMap(area->mano , current->nombre , current);
+                eraseMap(area->mazo_castillo , current->nombre);
+                bandera = 1;
+                return;
+
+        }
+
+    }
+*/
 }
 
 void h_arma_siete(carta* card){//vacio
 
 }
 
-void activarHabilidadArma(carta* card, int habilidad, Area_de_juego* area){
-
+void activarHabilidadArma(carta* card, int habilidad, Area_de_juego* area, int valor){
+    system("cls");
     switch(habilidad){
         case(0):
-            h_arma_cero(card);
+            h_arma_cero(card,valor);
             break;
         case(1):
-            h_arma_uno(card);
+            h_arma_uno(card,valor);
             break;
         case(2):
-            h_arma_dos(card);
+            h_arma_dos(card, valor);
             break;
         case(3):
             h_arma_tres(card,area);
@@ -426,10 +451,10 @@ void activarHabilidadArma(carta* card, int habilidad, Area_de_juego* area){
             h_arma_cuatro(card,area);
             break;
         case(5):
-            h_arma_cinco(card);
+            h_arma_cinco(area);
             break;
         case(6):
-            h_arma_seis(card);
+            h_arma_seis(area);
             break;
         case(7):
             h_arma_siete(card);
@@ -439,76 +464,297 @@ void activarHabilidadArma(carta* card, int habilidad, Area_de_juego* area){
 
 }
 
-void h_talisman_cero(carta* card){//vacio
+void h_talisman_cero(carta* card,Area_de_juego * Area){
+    h_talisman_cuatro(card,Area);
+}
+
+void h_talisman_uno(carta* card,Area_de_juego * Area ){
+    system("cls");
+ //   printf("\nCastillo:%d %d %d\n", MapCount(Area->mazo_castillo),MapCount(Area->mano),MapCount(Area->cementerio));
+    if(MapCount(Area->mazo_castillo) > 0){
+        carta* carta_nueva = firstMap(Area->mazo_castillo);
+        eraseMap(Area->mazo_castillo,carta_nueva->nombre);
+        insertMap(Area->mano,carta_nueva->nombre,carta_nueva);
+
+        eraseMap(Area->mano,card->nombre);
+        insertMap(Area->cementerio,card->nombre,card);
+     //   printf("\nCastillo:%d %d %d%s\n", MapCount(Area->mazo_castillo),MapCount(Area->mano),MapCount(Area->cementerio),carta_nueva->nombre);
+    }
+    system("pause");
 
 }
 
-void h_talisman_uno(carta* card){//vacio
+void h_talisman_dos(carta* card,Area_de_juego* Area){
+
+    Area->reserva_de_oro += 3;
+
+    eraseMap(Area->mano,card->nombre);
+    insertMap(Area->cementerio,card->nombre,card);
+}
+
+void h_talisman_tres(carta* card,Area_de_juego* area){
+    int cantidad_de_aliados = MapCount(area->linea_ataque) + MapCount(area->linea_defensa) + MapCount(area->area_enemiga->linea_ataque) + MapCount(area->area_enemiga->linea_defensa);
+
+ //   printf("%d %d %d %d\n",cantidad_de_aliados,MapCount(area->mano),MapCount(area->area_enemiga->mazo_castillo),MapCount(area->area_enemiga->cementerio));
+
+    Map* mazo_enemigo = area->area_enemiga->mazo_castillo;
+    Map* cementerio_enemigo = area->area_enemiga->cementerio;
+    carta* current = firstMap(mazo_enemigo);
+    int cont = 0;
+
+    for(cont = 0; current && cont < cantidad_de_aliados; current = firstMap(mazo_enemigo),cont++){
+        eraseMap(mazo_enemigo,current->nombre);
+        insertMap(cementerio_enemigo,current->nombre,current);
+    }
+
+    eraseMap(area->mano,card->nombre);
+    insertMap(area->cementerio,card->nombre,card);
+
+//    printf("%d %d %d %d\n",cantidad_de_aliados,MapCount(area->mano),MapCount(area->area_enemiga->mazo_castillo),MapCount(area->area_enemiga->cementerio));
+//    system("pause");
 
 }
-void h_talisman_dos(carta* card){//vacio
+
+void h_talisman_cuatro(carta* card,Area_de_juego* Area){
+    printf("\nVer Linea de Ataque Enemigo\n");
+    printf("Ver Linea de Defensa Enemigo");
+    int bandera = 0;
+    carta* aliadoObjetivo = NULL;
+    int cont = 1;
+    char tecla;
+    while(aliadoObjetivo == NULL){
+
+            while(bandera == 0){
+            gotoxy(1,cont+1);
+
+            tecla = getch();
+
+            switch(tecla){
+
+                case('w'):
+                    if(cont == 1) cont = 2;
+                    else cont--;
+
+                    break;
+                case('s'):
+                    if(cont == 2) cont = 1;
+                    else cont++;
+
+                    break;
+                case(13):
+                    bandera = cont;
+                    break;
+                case(8):
+                    Area->oro_pagado -= card->coste;
+                    Area->reserva_de_oro+= card->coste;
+                    return;
+                    break;
+            }
+        }
+
+        switch(bandera){
+                case(1):
+                    system("cls");
+                    aliadoObjetivo = verLineaAtaqueEnemigo(Area,1);
+                    if(aliadoObjetivo){
+                        eraseMap(Area->mano,card->nombre);
+                        insertMap(Area->cementerio,card->nombre,card);
+                        eliminarAliado(Area->area_enemiga->linea_ataque,aliadoObjetivo,Area->area_enemiga->cementerio);
+                        return;
+                    }
+
+                    system("cls");
+                    bandera = 0;
+                    break;
+                case(2):
+                    system("cls");
+                    aliadoObjetivo = verLineaDeDefensaEnemiga(Area,1);
+                    if(aliadoObjetivo){
+                            eraseMap(Area->mano,card->nombre);
+                            insertMap(Area->cementerio,card->nombre,card);
+                            eliminarAliado(Area->area_enemiga->linea_defensa,aliadoObjetivo,Area->area_enemiga->cementerio);
+                            return;
+                    }
+
+                    bandera = 0;
+                    system("cls");
+                    break;
+                default:
+                    break;
+        }
+        system("cls");
+        printf("\nVer Linea de Ataque Enemigo\n");
+        printf("Ver Linea de Defensa Enemigo");
+    }
+
 
 }
-void h_talisman_tres(carta* card){//vacio
+
+void h_talisman_cinco(carta* card,Area_de_juego* Area_final){
+
+    eraseMap(Area_final->mano,card->nombre);
+    insertMap(Area_final->cementerio,card->nombre,card);
+    int cont = 0;
+
+
+    if(MapCount(Area_final->mano) >= 5){
+ //       printf("%d %d %d",MapCount(Area_final->mano),MapCount(Area_final->area_enemiga->mazo_castillo),MapCount(Area_final->area_enemiga->cementerio));
+ //       system("pause");
+        do{
+            cont++;
+            system("cls");
+            descartarCarta(Area_final,1);
+
+        }while(cont < 5);
+        cont = 0;
+
+        Map* mazo_enemigo = Area_final->area_enemiga->mazo_castillo;
+        Map* cementerio_enemigo = Area_final->area_enemiga->cementerio;
+
+        carta* current = firstMap(mazo_enemigo);
+
+        for(cont = 0; current && cont < 5; current = firstMap(mazo_enemigo),cont++){
+            eraseMap(mazo_enemigo,current->nombre);
+            insertMap(cementerio_enemigo,current->nombre,current);
+        }
+//        printf("%d %d %d",MapCount(Area_final->mano),MapCount(Area_final->area_enemiga->mazo_castillo),MapCount(Area_final->area_enemiga->cementerio));
+//        system("pause");
+    }
+    else
+    {
+        system("No tienes cartas Suficientes para descartar\n");
+    }
 
 }
-void h_talisman_cuatro(carta* card){//vacio
+
+void h_talisman_seis(carta* card, Area_de_juego* Area){
+    int cantidad =2;
+    int cont = 0;
+    system("cls");
+
+    while(MapCount(Area->mazo_castillo) > 0 && cont < cantidad){
+        carta* carta_nueva = firstMap(Area->mazo_castillo);
+        eraseMap(Area->mazo_castillo,carta_nueva->nombre);
+        insertMap(Area->mano,carta_nueva->nombre,carta_nueva);
+
+        eraseMap(Area->mano,card->nombre);
+        insertMap(Area->cementerio,card->nombre,card);
+
+        cont++;
+    }
+
+    eraseMap(Area->mano,card->nombre);
+    insertMap(Area->cementerio,card->nombre,card);
 
 }
-void h_talisman_cinco(carta* card){//vacio
+
+void h_talisman_siete(carta* card, Area_de_juego* Area_final){
+    Map* linea_ataque = Area_final->linea_ataque;
+    Map* linea_defensa = Area_final->linea_defensa;
+
+    carta* current = NULL;
+    for(current = firstMap(linea_defensa); current; current = nextMap(linea_defensa)){
+        current->fuerza+=2;
+    }
+    for(current = firstMap(linea_ataque); current; current = nextMap(linea_ataque)){
+        current->fuerza+=2;
+    }
+
+    eraseMap(Area_final->mano,card->nombre);
+    insertMap(Area_final->cementerio,card->nombre,card);
+}
+
+void h_talisman_ocho(carta* card,Area_de_juego* Area){
+
+    h_talisman_uno(card,Area);
 
 }
-void h_talisman_seis(carta* card){//vacio
 
-}
-void h_talisman_siete(carta* card){//vacio
-
-}
-void h_talisman_ocho(carta* card){//vacio
-
-}
 void h_talisman_nueve(carta* card){//vacio
 
 }
+
 void h_talisman_diez(carta* card){//vacio
 
 }
-void h_talisman_once(carta* card){//vacio
+
+void MapaCartasEnJuego(Map* mapa, int* cont){
+    carta* current = NULL;
+    for(current=firstMap(mapa); current; current = nextMap(mapa)){
+        if(current->arma){
+            (*cont)++;
+        }
+        (*cont)++;
+    }
+}
+
+void h_talisman_once(carta* card, Area_de_juego* Area_Final){
+
+    system("cls");
+
+    Map* linea_de_defensa = Area_Final->linea_defensa;
+    Map* linea_de_ataque = Area_Final->linea_ataque;
+    Map* linea_de_defensa_enemiga = Area_Final->area_enemiga->linea_defensa;
+    Map* linea_de_ataque_enemiga = Area_Final->area_enemiga->linea_defensa;
+    int cartas_en_juego = 0;
+
+    MapaCartasEnJuego(linea_de_ataque,&cartas_en_juego);
+    MapaCartasEnJuego(linea_de_defensa,&cartas_en_juego);
+    MapaCartasEnJuego(linea_de_ataque_enemiga,&cartas_en_juego);
+    MapaCartasEnJuego(linea_de_defensa_enemiga,&cartas_en_juego);
+
+    carta* current = NULL;
+    int cont = 0;
+
+    cartas_en_juego += list_size(Area_Final->area_enemiga->linea_de_apoyo)+ list_size(Area_Final->linea_de_apoyo);
+
+    for(cont = 0,current = firstMap(Area_Final->cementerio); current && cont < cartas_en_juego; cont++,current = nextMap(Area_Final->cementerio)){
+        eraseMap(Area_Final->cementerio,current->nombre);
+        insertMap(Area_Final->mazo_castillo,current->nombre,current);
+    }
+
+    eraseMap(Area_Final->mano,card->nombre);
+    insertMap(Area_Final->cementerio,card->nombre,card);
+
+    system("pause");
 
 }
+
 void h_talisman_doce(carta* card){//vacio
 
 }
 
 
+
 void activarHabilidadTalisman(carta* card, int habilidad, Area_de_juego* area){
+    system("cls");
     switch(habilidad){
         case(0):
-            h_talisman_cero(card);
+            h_talisman_cero(card,area);
             break;
         case(1):
-            h_talisman_uno(card);
+            h_talisman_uno(card,area);
             break;
         case(2):
-            h_talisman_dos(card);
+            h_talisman_dos(card,area);
             break;
         case(3):
-            h_talisman_tres(card);
+            h_talisman_tres(card,area);
             break;
         case(4):
-            h_talisman_cuatro(card);
+            h_talisman_cuatro(card,area);
             break;
         case(5):
-            h_talisman_cinco(card);
+            h_talisman_cinco(card,area);
             break;
         case(6):
-            h_talisman_seis(card);
+            h_talisman_seis(card, area);
             break;
         case(7):
-            h_talisman_siete(card);
+            h_talisman_siete(card,area);
             break;
         case(8):
-            h_talisman_ocho(card);
+            h_talisman_ocho(card,area);
             break;
         case(9):
             h_talisman_nueve(card);
@@ -517,7 +763,7 @@ void activarHabilidadTalisman(carta* card, int habilidad, Area_de_juego* area){
             h_talisman_diez(card);
             break;
         case(11):
-            h_talisman_once(card);
+            h_talisman_once(card,area);
             break;
         case(12):
             h_talisman_doce(card);

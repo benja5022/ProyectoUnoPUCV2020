@@ -40,8 +40,8 @@ int main()
   //  system("pause");
  //   system("color 20");
 
-    PlaySound("Proyecto1.wav",NULL,SND_ASYNC | SND_LOOP); //| SND_LOOP);
-
+    //PlaySound("Proyecto1.wav",NULL,SND_ASYNC | SND_LOOP); //| SND_LOOP);
+//    PlaySound(TEXT("musica\\Lord of vermillion - sephirotic version.wav"),NULL,SND_ASYNC | SND_LOOP);
     logo();
     system("cls");
 
@@ -99,6 +99,6 @@ int main()
         }
     }while(area_final == NULL);
 
-
+//    PlaySound(NULL, 0, 0);
     return 0;
 }

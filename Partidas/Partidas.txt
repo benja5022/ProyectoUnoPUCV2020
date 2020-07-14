@@ -1,4 +1,4 @@
 Partida1,Pepe,Juan
 Superclasico,ColoColo,UdeChile
 Partida5,Juan,Pepe
-NuevaPartida,Jugador1,Jugador2
+Partida nueva,Jugador1,Jugador2

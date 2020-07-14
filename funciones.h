@@ -53,15 +53,15 @@ void imprimirMapa(Map* mapa);
 
 carta* verMano(Map* mano, int i);
 
-bool eleccionMapa(char tecla, Map * mapa, int* cont);
+carta * eleccionMapa(char tecla, Map * mapa, int* cont, int modo);
 
 bool eleccionLista(char tecla, list * lista, int* cont);
 
-void imprimirMenucomenzarJuego(char* nombre);
+void imprimirMenucomenzarJuego(char* nombre, int oros_disponibles);
 
 void analizarYLanzarCarta(carta* card, Area_de_juego* Area);
 
-void verLineaAtaqueEnemigo(Area_de_juego* Area);
+carta * verLineaAtaqueEnemigo(Area_de_juego* Area, int modo);
 
 void agruparOros(Area_de_juego* Area);
 
@@ -73,11 +73,11 @@ void verDestierro(Area_de_juego* Area);
 
 carta* verLineaDeDefensa(Area_de_juego* Area,int etapa);
 
-void descartarCarta(Area_de_juego* area);
+void descartarCarta(Area_de_juego* area, int modo);
 
 void Barajar_Mazo(Map *mazo);
 
-void verLineaDeDefensaEnemiga(Area_de_juego *Area);
+carta* verLineaDeDefensaEnemiga(Area_de_juego *Area,int modo);
 
 void verDestierroEnemigo(Area_de_juego *Area);
 
@@ -93,5 +93,5 @@ void comenzarAtaque(Area_de_juego* Area_final, carta* card);
 
 void comenzarDefensa(Area_de_juego* Area_final, carta* carta_enemiga);
 
-
+void eliminarAliado(Map* linea,carta* card,Map* cementerio);
 #endif // funciones_h_INCLUDED
