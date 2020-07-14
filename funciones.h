@@ -83,11 +83,11 @@ void verDestierroEnemigo(Area_de_juego *Area);
 
 const char* palabraQueSeImprimira(char* palabra, char * nombre_jugador,char* nombre_carta ,char lugar);
 
-void escribirEnArchivoCSV(Area_de_juego* area, FILE* archivo);
+void escribirEnArchivoCSV(Area_de_juego* area, FILE* archivo, HashTable* hash);
 
-void guardarPartida(Area_de_juego* area);
+void guardarPartida(Area_de_juego* area, HashTable* hash);
 
-void comenzarJuego(Area_de_juego* Area_final);
+void comenzarJuego(Area_de_juego* Area_final, HashTable* hash);
 
 void comenzarAtaque(Area_de_juego* Area_final, carta* card);
 

@@ -659,7 +659,7 @@ void ingresoAreaDeJuego(Area_de_juego* area, carta* card, int zona, char* nombre
                 carta_duena = searchMap(area->linea_ataque,nombre_aliado);
             }
             if(carta_duena == NULL){
-                printf("carta duena no existe\n");
+                printf("carta duena no existe %s\n",nombre_aliado);
                 system("pause");
             }
             else{
@@ -795,14 +795,19 @@ Area_de_juego* buscarPartida(HashTable* tabla){
         }
         else
         {
-            //printf("%s\n",busqueda->nombre);
-            //printf("->%s %s %s | %s\n\n",get_csv_field(current,1),get_csv_field(current,2),get_csv_field(current,3),area->nombre_jugador);
-            //system("pause");
+ //           printf("%s\n",busqueda->nombre);
+  //          printf("->%s %s %s | %s\n\n",get_csv_field(current,1),get_csv_field(current,2),get_csv_field(current,3),area->nombre_jugador);
+  //          system("pause");
 
             if(strcmp(area->nombre_jugador , get_csv_field(current,1))== 0){
                 zona = atoi(get_csv_field(current,3));
                 strcpy(nombre_aliado,get_csv_field(current,4));
                 zona_del_aliado = atoi(get_csv_field(current,5));
+
+                if(strcmp(get_csv_field(current,4),"nada") != 0){
+                    busqueda -> fuerza += atoi(get_csv_field(current,4));
+                }
+
                 ingresoAreaDeJuego(area,busqueda,zona,nombre_aliado,zona_del_aliado);
 //                ingresoAreaDeJuego(area,busqueda,zona);
             }
@@ -818,6 +823,11 @@ Area_de_juego* buscarPartida(HashTable* tabla){
                 }
                 strcpy(nombre_aliado,get_csv_field(current,4));
                 zona_del_aliado = atoi(get_csv_field(current,5));
+
+                if(strcmp(get_csv_field(current,4),"nada") != 0){
+                    busqueda -> fuerza += atoi(get_csv_field(current,4));
+                }
+
                 ingresoAreaDeJuego(area2,busqueda,zona,nombre_aliado,zona_del_aliado);
             }
         }
@@ -1816,7 +1826,7 @@ void verLineaDeApoyo(Area_de_juego* Area){
     }
 }
 
-const char* ImpresionPartidaCSVsa(char* palabra, char * nombre_jugador,char* nombre_carta ,char lugar){
+const char* ImpresionPartidaCSVsa(char* palabra, char * nombre_jugador,char* nombre_carta ,char lugar, char bonus,int signo){
     palabra[0] = ',';
     palabra[1] = '\0';
     strcat(palabra,nombre_jugador);
@@ -1827,7 +1837,34 @@ const char* ImpresionPartidaCSVsa(char* palabra, char * nombre_jugador,char* nom
     palabra[numero] = lugar;
     palabra[numero+1] = '\0';
 
-    strcat(palabra,",nada,0,\n");
+    if(bonus != 'N'){
+        if(signo < 0){
+            char aux[4];
+            aux[0] = ',';
+            aux[1] = '-';
+            aux[2] = bonus;
+            aux[3] = ',';
+            aux[4] = '\0';
+            strcat(palabra,aux);
+            strcat(palabra,"0,\n");
+        }
+        else
+        {
+            char aux[4];
+            aux[0] = ',';
+            aux[1] = bonus;
+            aux[2] = ',';
+            aux[3] = '\0';
+            strcat(palabra,aux);
+            strcat(palabra,"0,\n");
+        }
+
+    }
+    else{
+        strcat(palabra,",nada,0,\n");
+    }
+
+
 
     return palabra;
 }
@@ -1855,7 +1892,7 @@ const char* ImpresionPartidaCSVca(char* palabra, char * nombre_jugador,char* nom
     return palabra;
 }
 
-void escribirEnArchivoCSV(Area_de_juego* area, FILE* archivo){
+void escribirEnArchivoCSV(Area_de_juego* area, FILE* archivo, HashTable* Tabla_Hash){
     carta* current = NULL;
     char palabra[200];
 
@@ -1863,13 +1900,13 @@ void escribirEnArchivoCSV(Area_de_juego* area, FILE* archivo){
         current = stack_pop(area->oros);
         if(area->reserva_de_oro > 0){
             area ->reserva_de_oro--;
-            strcpy(palabra, ImpresionPartidaCSVsa(palabra,area->nombre_jugador,current->nombre,'3'));
+            strcpy(palabra, ImpresionPartidaCSVsa(palabra,area->nombre_jugador,current->nombre,'3','N',0));
 
             fprintf(archivo,palabra);
         }
         else
         {
-            strcpy(palabra, ImpresionPartidaCSVsa(palabra,area->nombre_jugador,current->nombre,'4'));
+            strcpy(palabra, ImpresionPartidaCSVsa(palabra,area->nombre_jugador,current->nombre,'4','N',0));
 
             fprintf(archivo,palabra);
         }
@@ -1877,7 +1914,7 @@ void escribirEnArchivoCSV(Area_de_juego* area, FILE* archivo){
 
     current = lastMap(area->cementerio);
     while(MapCount(area->cementerio) > 0 && current!= NULL){
-        ImpresionPartidaCSVsa(palabra,area->nombre_jugador,current->nombre,'0');
+        ImpresionPartidaCSVsa(palabra,area->nombre_jugador,current->nombre,'0','N',0);
 
         fprintf(archivo,palabra);
         current = prevMap(area->cementerio);
@@ -1887,7 +1924,7 @@ void escribirEnArchivoCSV(Area_de_juego* area, FILE* archivo){
 
     current = lastMap(area->mano);
     while(MapCount(area->mano) > 0 && current!= NULL ){
-        ImpresionPartidaCSVsa(palabra,area->nombre_jugador,current->nombre,'2');
+        ImpresionPartidaCSVsa(palabra,area->nombre_jugador,current->nombre,'2','N',0);
 
         fprintf(archivo,palabra);
         current = prevMap(area->mano);
@@ -1900,7 +1937,28 @@ void escribirEnArchivoCSV(Area_de_juego* area, FILE* archivo){
         if(current->arma != NULL){
             printf("%s\n",current->arma->nombre);
             system("pause");
-            ImpresionPartidaCSVsa(palabra,area->nombre_jugador,current->nombre,'6');
+
+//************************* aca *******************************************
+            carta* carta_original = searchHashTable(Tabla_Hash,current->nombre);
+
+            printf("Fuerzas: %d %d",carta_original->fuerza,current->fuerza);
+            system("pause");
+
+            if(carta_original->fuerza != current->fuerza){
+
+                if(carta_original->fuerza > current->fuerza){
+                    ImpresionPartidaCSVsa(palabra,area->nombre_jugador,current->nombre,'6',carta_original->fuerza- current->fuerza +48,-1);
+                }
+                else
+                {
+                    ImpresionPartidaCSVsa(palabra,area->nombre_jugador,current->nombre,'6', current->fuerza - carta_original->fuerza +48,1);
+                }
+            }
+            else
+            {
+                    ImpresionPartidaCSVsa(palabra,area->nombre_jugador,current->nombre,'6','N',0);
+
+            }
 
             fprintf(archivo,palabra);
 
@@ -1910,7 +1968,25 @@ void escribirEnArchivoCSV(Area_de_juego* area, FILE* archivo){
         }
         else
         {
-            ImpresionPartidaCSVsa(palabra,area->nombre_jugador,current->nombre,'6');
+            carta* carta_original = searchHashTable(Tabla_Hash,current->nombre);
+
+            printf("Fuerzas: %d %d",carta_original->fuerza,current->fuerza);
+            system("pause");
+
+            if(carta_original->fuerza != current->fuerza){
+
+                if(carta_original->fuerza > current->fuerza){
+                    ImpresionPartidaCSVsa(palabra,area->nombre_jugador,current->nombre,'6',carta_original->fuerza - current->fuerza + 48,-1);
+                }
+                else
+                {
+                    ImpresionPartidaCSVsa(palabra,area->nombre_jugador,current->nombre,'6',current->fuerza - carta_original->fuerza + 48,-1);
+                }
+            }
+            else
+            {
+                ImpresionPartidaCSVsa(palabra,area->nombre_jugador,current->nombre,'6','N',0);
+            }
             fprintf(archivo,palabra);
         }
 
@@ -1923,18 +1999,58 @@ void escribirEnArchivoCSV(Area_de_juego* area, FILE* archivo){
         if(current->arma != NULL){
 //            printf("%s\n",current->arma->nombre);
 //            system("pause");
-            ImpresionPartidaCSVsa(palabra,area->nombre_jugador,current->nombre,'5');
+ //*********************************************************************************
+            carta* carta_original = searchHashTable(Tabla_Hash,current->nombre);
+
+            printf("Fuerzas: %d %d",carta_original->fuerza,current->fuerza);
+            system("pause");
+
+            if(carta_original->fuerza != current->fuerza){
+                if(carta_original->fuerza > current->fuerza){
+                    ImpresionPartidaCSVsa(palabra,area->nombre_jugador,current->nombre,'5',carta_original->fuerza - current->fuerza + 48,-1);
+                }
+                else
+                {
+                    ImpresionPartidaCSVsa(palabra,area->nombre_jugador,current->nombre,'5',current->fuerza - carta_original->fuerza + 48,1);
+                }
+            }
+            else
+            {
+                    ImpresionPartidaCSVsa(palabra,area->nombre_jugador,current->nombre,'5','N',0);
+            }
+
+
+//            ImpresionPartidaCSVsa(palabra,area->nombre_jugador,current->nombre,'5','N');
 
             fprintf(archivo,palabra);
-
+//****************************************************************
             ImpresionPartidaCSVca(palabra,area->nombre_jugador,current->arma->nombre,'9',current->nombre,'5');
             fprintf(archivo,palabra);
+
             current->arma = NULL;
         }
         else
         {
 
-            ImpresionPartidaCSVsa(palabra,area->nombre_jugador,current->nombre,'5');
+            carta* carta_original = searchHashTable(Tabla_Hash,current->nombre);
+
+            printf("Fuerzas: %d %d",carta_original->fuerza,current->fuerza);
+            system("pause");
+
+            if(carta_original->fuerza != current->fuerza){
+
+                if(carta_original->fuerza > current->fuerza){
+                    ImpresionPartidaCSVsa(palabra,area->nombre_jugador,current->nombre,'5',carta_original->fuerza - current->fuerza +48,-1);
+                }
+                else
+                {
+                    ImpresionPartidaCSVsa(palabra,area->nombre_jugador,current->nombre,'5',current->fuerza - carta_original->fuerza +48,1);
+                }
+            }
+            else
+            {
+                ImpresionPartidaCSVsa(palabra,area->nombre_jugador,current->nombre,'5','N',0);
+            }
             fprintf(archivo,palabra);
         }
         current = prevMap(area->linea_defensa);
@@ -1945,7 +2061,7 @@ void escribirEnArchivoCSV(Area_de_juego* area, FILE* archivo){
     current = list_last(area->destierro);
     while(list_size(area->destierro) > 0 && current!= NULL){
         current = list_pop_back(area->destierro);
-        ImpresionPartidaCSVsa(palabra,area->nombre_jugador,current->nombre,'8');
+        ImpresionPartidaCSVsa(palabra,area->nombre_jugador,current->nombre,'8','N',0);
 
         fprintf(archivo,palabra);
     }
@@ -1955,7 +2071,7 @@ void escribirEnArchivoCSV(Area_de_juego* area, FILE* archivo){
     while(list_size(area->linea_de_apoyo) > 0 && current!= NULL){
         current = list_pop_back(area->linea_de_apoyo);
 
-        ImpresionPartidaCSVsa(palabra,area->nombre_jugador,current->nombre,'7');
+        ImpresionPartidaCSVsa(palabra,area->nombre_jugador,current->nombre,'7','N',0);
         fprintf(archivo,palabra);
     }
     area->linea_de_apoyo = NULL;
@@ -1969,7 +2085,7 @@ void escribirEnArchivoCSV(Area_de_juego* area, FILE* archivo){
         }
         else
         {
-            ImpresionPartidaCSVsa(palabra,area->nombre_jugador,current->nombre,'1');
+            ImpresionPartidaCSVsa(palabra,area->nombre_jugador,current->nombre,'1','N',0);
 
             fprintf(archivo,palabra);
             current = prevMap(area->mazo_castillo);
@@ -1980,7 +2096,7 @@ void escribirEnArchivoCSV(Area_de_juego* area, FILE* archivo){
     removeAllMap(area->mazo_castillo);
 }
 
-void guardarPartida(Area_de_juego* area){//**********
+void guardarPartida(Area_de_juego* area, HashTable* Tabla_Hash){//**********
 
     system("cls");
 
@@ -1992,8 +2108,8 @@ void guardarPartida(Area_de_juego* area){//**********
     FILE * archivo = fopen(direccion,"w");
 
     fprintf(archivo,",%s,%s,%s,nada,0,\n",area->nombre_partida,area->nombre_jugador,area->area_enemiga->nombre_jugador);
-    escribirEnArchivoCSV(area,archivo);
-    escribirEnArchivoCSV(area->area_enemiga,archivo);
+    escribirEnArchivoCSV(area,archivo,Tabla_Hash);
+    escribirEnArchivoCSV(area->area_enemiga,archivo,Tabla_Hash);
     fclose(archivo);
     return;
 
@@ -2205,7 +2321,7 @@ void comenzarDefensa(Area_de_juego* Area_final, carta* carta_enemiga){
     }
 }
 
-void comenzarJuego(Area_de_juego* Area_final){
+void comenzarJuego(Area_de_juego* Area_final, HashTable* Tabla_Hash){
 
     imprimirMenucomenzarJuego(Area_final->nombre_jugador, Area_final->reserva_de_oro);
 
@@ -2356,7 +2472,7 @@ void comenzarJuego(Area_de_juego* Area_final){
 
                 insertMap(Area_final->area_enemiga->mazo_castillo,estado_bandera->nombre,estado_bandera);
 
-                guardarPartida(Area_final);
+                guardarPartida(Area_final, Tabla_Hash);
                 system("cls");
                 imprimirCuadrado();
                 gotoxy(53,16);

@@ -41,9 +41,8 @@ int main()
  //   system("color 20");
 
     //PlaySound("Proyecto1.wav",NULL,SND_ASYNC | SND_LOOP); //| SND_LOOP);
-//    PlaySound(TEXT("musica\\Lord of vermillion - sephirotic version.wav"),NULL,SND_ASYNC | SND_LOOP);
+    PlaySound(TEXT("musica\\Lord of vermillion - sephirotic version.wav"),NULL,SND_ASYNC | SND_LOOP);
     logo();
-    system("cls");
 
     HashTable* TablaHash = createHashTable(stringHash,stringEqual);
     list* lista_todas_las_cartas = list_create_empty();
@@ -94,11 +93,11 @@ int main()
         }
 
         if(area_final != NULL){
-            comenzarJuego(area_final);
+            comenzarJuego(area_final,TablaHash);
             area_final = NULL;
         }
     }while(area_final == NULL);
 
-//    PlaySound(NULL, 0, 0);
+    PlaySound(NULL, 0, 0);
     return 0;
 }

@@ -2,6 +2,13 @@
 #include "habilidades.h"
 #include "funciones.h"
 
+/*
+struct estado{
+    int oro_plus;
+    int oro_reserva_plus;
+    int oro_usado_plus
+
+};*/
 
 struct carta{
 
@@ -319,21 +326,28 @@ void h_arma_dos(carta* card, int valor){
 }
 
 void h_arma_tres(carta* card , Area_de_juego *Areafinal){// EDITAR
-
+//    printf("%d %d\n", MapCount(Areafinal->cementerio),MapCount(Areafinal->mano));
     carta *nav = firstMap(Areafinal->cementerio);
+
+    Map* aux = createMap(cmp_str_map);
 
     while(nav != NULL){
 
         if(nav->tipo == 3){
 
             insertMap(Areafinal->mano , nav->nombre , nav);
-            eraseMap(Areafinal->cementerio , nav->nombre);
+            insertMap(aux,nav->nombre,nav);
 
         }
-
         nav = nextMap(Areafinal->cementerio);
 
     }
+
+    for(nav = firstMap(aux); nav; nav = nextMap(aux)) eraseMap(Areafinal->cementerio,nav->nombre);
+
+    removeAllMap(aux);
+ //   printf("%d %d", MapCount(Areafinal->cementerio),MapCount(Areafinal->mano));
+ //   system("pause");
 
 }
 
