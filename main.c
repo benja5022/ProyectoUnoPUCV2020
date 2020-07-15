@@ -36,11 +36,7 @@ int stringEqual(const void * key1, const void * key2) {
 
 int main()
 {
-  //  imprimirHabilidadTalisman(5);
-  //  system("pause");
- //   system("color 20");
 
-    //PlaySound("Proyecto1.wav",NULL,SND_ASYNC | SND_LOOP); //| SND_LOOP);
     PlaySound(TEXT("musica\\Lord of vermillion - sephirotic version.wav"),NULL,SND_ASYNC | SND_LOOP);
     logo();
 
@@ -57,15 +53,13 @@ int main()
     carta* Tarjeta = NULL;
 
     while(fgets(palabra,500,archivo)){
-        //printf("%s\n",palabra);
+
         Tarjeta = crearCarta(palabra);
         list_push_back(lista_todas_las_cartas,Tarjeta);
         insertHashTable(TablaHash , Tarjeta->nombre ,Tarjeta);
     }
 
     fclose(archivo);
-
-    //printf("fuera");
 
     Area_de_juego* area_final = NULL;
     int bandera =0;

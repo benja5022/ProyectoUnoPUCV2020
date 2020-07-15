@@ -320,13 +320,14 @@ void h_arma_uno(carta* card, int valor){// el valor indica si la habilidad siend
 }
 
 void h_arma_dos(carta* card, int valor){
+
     carta* carta_aliado = card->arma;// el valor indica si la habilidad siendo activada o desactivada
     if(valor==0) carta_aliado->fuerza+=3;
     else carta_aliado->fuerza -=3;
 }
 
 void h_arma_tres(carta* card , Area_de_juego *Areafinal){// EDITAR
-//    printf("%d %d\n", MapCount(Areafinal->cementerio),MapCount(Areafinal->mano));
+
     carta *nav = firstMap(Areafinal->cementerio);
 
     Map* aux = createMap(cmp_str_map);
@@ -344,10 +345,10 @@ void h_arma_tres(carta* card , Area_de_juego *Areafinal){// EDITAR
     }
 
     for(nav = firstMap(aux); nav; nav = nextMap(aux)) eraseMap(Areafinal->cementerio,nav->nombre);
-
+    Areafinal->oro_pagado += card->coste;
+    Areafinal->reserva_de_oro -= card->coste;
     removeAllMap(aux);
- //   printf("%d %d", MapCount(Areafinal->cementerio),MapCount(Areafinal->mano));
- //   system("pause");
+
 
 }
 
@@ -374,8 +375,8 @@ void h_arma_cinco(Area_de_juego *area){
     }
 
 }
-// Parece que está buena
-void h_arma_seis(Area_de_juego *area){// cuando se llame a esta función, mandar la carta que se va a desterrar
+
+void h_arma_seis(Area_de_juego *area){
 /*
     carta *current = NULL;
     char tecla;
