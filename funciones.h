@@ -53,45 +53,31 @@ void imprimirMapa(Map* mapa);
 
 carta* verMano(Map* mano, int i);
 
-carta * eleccionMapa(char tecla, Map * mapa, int* cont, int modo);
+carta* eleccionMapa(char tecla, Map * mapa, int* cont, int modo);
 
-bool eleccionLista(char tecla, list * lista, int* cont);
+carta* eleccionLista(char tecla, list * lista, int* cont, int modo);
 
 void imprimirMenucomenzarJuego(char* nombre, int oros_disponibles);
 
 void analizarYLanzarCarta(carta* card, Area_de_juego* Area);
 
-carta * verLineaAtaqueEnemigo(Area_de_juego* Area, int modo);
-
-void agruparOros(Area_de_juego* Area);
-
-void agruparAliados(Area_de_juego* Area);
-
-void verLineaDeAtaque(Area_de_juego* Area);
-
-void verDestierro(Area_de_juego* Area);
-
-carta* verLineaDeDefensa(Area_de_juego* Area,int etapa);
-
 void descartarCarta(Area_de_juego* area, int modo);
 
 void Barajar_Mazo(Map *mazo);
-
-carta* verLineaDeDefensaEnemiga(Area_de_juego *Area,int modo);
-
-void verDestierroEnemigo(Area_de_juego *Area);
 
 const char* palabraQueSeImprimira(char* palabra, char * nombre_jugador,char* nombre_carta ,char lugar);
 
 void escribirEnArchivoCSV(Area_de_juego* area, FILE* archivo, HashTable* hash);
 
-void guardarPartida(Area_de_juego* area, HashTable* hash);
-
-void comenzarJuego(Area_de_juego* Area_final, HashTable* hash);
-
-void comenzarAtaque(Area_de_juego* Area_final, carta* card);
-
-void comenzarDefensa(Area_de_juego* Area_final, carta* carta_enemiga);
-
 void eliminarAliado(Map* linea,carta* card,Map* cementerio);
+
+void moverAliadoDeLugar(Map* mapa1, carta* card, Map* mapa2);
+
+bool verificarMuerteDeAliado(carta* card,Area_de_juego* area);
+
+void restaurarAliados(Map* Cementerio, HashTable* tabla);
+
+void imprimirJugadorGanador(char* nombre_jugador);
+
+bool destruccionAliadoAtacantexTalisman(Area_de_juego* area, carta* carta_enemiga, carta* defensa);
 #endif // funciones_h_INCLUDED

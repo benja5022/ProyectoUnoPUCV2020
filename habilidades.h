@@ -49,13 +49,13 @@ void h_totem_cero(carta* card, Area_de_juego* Area);
 
 void h_totem_uno(carta* card, Area_de_juego* Area);
 
-void h_totem_dos(carta* card);
+void h_totem_dos(carta* card,Area_de_juego* Area);
 
-void h_totem_tres(carta* card);
+void h_totem_tres(carta* card, Area_de_juego* Area);
 
-void h_totem_cuatro(carta* card);
+void h_totem_cuatro(carta* card, Area_de_juego* Area);
 
-void h_totem_cinco(carta* card);
+void h_totem_cinco(carta* card, Area_de_juego* Area);
 
 void h_totem_seis(carta* card, Area_de_juego* Area);
 

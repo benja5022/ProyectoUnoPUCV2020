@@ -155,3 +155,104 @@
 	"habilidades.h"
 	"funciones.h"
 
+1593744247 source:d:\escritorio real\proyecto pucv ed\proyectopucved\hashtable.c
+	"HashTable.h"
+	<math.h>
+	<string.h>
+	<stdlib.h>
+	<stdint.h>
+	<assert.h>
+
+1593744251 d:\escritorio real\proyecto pucv ed\proyectopucved\hashtable.h
+
+1586478966 source:d:\escritorio real\proyecto pucv ed\proyectopucved\list.c
+	"list.h"
+	<stdlib.h>
+	<assert.h>
+
+1575514896 d:\escritorio real\proyecto pucv ed\proyectopucved\list.h
+
+1595193226 source:d:\escritorio real\proyecto pucv ed\proyectopucved\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdbool.h>
+	<conio.h>
+	<ctype.h>
+	<windows.h>
+	<MMsystem.h>
+	"HashTable.h"
+	"stack.h"
+	"list.h"
+	"Map.h"
+	"habilidades.h"
+	"funciones.h"
+	"funcionesdejuego.h"
+
+1575514896 d:\escritorio real\proyecto pucv ed\proyectopucved\stack.h
+
+1594346133 d:\escritorio real\proyecto pucv ed\proyectopucved\map.h
+
+1595189651 d:\escritorio real\proyecto pucv ed\proyectopucved\habilidades.h
+
+1595191289 d:\escritorio real\proyecto pucv ed\proyectopucved\funciones.h
+
+1594616389 source:d:\escritorio real\proyecto pucv ed\proyectopucved\map.c
+	"Map.h"
+	<stdlib.h>
+	<assert.h>
+
+1575514896 source:d:\escritorio real\proyecto pucv ed\proyectopucved\stack.c
+	"stack.h"
+	<stdlib.h>
+	<assert.h>
+
+1595196380 source:d:\escritorio real\proyecto pucv ed\proyectopucved\funciones.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdbool.h>
+	<conio.h>
+	<ctype.h>
+	<windows.h>
+	"HashTable.h"
+	"stack.h"
+	"list.h"
+	"Map.h"
+	"habilidades.h"
+	"funciones.h"
+	"funcionesdejuego.h"
+
+1595194183 source:d:\escritorio real\proyecto pucv ed\proyectopucved\habilidades.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdbool.h>
+	<conio.h>
+	<ctype.h>
+	<windows.h>
+	"HashTable.h"
+	"stack.h"
+	"list.h"
+	"Map.h"
+	"habilidades.h"
+	"funciones.h"
+	"funcionesdejuego.h"
+
+1595191327 d:\escritorio real\proyecto pucv ed\proyectopucved\funcionesdejuego.h
+
+1595195429 source:d:\escritorio real\proyecto pucv ed\proyectopucved\funcionesdejuego.c
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+	<conio.h>
+	<ctype.h>
+	<windows.h>
+	"HashTable.h"
+	"stack.h"
+	"list.h"
+	"Map.h"
+	"habilidades.h"
+	"funciones.h"
+	"funcionesdejuego.h"
+

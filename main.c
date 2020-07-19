@@ -12,6 +12,7 @@
 #include "Map.h"
 #include "habilidades.h"
 #include "funciones.h"
+#include "funcionesdejuego.h"
 
 
 

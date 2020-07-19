@@ -11,6 +11,7 @@
 #include "Map.h"
 #include "habilidades.h"
 #include "funciones.h"
+#include "funcionesdejuego.h"
 
 
 void imprimirHabilidadTotem(int habilidad){
@@ -169,19 +170,55 @@ void h_totem_uno(carta* card, Area_de_juego* area){
     }
 }
 
-void h_totem_dos(carta* card){//vacio
+void h_totem_dos(carta* card, Area_de_juego* Area){
+    list* linea_de_apoyo = Area->area_enemiga->linea_de_apoyo;
+
+    carta* cartaEscogida = verLineaDeApoyoEnemigo(Area,1);
+
+    if(cartaEscogida){
+        carta* current = NULL;
+
+        for(current = list_first(linea_de_apoyo);current; current=list_next(linea_de_apoyo)){
+            if(strcmp(current->nombre,cartaEscogida->nombre) == 0 && cartaEscogida->estado == current->estado){
+                list_pop_current(linea_de_apoyo);
+                insertMap(Area->area_enemiga->cementerio,cartaEscogida->nombre,cartaEscogida);
+                break;
+            }
+        }
+    }
+}
+
+void h_totem_tres(carta* card, Area_de_juego* Area){
+    Map* linea_d_enemiga = Area->area_enemiga->linea_defensa;
+    Map* linea_a_enemiga = Area->area_enemiga->linea_ataque;
+    carta* current = NULL;
+
+    for(current = firstMap(linea_d_enemiga); current; current = nextMap(linea_d_enemiga)){
+        current->fuerza--;
+    }
+
+    for(current = firstMap(linea_a_enemiga); current; current = nextMap(linea_a_enemiga)){
+        current->fuerza--;
+    }
+}
+
+void h_totem_cuatro(carta* card, Area_de_juego* Area){
+    int num = list_size(Area->linea_de_apoyo);
+    int i;
+
+    Map* mazo_castillo = Area->mazo_castillo;
+    Map* mano = Area->mano;
+
+    carta* current = NULL;
+
+    for(current = firstMap(mazo_castillo), i=0; current && i<num ;current = firstMap(mazo_castillo)){
+        insertMap(mano,current->nombre,current);
+        eraseMap(mazo_castillo,current->nombre);
+    }
 
 }
 
-void h_totem_tres(carta* card){//vacio
-
-}
-
-void h_totem_cuatro(carta* card){//vacio
-
-}
-
-void h_totem_cinco(carta* card){//vacio
+void h_totem_cinco(carta* card, Area_de_juego* Area){//vacio
 
 }
 
@@ -247,16 +284,16 @@ void activarHabilidadTotem(carta* card, int habilidad, Area_de_juego* area){
             h_totem_uno(card,area);
             break;
         case(2):
-            //h_totem_dos(card);
+            h_totem_dos(card, area);
             break;
         case(3):
-            //h_totem_tres(card);
+            h_totem_tres(card, area);
             break;
         case(4):
-            //h_totem_cuatro(card);
+            h_totem_cuatro(card, area);
             break;
         case(5):
-            //h_totem_cinco(card);
+            h_totem_cinco(card,area);
             break;
         case(6):
             h_totem_seis(card,area);
@@ -699,7 +736,6 @@ void h_talisman_once(carta* card, Area_de_juego* Area_Final){
 void h_talisman_doce(carta* card){//vacio
 
 }
-
 
 
 void activarHabilidadTalisman(carta* card, int habilidad, Area_de_juego* area){
