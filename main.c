@@ -10,8 +10,8 @@
 #include "stack.h"
 #include "list.h"
 #include "Map.h"
-#include "habilidades.c"
-#include "funciones.c"
+#include "habilidades.h"
+#include "funciones.h"
 
 
 
@@ -37,7 +37,7 @@ int stringEqual(const void * key1, const void * key2) {
 int main()
 {
 
-    PlaySound(TEXT("musica\\Lord of vermillion - sephirotic version.wav"),NULL,SND_ASYNC | SND_LOOP);
+ //   PlaySound(TEXT("musica\\Lord of vermillion - sephirotic version.wav"),NULL,SND_ASYNC | SND_LOOP);
     logo();
 
     HashTable* TablaHash = createHashTable(stringHash,stringEqual);
@@ -92,6 +92,6 @@ int main()
         }
     }while(area_final == NULL);
 
-    PlaySound(NULL, 0, 0);
+ //   PlaySound(NULL, 0, 0);
     return 0;
 }

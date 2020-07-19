@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1594832410 source:c:\users\benjamín\desktop\proyecto pucv ed\proyectopucved\main.c
+1594955776 source:c:\users\benjamín\desktop\proyecto pucv ed\proyectopucved\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -12,8 +12,8 @@
 	"stack.h"
 	"list.h"
 	"Map.h"
-	"habilidades.c"
-	"funciones.c"
+	"habilidades.h"
+	"funciones.h"
 
 1593744247 source:c:\users\benjamín\desktop\proyecto pucv ed\proyectopucved\hashtable.c
 	"HashTable.h"
@@ -25,9 +25,9 @@
 
 1593744251 c:\users\benjamín\desktop\proyecto pucv ed\proyectopucved\hashtable.h
 
-1594751719 c:\users\benjamín\desktop\proyecto pucv ed\proyectopucved\funciones.h
+1594941629 c:\users\benjamín\desktop\proyecto pucv ed\proyectopucved\funciones.h
 
-1594833330 c:\users\benjamín\desktop\proyecto pucv ed\proyectopucved\funciones.c
+1594922936 c:\users\benjamín\desktop\proyecto pucv ed\proyectopucved\funciones.c
 	"funciones.h"
 
 1594616389 source:c:\users\benjamín\desktop\proyecto pucv ed\proyectopucved\map.c
@@ -51,10 +51,20 @@
 
 1575514896 c:\users\benjamín\desktop\proyecto pucv ed\proyectopucved\stack.h
 
-1594705547 c:\users\benjamín\desktop\proyecto pucv ed\proyectopucved\habilidades.h
+1594942061 c:\users\benjamín\desktop\proyecto pucv ed\proyectopucved\habilidades.h
 
-1594833388 c:\users\benjamín\desktop\proyecto pucv ed\proyectopucved\habilidades.c
+1594941505 c:\users\benjamín\desktop\proyecto pucv ed\proyectopucved\habilidades.c
 	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdbool.h>
+	<conio.h>
+	<ctype.h>
+	<windows.h>
+	"HashTable.h"
+	"stack.h"
+	"list.h"
+	"Map.h"
 	"habilidades.h"
 	"funciones.h"
 
@@ -114,4 +124,34 @@
 	"funciones.h"
 
 1594590590 c:\users\matias\desktop\proyectounopucv2020-master\real\proyectounopucv2020\funciones.h
+
+1594958533 source:c:\users\benjamín\desktop\proyecto pucv ed\proyectopucved\habilidades.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdbool.h>
+	<conio.h>
+	<ctype.h>
+	<windows.h>
+	"HashTable.h"
+	"stack.h"
+	"list.h"
+	"Map.h"
+	"habilidades.h"
+	"funciones.h"
+
+1594957226 source:c:\users\benjamín\desktop\proyecto pucv ed\proyectopucved\funciones.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdbool.h>
+	<conio.h>
+	<ctype.h>
+	<windows.h>
+	"HashTable.h"
+	"stack.h"
+	"list.h"
+	"Map.h"
+	"habilidades.h"
+	"funciones.h"
 

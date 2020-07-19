@@ -1,52 +1,17 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
+#include <conio.h>
+#include <ctype.h>
+#include <windows.h>
+#include "HashTable.h"
+#include "stack.h"
+#include "list.h"
+#include "Map.h"
 #include "habilidades.h"
 #include "funciones.h"
 
-/*
-struct estado{
-    int oro_plus;
-    int oro_reserva_plus;
-    int oro_usado_plus
-
-};*/
-
-struct carta{
-
-    int tipo;
-    int coste;
-    int habilidad_talisman;
-    int habilidad_totem;
-    int habilidad_arma;
-    int fuerza;
-    char nombre[100];
-    struct carta * arma;
-    bool estado; //si es bool, significa que ha sido usado
-
-};
-
-struct Partida{
-    char nombre_partida[50];
-    char nombre_Jugador1[50];
-    char nombre_Jugador2[50];
-
-};
-
-struct Area_de_juego{
-    struct Area_de_juego * area_enemiga;
-    char nombre_jugador[100];
-    char nombre_partida[100];
-    Map * cementerio;
-    Map * mazo_castillo;
-    Map * linea_defensa;
-    Map * linea_ataque;
-    Map * mano;
-    unsigned int reserva_de_oro;
-    unsigned int oro_pagado;
-    stack * oros;
-    list * linea_de_apoyo;
-    list * destierro;
-    unsigned short total;
-};
 
 void imprimirHabilidadTotem(int habilidad){
     switch(habilidad){
@@ -160,7 +125,6 @@ void imprimirHabilidadArma(int habilidad){
 
     }
 }
-
 
 void h_totem_cero(carta* card, Area_de_juego* Area){
     if(MapCount(Area->linea_ataque)==0 && MapCount(Area->linea_defensa) == 0){
@@ -326,7 +290,7 @@ void h_arma_dos(carta* card, int valor){
     else carta_aliado->fuerza -=3;
 }
 
-void h_arma_tres(carta* card , Area_de_juego *Areafinal){// EDITAR
+void h_arma_tres(carta* card , Area_de_juego *Areafinal){//
 
     carta *nav = firstMap(Areafinal->cementerio);
 
@@ -651,9 +615,6 @@ void h_talisman_seis(carta* card, Area_de_juego* Area){
         carta* carta_nueva = firstMap(Area->mazo_castillo);
         eraseMap(Area->mazo_castillo,carta_nueva->nombre);
         insertMap(Area->mano,carta_nueva->nombre,carta_nueva);
-
-        eraseMap(Area->mano,card->nombre);
-        insertMap(Area->cementerio,card->nombre,card);
 
         cont++;
     }

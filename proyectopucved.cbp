@@ -41,18 +41,12 @@
 		<Unit filename="Map.h" />
 		<Unit filename="funciones.c">
 			<Option compilerVar="CC" />
-			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="funciones.h">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
+		<Unit filename="funciones.h" />
 		<Unit filename="habilidades.c">
 			<Option compilerVar="CC" />
-			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="habilidades.h">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
+		<Unit filename="habilidades.h" />
 		<Unit filename="list.c">
 			<Option compilerVar="CC" />
 		</Unit>
